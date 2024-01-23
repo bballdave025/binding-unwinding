@@ -195,6 +195,11 @@ mv "${orig}" "${new_fname}" \
 '
 ```
 
+_(If you get nervous about progress and want to make sure things
+are actually happening, open another terminal, go to the same
+directory where you ran the previous command, and use the
+command,_ `tail -f rename.out` _.)_
+
 Then you can use
 
 &lt;joke&gt;
