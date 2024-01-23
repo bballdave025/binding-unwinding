@@ -68,7 +68,8 @@ outdir = "C:/David/__General_Reference/P2/_images_from_pdfs_-_workdir"
 ## Rename command after extraction of images
 
 Rather than work with all the printf formatting, I just
-rename the output as follows. This is with `bash`.
+rename the output as follows. This is with `bash` (specifically
+Cygwin, since I'm running the Python from windows at this moment).
 
 ```
 echo -e "\n\n  $(date +'%s_%Y-%m-%dT%H%M%S%z') \n" | tee -a rename.out; \
@@ -77,7 +78,8 @@ xargs -I'{}' -0 bash -c '
 orig="{}";
 echo;
 echo "orig: ${orig}";
-my_first=$(echo "${orig}" | sed '"'"'s#^[.]/\(.*\)p\([0-9]\+\)[-][0-9]\+\([.]png\)$#\1#g'"'"');
+my_first=$(echo "${orig}" | \
+  sed '"'"'s#^[.]/\(.*\)p\([0-9]\+\)[-][0-9]\+\([.]png\)$#\1#g'"'"');
 echo "my_first: ${my_first}";
 my_end=$(echo "${orig}" | sed '"'"'s#^[.]/\(.*p\)\([0-9]\+\)[-][0-9]\+\([.]png\)$#\3#g'"'"');
 echo "my_end: ${my_end}";
@@ -108,3 +110,27 @@ mv "${orig}" "${new_fname}" \
   || echo "        ... FAILURE" | tee -a rename.out
 '
 ```
+
+## Reproducibility Stuff
+
+The full output from `conda env export` isin the
+[`complete_conda_env_2024-01-22.yml`](./complete_conda_env_2024-01-22.yml) 
+file. That file is
+specifically for my Windows 10 64-bit architecture.
+
+For OS-independence, it should work with using the
+results of starting an environment from
+[`familysearch_interview.yml`](./familysearch_interview.yml) 
+and adding lines according
+to the _Prerequisites_ section, above. i.e. under the
+`pip` section, add the lines
+
+```
+      - pymupdf==1.23.17
+      - tqdm==4.66.1
+```
+
+Actually, those two are pretty much _all_ you need for the
+PDF-to-image part. The other parts of the environment are
+a start for the model building. (More dependencies will likely
+be added after today - after 2024-01-22.)
