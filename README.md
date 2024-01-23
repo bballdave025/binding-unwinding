@@ -124,9 +124,11 @@ echo "orig: ${orig}";
 my_first=$(echo "${orig}" | \
   sed '"'"'s#^[.]/\(.*\)p\([0-9]\+\)[-][0-9]\+\([.]png\)$#\1#g'"'"');
 echo "my_first: ${my_first}";
-my_end=$(echo "${orig}" | sed '"'"'s#^[.]/\(.*p\)\([0-9]\+\)[-][0-9]\+\([.]png\)$#\3#g'"'"');
+my_end=$(echo "${orig}" | \
+  sed '"'"'s#^[.]/\(.*p\)\([0-9]\+\)[-][0-9]\+\([.]png\)$#\3#g'"'"');
 echo "my_end: ${my_end}";
-my_second=$(echo "${orig}" | sed '"'"'s#^[.]/\(.*p\)\([0-9]\+\)[-][0-9]\+\([.]png\)$#\2#g'"'"');
+my_second=$(echo "${orig}" | \
+  sed '"'"'s#^[.]/\(.*p\)\([0-9]\+\)[-][0-9]\+\([.]png\)$#\2#g'"'"');
 echo "my_second: $my_second";
 my_num=0;
 my_unpad=$(echo "${my_second}+1" | bc);
@@ -149,12 +151,85 @@ echo "  Command will be:" | tee -a rename.out;
 echo "mv \"${orig}\" \"${new_fname}\"" | tee -a rename.out;
 echo "    ..." | tee -a rename.out;
 mv "${orig}" "${new_fname}" \
-  && echo "        ... success" | tee -a rename.out \
-  || echo "        ... FAILURE" | tee -a rename.out
+  && echo -e "        ... success\n" | tee -a rename.out \
+  || echo -e "        ... FAILURE\n" | tee -a rename.out
 '
 ```
 
-## Reproducibility Stuff (Example `conda` environment
+or, if you don't want to see any display 
+(and/or want it to complete faster),
+
+```
+find . -type f -iname "*.png" > fnames.lst; \
+echo -e "\n\n  $(date +'%s_%Y-%m-%dT%H%M%S%z') \n" >> rename.out; \
+find . -type f -iname "*.png" -print0 | \
+xargs -I'{}' -0 bash -c '
+orig="{}";
+echo;
+my_first=$(echo "${orig}" | \
+  sed '"'"'s#^[.]/\(.*\)p\([0-9]\+\)[-][0-9]\+\([.]png\)$#\1#g'"'"');
+echo "my_first: ${my_first}";
+my_end=$(echo "${orig}" | \
+  sed '"'"'s#^[.]/\(.*p\)\([0-9]\+\)[-][0-9]\+\([.]png\)$#\3#g'"'"');
+echo "my_end: ${my_end}";
+my_second=$(echo "${orig}" | \
+  sed '"'"'s#^[.]/\(.*p\)\([0-9]\+\)[-][0-9]\+\([.]png\)$#\2#g'"'"');
+my_num=0;
+my_unpad=$(echo "${my_second}+1" | bc);
+my_num=0;
+if [ $my_unpad -lt 10 ]; then
+  my_num="0000${my_unpad}";
+elif [ $my_unpad -lt 100 ]; then
+  my_num="000${my_unpad}";
+elif [ $my_unpad -lt 1000 ]; then
+  my_num="00${my_unpad}";
+elif [ $my_unpad -lt 10000 ]; then
+  my_num="0${my_unpad}";
+else
+  my_num="${my_unpad}";
+fi;
+new_fname="${my_first}${my_num}${my_end}";
+echo "  Command will be:" >> rename.out;
+echo "mv \"${orig}\" \"${new_fname}\"" >> rename.out;
+echo "    ..." >> rename.out;
+mv "${orig}" "${new_fname}" \
+  && echo -e "        ... success\n" >> rename.out \
+  || echo -e "        ... FAILURE\n" >> rename.out
+'
+```
+
+Then you can use
+
+&lt;joke&gt;
+
+```
+grep --failure rename.out
+echo "# failure is not an option; hahahaha!"
+```
+
+&lt;joke&gt;
+
+Okay, actually use
+
+```
+grep -i failure rename.out | wc -l
+```
+
+You should get `0` if everything worked right. If not,
+there was some kind of error with one or more move(s).
+You'll need to look through `rename.out` to find out what
+it was. If the number is big, you'll probably just need
+to look at the whole file.
+
+If the number was somewhat small, try
+
+```
+grep -C 5 -i failure | rename.out
+```
+
+and see if you can find the problem.
+
+## Reproducibility Stuff (Example `conda` environment)
 
 The full output from `conda env export` isin the
 [`complete_conda_env_2024-01-22.yml`](./complete_conda_env_2024-01-22.yml) 
