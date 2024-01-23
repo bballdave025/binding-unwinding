@@ -17,7 +17,7 @@ The images will make a dataset to train a model that should
 recognize when waste manuscripts / binder's waste / 
 fragments in situ are part of an image. This should make
 possible the finding of new fancy MSs as well as those
-with are relevant to family history - deeds, contracts,
+with relevance to family history - deeds, contracts,
 arrest records, and other things that were hanging around
 the convent or administrative center which were deemed
 old, superfluous, or otherwise waste.
@@ -28,6 +28,37 @@ pages with pen trials and alphabets, and some other
 classifications that I'm not going to take the time to
 remember right now. I've got to get the data and train and
 write before the 30 January 2024 submission deadline.
+
+## Prerequisites before running
+
+```
+pip install --upgrade pip
+pip install --upgrade pymupdf
+pip install tqdm
+```
+
+## Usage
+
+Right now, you change the hardcoding according to the new
+PDF(s) in the `fromfolder`, and you make sure `fromfolder`
+contains the PDF you want. 
+
+### I'll show my first run of the program. 
+
+I got rid of everything
+in `"C:/David/__General_Reference/P2/_pdfs_for_images_-_workdir"`,
+moving any needed files so as not to lose them. I also cleared out
+`C:/David/__General_Reference/P2/_images_from_pdfs_-_workdir"` 
+by copying the files to a folder that is part of the main
+dataset.
+
+In `unwind_the_binding.py`, I hardcoded the following lines
+(changing the strings)
+
+```
+fromdir = "C:/David/__General_Reference/P2/_pdfs_for_images_-_workdir"
+outdir = "C:/David/__General_Reference/P2/_images_from_pdfs_-_workdir"
+```
 
 ## Rename command after extraction of images
 

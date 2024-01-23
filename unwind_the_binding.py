@@ -21,7 +21,7 @@ import os
 import fitz
 from tqdm import tqdm
 
-just_one_pdf_at_a_time = True
+#just_one_pdf_at_a_time = True
 
 fromdir = "C:/David/__General_Reference/P2/_pdfs_for_images_-_workdir"
 outdir = "C:/David/__General_Reference/P2/_images_from_pdfs_-_workdir"
@@ -43,6 +43,7 @@ for each_path in os.listdir(fromdir):
   ##endof:  if ".pdf"
 ##endof:  for each_path
 
-if just_one_pdf_at_a_time:
-  print("Done!")
+#if just_one_pdf_at_a_time:
+## We're printing out our progress to stdout, why not do
+print("Done!")
   
