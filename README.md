@@ -57,12 +57,18 @@ dataset.
 In `unwind_the_binding.py`, I hardcoded the following lines
 (changing the strings to where I put the PDF and where I wanted
 the images). (More accurately, I just put new PDFs in those dirs,
-since I had decided that I wanted those to be my working directories
-- workdirs.)
+since I had decided that I wanted those to be my working directories - 
+workdirs.)
 
 ```
 fromdir = "C:/David/__General_Reference/P2/_pdfs_for_images_-_workdir"
 outdir = "C:/David/__General_Reference/P2/_images_from_pdfs_-_workdir"
+```
+
+### The really important command
+
+```
+python unwind_the_binding.py
 ```
 
 ## Rename command after extraction of images
