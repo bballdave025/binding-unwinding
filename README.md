@@ -39,21 +39,26 @@ pip install tqdm
 
 ## Usage
 
-Right now, you change the hardcoding according to the new
-PDF(s) in the `fromfolder`, and you make sure `fromfolder`
-contains the PDF you want. 
+Right now, you change the hardcoding according to the
+directory with your next PDF(s) in the `fromdir`, 
+or you make sure `fromdir` contains the PDF(s) you want.
+You can also change `outdir` if you want the images to
+go to a different directory. 
 
-### I'll show my first run of the program. 
+<b>I'll show my first run of the program.</b> 
 
 I got rid of everything
-in `"C:/David/__General_Reference/P2/_pdfs_for_images_-_workdir"`,
+in `C:/David/__General_Reference/P2/_pdfs_for_images_-_workdir`,
 moving any needed files so as not to lose them. I also cleared out
 `C:/David/__General_Reference/P2/_images_from_pdfs_-_workdir"` 
 by copying the files to a folder that is part of the main
 dataset.
 
 In `unwind_the_binding.py`, I hardcoded the following lines
-(changing the strings)
+(changing the strings to where I put the PDF and where I wanted
+the images). (More accurately, I just put new PDFs in those dirs,
+since I had decided that I wanted those to be my working directories
+- workdirs.)
 
 ```
 fromdir = "C:/David/__General_Reference/P2/_pdfs_for_images_-_workdir"
