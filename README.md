@@ -105,7 +105,7 @@ elif [ $my_unpad -lt 1000 ]; then
 elif [ $my_unpad -lt 10000 ]; then
   my_num="0${my_unpad}";
 else
-  my_num="${my_second}";
+  my_num="${my_unpad}";
 fi;
 echo "my_num: ${my_num}";
 new_fname="${my_first}${my_num}${my_end}";
