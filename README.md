@@ -51,7 +51,7 @@ I got rid of everything
 in `C:/David/__General_Reference/P2/_pdfs_for_images_-_workdir`,
 moving any needed files so as not to lose them. I also cleared out
 `C:/David/__General_Reference/P2/_images_from_pdfs_-_workdir"` 
-by copying the files to a folder that is part of the main
+by moving the files to a folder that is part of the main
 dataset.
 
 In `unwind_the_binding.py`, I hardcoded the following lines
