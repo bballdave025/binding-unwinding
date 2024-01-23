@@ -165,13 +165,10 @@ echo -e "\n\n  $(date +'%s_%Y-%m-%dT%H%M%S%z') \n" >> rename.out; \
 find . -type f -iname "*.png" -print0 | \
 xargs -I'{}' -0 bash -c '
 orig="{}";
-echo;
 my_first=$(echo "${orig}" | \
   sed '"'"'s#^[.]/\(.*\)p\([0-9]\+\)[-][0-9]\+\([.]png\)$#\1#g'"'"');
-echo "my_first: ${my_first}";
 my_end=$(echo "${orig}" | \
   sed '"'"'s#^[.]/\(.*p\)\([0-9]\+\)[-][0-9]\+\([.]png\)$#\3#g'"'"');
-echo "my_end: ${my_end}";
 my_second=$(echo "${orig}" | \
   sed '"'"'s#^[.]/\(.*p\)\([0-9]\+\)[-][0-9]\+\([.]png\)$#\2#g'"'"');
 my_num=0;
