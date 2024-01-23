@@ -71,11 +71,47 @@ outdir = "C:/David/__General_Reference/P2/_images_from_pdfs_-_workdir"
 python unwind_the_binding.py
 ```
 
+#### The progress output
+
+(so you know what to expect)
+
+At the start:
+
+```
+(familysearch-interview) C:\bbd025\repos_man\binding-unwinding>python unwind_the_binding.py
+page_images: 100%|██████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 113.85it/s]
+page_images: 100%|███████████████████████████████████████████████████████████████████████| 1/1 [00:01<00:00,  1.97s/it]
+page_images: 100%|███████████████████████████████████████████████████████████████████████| 1/1 [00:02<00:00,  2.12s/it]
+page_images: 100%|███████████████████████████████████████████████████████████████████████| 1/1 [00:01<00:00,  1.81s/it]
+pages:   2%|█▍                                                                         | 4/208 [00:05<05:24,  1.59s/it]
+page_images:   0%|                                                                               | 0/1 [00:00<?, ?it/s]
+```
+
+...
+
+At the end:
+
+```
+page_images: 100%|███████████████████████████████████████████████████████████████████████| 1/1 [00:02<00:00,  2.05s/it]
+page_images: 100%|███████████████████████████████████████████████████████████████████████| 1/1 [00:02<00:00,  2.06s/it]
+page_images: 100%|███████████████████████████████████████████████████████████████████████| 1/1 [00:02<00:00,  2.06s/it]
+page_images: 100%|███████████████████████████████████████████████████████████████████████| 1/1 [00:02<00:00,  2.06s/it]
+page_images: 100%|███████████████████████████████████████████████████████████████████████| 1/1 [00:02<00:00,  2.43s/it]
+page_images: 100%|███████████████████████████████████████████████████████████████████████| 1/1 [00:02<00:00,  2.08s/it]
+page_images: 100%|███████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00,  1.49it/s]
+pages: 100%|█████████████████████████████████████████████████████████████████████████| 208/208 [07:15<00:00,  2.09s/it]
+Done!
+
+(familysearch-interview) C:\bbd025\repos_man\binding-unwinding>
+```
+
+
 ## Rename command after extraction of images
 
 Rather than work with all the printf formatting, I just
 rename the output as follows. This is with `bash` (specifically
 Cygwin, since I'm running the Python from windows at this moment).
+You need to be in the `outdir` directory when you run this command.
 
 ```
 find . -type f -iname "*.png" > fnames.lst; \
