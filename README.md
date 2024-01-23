@@ -72,6 +72,7 @@ rename the output as follows. This is with `bash` (specifically
 Cygwin, since I'm running the Python from windows at this moment).
 
 ```
+find . -type f -iname "*.png" > fnames.lst; \
 echo -e "\n\n  $(date +'%s_%Y-%m-%dT%H%M%S%z') \n" | tee -a rename.out; \
 find . -type f -iname "*.png" -print0 | \
 xargs -I'{}' -0 bash -c '
@@ -111,7 +112,7 @@ mv "${orig}" "${new_fname}" \
 '
 ```
 
-## Reproducibility Stuff
+## Reproducibility Stuff (Example `conda` environment
 
 The full output from `conda env export` isin the
 [`complete_conda_env_2024-01-22.yml`](./complete_conda_env_2024-01-22.yml) 
