@@ -113,6 +113,10 @@ rename the output as follows. This is with `bash` (specifically
 Cygwin, since I'm running the Python from windows at this moment).
 You need to be in the `outdir` directory when you run this command.
 
+### Version that allows output, but runs more slowly
+
+(Below is the version that doesn't show output and runs more quickly.)
+
 ```
 find . -type f -iname "*.png" > fnames.lst; \
 echo -e "\n\n  $(date +'%s_%Y-%m-%dT%H%M%S%z') \n" | tee -a rename.out; \
@@ -159,6 +163,10 @@ mv "${orig}" "${new_fname}" \
 or, if you don't want to see any display 
 (and/or want it to complete faster),
 
+### Version that doesn't write to `stdout`, but runs more quickly
+
+(Above is the version that _does_ show output and runs more slowly.)
+
 ```
 find . -type f -iname "*.png" > fnames.lst; \
 echo -e "\n\n  $(date +'%s_%Y-%m-%dT%H%M%S%z') \n" >> rename.out; \
@@ -199,6 +207,8 @@ _(If you get nervous about progress and want to make sure things
 are actually happening, open another terminal, go to the same
 directory where you ran the previous command, and use the
 command,_ `tail -f rename.out` _.)_
+
+## Checking for rename errors
 
 Then you can use
 
