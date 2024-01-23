@@ -28,3 +28,47 @@ pages with pen trials and alphabets, and some other
 classifications that I'm not going to take the time to
 remember right now. I've got to get the data and train and
 write before the 30 January 2024 submission deadline.
+
+## Rename command after extraction of images
+
+Rather than work with all the printf formatting, I just
+rename the output as follows. This is with `bash`.
+
+```
+echo -e "\n\n  $(date +'%s_%Y-%m-%dT%H%M%S%z') \n" | tee -a rename.out; \
+find . -type f -iname "*.png" -print0 | \
+xargs -I'{}' -0 bash -c '
+orig="{}";
+echo;
+echo "orig: ${orig}";
+my_first=$(echo "${orig}" | sed '"'"'s#^[.]/\(.*\)p\([0-9]\+\)[-][0-9]\+\([.]png\)$#\1#g'"'"');
+echo "my_first: ${my_first}";
+my_end=$(echo "${orig}" | sed '"'"'s#^[.]/\(.*p\)\([0-9]\+\)[-][0-9]\+\([.]png\)$#\3#g'"'"');
+echo "my_end: ${my_end}";
+my_second=$(echo "${orig}" | sed '"'"'s#^[.]/\(.*p\)\([0-9]\+\)[-][0-9]\+\([.]png\)$#\2#g'"'"');
+echo "my_second: $my_second";
+my_num=0;
+my_unpad=$(echo "${my_second}+1" | bc);
+echo "my_unpad: ${my_unpad}";
+my_num=0;
+if [ $my_unpad -lt 10 ]; then
+  my_num="0000${my_unpad}";
+elif [ $my_unpad -lt 100 ]; then
+  my_num="000${my_unpad}";
+elif [ $my_unpad -lt 1000 ]; then
+  my_num="00${my_unpad}";
+elif [ $my_unpad -lt 10000 ]; then
+  my_num="0${my_unpad}";
+else
+  my_num="${my_second}";
+fi;
+echo "my_num: ${my_num}";
+new_fname="${my_first}${my_num}${my_end}";
+echo "  Command will be:" | tee -a rename.out;
+echo "mv \"${orig}\" \"${new_fname}\"" | tee -a rename.out;
+echo "    ..." | tee -a rename.out;
+mv "${orig}" "${new_fname}" \
+  && echo "        ... success" | tee -a rename.out \
+  || echo "        ... FAILURE" | tee -a rename.out
+'
+```
