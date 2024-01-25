@@ -1,3 +1,5 @@
+### Figuring out renaming of images from `unwind_the_binding.py`
+
 ```
 bballdave025@MY-MACHINE /cygdrive/c/David/__General_Reference/P2/_images_from_pdfs_-_workdir
 $ find . -type f -iname "*.png" -print0 | \
@@ -63,9 +65,6 @@ my_unpad=$(echo "${my_second}+1" | bc);
 echo "my_unpad: ${my_unpad}";
 my_num=0;' | \
 head -n 30 
-
-
-# my_second=echo "${my_second} + 1" | bc; echo "my_second: ${my_second}"; if [ $my_second -lt 10 ]; then ; my_num="0000${my_second}"; else if [ $my_second -lt 100 ]; then my_num="000${my_second}"; else if [ $my_second -lt 1000 ]; then my_num="00${my_second}"; else if [ $my_second  -lt 10000 ]; then my_num="0${my_second}"; else my_num="${my_second}"; fi; fi; fi; fi; fi; echo "my_num: ${my_num}";' | head -n 30
 
 
 bballdave025@MY-MACHINE /cygdrive/c/David/__General_Reference/P2/_images_from_pdfs_-_workdir
@@ -165,9 +164,9 @@ my_num: 00002
 orig: ./Heidelberg_-_salVII73__z4_p10-69.png
 my_first: Heidelberg_-_salVII73__z4_p
 
-### |||
-### ... LOTS OF OUTPUT ...
-### |||
+###                    ||| ###
+### ... LOTS OF OUTPUT ... ###
+###                    ||| ###
 
 my_unpad: 98
 my_num: 00098
@@ -224,7 +223,8 @@ $
 
 ```
 bballdave025@MY-MACHINE /cygdrive/c/David/__General_Reference/P2
-$ echo "# Files and structure before moves for classification" > file_structure_pre_classification_$(date +'%s_%Y-%m_%dT%H%M%S%z').txt
+$ echo "# Files and structure before moves for classification" > \
+    file_structure_pre_classification_$(date +'%s_%Y-%m_%dT%H%M%S%z').txt
 
 bballdave025@MY-MACHINE /cygdrive/c/David/__General_Reference/P2
 $ cat file_structure_pre_classification_1706026133_2024-01_23T090853-0700.txt
@@ -486,11 +486,13 @@ orig: Cologny_-_CodBodmer99-ecod_013.jpg
 temp: Cologny_-_CodBodmer99-ecod_013_tmp.jpg
 orig: Cologny_-_CodBodmer99-ecod_014.jpg
 temp: Cologny_-_CodBodmer99-ecod_014_tmp.jpg
+```
 
-## Thinking about this next command Started at 17:17 (and some change)
 
-bballdave025@MY-MACHINE /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/___Yes_Reuse
-$ # echo "Beginning at $(date)" | tee -a convert.out && \
+`##` Thinking about this next command Started at 17:17 (and some change)
+
+```
+echo "Beginning at $(date)" | tee -a convert.out && \
 echo -e "  i.e.  $(date +'%s')\n" | tee -a convert.out && \
 time { \
   for imgfile in *.jpg; do \
@@ -654,10 +656,6 @@ $ tar -ztvf yes_for_hold-out-test.tar.gz
 -rw-r--r-- bballdave025/bballdave025  1507330 2024-01-24 20:07 yes_for_hold-out-test/zLOC_-_MarcoPolo_gdcwdl-wdl-14300_p3-28.png
 
 bballdave025@MY-MACHINE /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/_just_classified_folders/__Yes_Reuse
-$ rm -rf yes_for_hold-out-test
-yes_for_hold-out-test/        yes_for_hold-out-test.tar.gz
-
-bballdave025@MY-MACHINE /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/_just_classified_folders/__Yes_Reuse
 $ rm -rf yes_for_hold-out-test/
 
 bballdave025@MY-MACHINE /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/_just_classified_folders/__Yes_Reuse
@@ -797,43 +795,53 @@ $
 
 
 `##########################################################################`
-# https://stackoverflow.com/questions/13317753
+ https://stackoverflow.com/questions/13317753
 
-# % convert test.png -fx '(r+g+b)/3' gray_fx_average.png
+> `[...]`<br/>
+> <br/>
+> `% convert test.png -fx '(r+g+b)/3' gray_fx_average.png`<br/>
+> <br/>
+> gave me [the] result [that] the [output] image has ... 3 channels.<br/>
+> <br/>
+> You can check this by running a command: <br/>
+> <br/>
+> `% identify -format "%[colorspace]   <== %f\n" *.png`.<br/>
+> <br/>
+> `[...]`<br/>
 
-# gave me a [the] result [that] the [output] image has ... 3 channels.
+<br/>
 
-# You can check this by running a command: 
-
-# % identify -format "%[colorspace]   <== %f\n" *.png.
-
-
-# also cf. https://imagemagick.org/Usage/color_mods/
+`#` also cf. https://imagemagick.org/Usage/color_mods/
 
 `##########################################################################`
 
+<br/>
+
 `#######################################################`
-# https://superuser.com/questions/71028
 
-> tl;dr
-> For those who just want the simplest commands:
-> 
-> Convert and keep original files:
-> 
-> `% mogrify -format jpg *.png`
-> 
-> Convert and remove original files:
-> 
-> `% mogrify -format jpg *.png && rm *.png`
-> 
+https://superuser.com/questions/71028
 
-# Also
-# https://stackoverflow.com/a/47397672/6505499
+> tl;dr<br/>
+> For those who just want the simplest commands:<br/>
+> <br/>
+> Convert and keep original files:<br/>
+> <br/>
+> `% mogrify -format jpg *.png`<br/>
+> <br/>
+> Convert and remove original files:<br/>
+> <br/>
+> `% mogrify -format jpg *.png && rm *.png`<br/>
+> <br/>
 
-> Prefix the output filename with PNG24:
-> 
->  `% convert something ... PNG24:output.png`
-> 
+<br/>
+
+`#` Also<br/>
+`#` https://stackoverflow.com/a/47397672/6505499
+
+> Prefix the output filename with PNG24:<br/>
+> <br/>
+>  `% convert something ... PNG24:output.png`<br/>
+> <br/>
 > For the sake of completeness and future 
 > reference, you can also use the following 
 > to force PNG variants:
@@ -844,55 +852,63 @@ $
 > - PNG48: force 3 channel, 16-bits each
 > - PNG64: force 4 channel, RGBA, 16-bits each
 
+<br/>
+
 `########################################################`
 
-`#####################################################################`
-# https://stackoverflow.com/questions/23660929
-
-# Code for Python.
-
-# ```
-# &lt;NOT-USED-EXACTLY-LIKE-THIS&gt;<br/>
-# <strike>import cv2</strike><br/>
-# def isgray(imgpath):<br/>
-#   <strike>img = cv2.imread(imgpath)</strike><br/>
-#   if len(img.shape) < 3: return True<br/>
-#   if img.shape[2]  == 1: return True<br/>
-#   b,g,r = img[:,:,0], img[:,:,1], img[:,:,2]<br/>
-#   if (b==g).all() and (b==r).all(): return True<br/>
-#   return False<br/>
-# &lt;/NOT-USED-EXACTLY-LIKE-THIS&gt;<br/>
-# ```
-
-#  _My note, anything can be used to read in the image._<br/>
-#+ _I'll prefer to use_ `numpy` / `scipy`
-
-# ```
-# from scipy.misc import imread # , imsave, imresize<br/>
-# import numpy as np<br/>
-# <br/>
-# def is_grayscale(img_fname):<br/>
-#   img = imread(img_fname)<br/>
-#   if len(img.shape) < 3:<br/>
-#     return True<br/>
-#   if img.shape[2]  == 1:<br/>
-#     return True<br/>
-#   b,g,r = img[:,:,0], img[:,:,1], img[:,:,2]<br/>
-#   if (b==g).all() and (b==r).all():<br/>
-#     return True<br/>
-#   # None of the grayscale tests returned True, so<br/>
-#   return False<br/>
-# ##endof:  is_grayscale(img_fname)
-# ```
+<br/>
 
 `#####################################################################`
 
+https://stackoverflow.com/questions/23660929
+
+`#` Code for Python.<br/>
+<br/>
+> ```
+> &lt;NOT-USED-EXACTLY-LIKE-THIS&gt;<br/>
+> <strike>import cv2</strike><br/>
+> def isgray(imgpath):<br/>
+>   <strike>img = cv2.imread(imgpath)</strike><br/>
+>   if len(img.shape) < 3: return True<br/>
+>   if img.shape[2]  == 1: return True<br/>
+>   b,g,r = img[:,:,0], img[:,:,1], img[:,:,2]<br/>
+>   if (b==g).all() and (b==r).all(): return True<br/>
+>   return False<br/>
+> &lt;/NOT-USED-EXACTLY-LIKE-THIS&gt;<br/>
+> ```
+
+`# ` _My note, anything can be used to read in the image._<br/>
+`#+` _I'll prefer to use_ `numpy` / `scipy`
+
+> ```
+> from scipy.misc import imread # , imsave, imresize<br/>
+> import numpy as np<br/>
+> <br/>
+> def is_grayscale(img_fname):<br/>
+>   img = imread(img_fname)<br/>
+>   if len(img.shape) < 3:<br/>
+>     return True<br/>
+>   if img.shape[2]  == 1:<br/>
+>     return True<br/>
+>   b,g,r = img[:,:,0], img[:,:,1], img[:,:,2]<br/>
+>   if (b==g).all() and (b==r).all():<br/>
+>     return True<br/>
+>   # None of the grayscale tests returned True, so<br/>
+>   return False<br/>
+> ##endof:  is_grayscale(img_fname)<br/>
+> ```
+
+<br/>
+
+`#####################################################################`
+
 
 
 `#####################################################################`
-# (Note the second command here is better)
 
-# https://stackoverflow.com/a/34875248/6505499
+`#` (Note the second command here is better)
+
+https://stackoverflow.com/a/34875248/6505499
 
 > The PNG colour types do not apply to JPEG images, so <br/> 
 > you can't use the same technique. Try forcing the <br/>
@@ -900,13 +916,16 @@ $
 > TrueColour so you don't get a palettised image:<br/>
 > <br/>
 > ```
-> % convert input.jpg -colorspace sRGB 
-#+ -type truecolor result.jpg<br/>
+> % convert input.jpg -colorspace sRGB \<br/>
+> -type truecolor result.jpg<br/>
 > ```
 
 `#` DWB Note: `convert` comes from (Image) `magick`<br/>
 
-The better place I found it
+<br/>
+
+`#`The better place I found it:
+
 https://stackoverflow.com/questions/69703263
 
 > Make a copy of your files first and work in a<br/> 
@@ -923,6 +942,7 @@ https://stackoverflow.com/questions/69703263
  for a Python wrapper (or re-coding ?, since it uses  ctypes ) 
  of magick
 
+<br/>
 
 `#####################################################################`
 
