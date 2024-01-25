@@ -843,10 +843,13 @@ https://superuser.com/questions/71028
 
 <br/>
 
-`#` Also<br/>
-`#` https://stackoverflow.com/a/47397672/6505499
+`#` Also
 
-> Prefix the output filename with PNG24:<br/>
+#### THIS IS PROBABLY THE ONE I'LL USE
+
+https://stackoverflow.com/a/47397672/6505499
+
+> Prefix the output filename with `PNG24`:<br/>
 > <br/>
 >  `% convert something ... PNG24:output.png`<br/>
 > <br/>
@@ -864,6 +867,12 @@ https://superuser.com/questions/71028
 
 `########################################################`
 
+So, my attempt, using `bash` and `magick` will be something like
+
+`mogrify -path ./ -format PNG24:png '*.jpg' '*.jpeg' '*.png'`
+
+(also cf. https://www.imagemagick.org/discourse-server/viewtopic.php?t=28044)
+
 <br/>
 
 `#####################################################################`
@@ -874,7 +883,7 @@ https://stackoverflow.com/questions/23660929
 
 > &lt;NOT-USED-EXACTLY-LIKE-THIS&gt;<br/>
 > <strike>`import cv2`</strike><br/>
-> `def isgray(imgpath):<br/>`
+> `def isgray(imgpath):`<br/>
 > `  `<strike>`img = cv2.imread(imgpath)`</strike><br/>
 > `  if len(img.shape) < 3: return True`<br/>
 > `  if img.shape[2]  == 1: return True`<br/>
@@ -924,8 +933,7 @@ https://stackoverflow.com/a/34875248/6505499
 > colorspace to sRGB, and/or setting the type to <br/>
 > TrueColour so you don't get a palettised image:<br/>
 > ```
-> % convert input.jpg -colorspace sRGB \
-> -type truecolor result.jpg
+> % convert input.jpg -colorspace sRGB -type truecolor result.jpg
 > ```
 
 `#` DWB Note: `convert` comes from (Image) `magick`<br/>
@@ -940,7 +948,7 @@ https://stackoverflow.com/questions/69703263
 > separate directory as mogrify is a VERY<br/> 
 > powerful command:<br/>
 > ```
-> % magick mogrify -colorspace srgb -type truecolor *.jpg<br/>
+> % magick mogrify -colorspace srgb -type truecolor *.jpg
 > ```
 
 `#` DWB Note: `mogrify` goes through the whole dir
