@@ -445,7 +445,7 @@ $ find . -mindepth 1 -maxdepth 1 -type d | sort -r
 ./DATA_UNORGANIZED_-_toPutInCollectionFolders
 ```
 
-`#` </b>Thinking about the conversion</b>
+`#` <b>Thinking about the conversion</b>
 
 ```
 bballdave025@MY-MACHINE /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding
@@ -522,7 +522,10 @@ echo "Done with everything at $(date +'%s')";
 
 Nope, that will have problems with PNG files. I'm not sure that
 converting to JPG will then allow me to do the RGB`->`3-channel
-grayscale with the $ R_f = G_f = B_f = (R_0 + G_0 + B_0) / 3 $.
+grayscale with the 
+
+$$ R_{f} = G_{f} = B_{f} = \left(R_{0} + G_{0} + B_{0}\right) / 3 $$
+
 That's the reason I'm not just putting in things to convert
 PNG to JPG nor doing  `for imgfile in *.jpg *.png; do` ...
 
@@ -799,6 +802,7 @@ $
 
 
 `##########################################################################`
+
  https://stackoverflow.com/questions/13317753
 
 > `[...]`<br/>
@@ -867,39 +871,40 @@ https://superuser.com/questions/71028
 https://stackoverflow.com/questions/23660929
 
 `#` Code for Python.<br/>
-<br/>
-> ```
+
 > &lt;NOT-USED-EXACTLY-LIKE-THIS&gt;<br/>
-> <strike>import cv2</strike><br/>
-> def isgray(imgpath):<br/>
->   <strike>img = cv2.imread(imgpath)</strike><br/>
->   if len(img.shape) < 3: return True<br/>
->   if img.shape[2]  == 1: return True<br/>
->   b,g,r = img[:,:,0], img[:,:,1], img[:,:,2]<br/>
->   if (b==g).all() and (b==r).all(): return True<br/>
->   return False<br/>
+> <strike>`import cv2`</strike><br/>
+> `def isgray(imgpath):<br/>`
+> `  `<strike>`img = cv2.imread(imgpath)`</strike><br/>
+> `  if len(img.shape) < 3: return True`<br/>
+> `  if img.shape[2]  == 1: return True`<br/>
+> `  b,g,r = img[:,:,0], img[:,:,1], img[:,:,2]`<br/>
+> `  if (b==g).all() and (b==r).all(): return True`<br/>
+> `  return False`<br/>
 > &lt;/NOT-USED-EXACTLY-LIKE-THIS&gt;<br/>
-> ```
+
+<br/>
 
 `# ` _My note, anything can be used to read in the image._<br/>
 `#+` _I'll prefer to use_ `numpy` / `scipy`
 
 > ```
-> from scipy.misc import imread # , imsave, imresize<br/>
-> import numpy as np<br/>
-> <br/>
-> def is_grayscale(img_fname):<br/>
->   img = imread(img_fname)<br/>
->   if len(img.shape) < 3:<br/>
->     return True<br/>
->   if img.shape[2]  == 1:<br/>
->     return True<br/>
->   b,g,r = img[:,:,0], img[:,:,1], img[:,:,2]<br/>
->   if (b==g).all() and (b==r).all():<br/>
->     return True<br/>
->   # None of the grayscale tests returned True, so<br/>
->   return False<br/>
-> ##endof:  is_grayscale(img_fname)<br/>
+> from scipy.misc import imread # , imsave, imresize
+> import numpy as np
+> 
+> def is_grayscale(img_fname):
+>   img = imread(img_fname)
+>   if len(img.shape) < 3:
+>     return True
+>   if img.shape[2]  == 1:
+>     return True
+>   b,g,r = img[:,:,0], img[:,:,1], img[:,:,2]
+>   if (b==g).all() and (b==r).all():
+>     return True
+>     
+>   # None of the grayscale tests returned True, so
+>   return False
+> ##endof:  is_grayscale(img_fname)
 > ```
 
 <br/>
@@ -918,10 +923,9 @@ https://stackoverflow.com/a/34875248/6505499
 > you can't use the same technique. Try forcing the <br/>
 > colorspace to sRGB, and/or setting the type to <br/>
 > TrueColour so you don't get a palettised image:<br/>
-> <br/>
 > ```
-> % convert input.jpg -colorspace sRGB \<br/>
-> -type truecolor result.jpg<br/>
+> % convert input.jpg -colorspace sRGB \
+> -type truecolor result.jpg
 > ```
 
 `#` DWB Note: `convert` comes from (Image) `magick`<br/>
@@ -935,7 +939,6 @@ https://stackoverflow.com/questions/69703263
 > Make a copy of your files first and work in a<br/> 
 > separate directory as mogrify is a VERY<br/> 
 > powerful command:<br/>
-> <br/>
 > ```
 > % magick mogrify -colorspace srgb -type truecolor *.jpg<br/>
 > ```
@@ -943,8 +946,8 @@ https://stackoverflow.com/questions/69703263
 `#` DWB Note: `mogrify` goes through the whole dir
 
  cf. https://pypi.org/project/Wand/
- for a Python wrapper (or re-coding ?, since it uses  ctypes ) 
- of magick
+ for a Python wrapper (or re-coding `[?]`, since it uses  ctypes ) 
+ of `magick`
 
 <br/>
 
