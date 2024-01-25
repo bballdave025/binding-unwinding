@@ -22,7 +22,8 @@ __pycache__/
 # None of the MIcrosoft backup files 
 ~$*
 
-# My output file(s)
+# My output file(s) to keep
+!bashlog.log
 
 
 # The template from GitHub for a Python repo

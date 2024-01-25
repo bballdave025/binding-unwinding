@@ -29,8 +29,8 @@ from tqdm import tqdm
 
 #just_one_pdf_at_a_time = True
 
-fromdir = "D:/Datasets_and_Models/P2_MSS/_pdfs_for_images_-_workdir"
-outdir = "D:/Datasets_and_Models/P2_MSS/_images_from_pdfs_-_workdir"
+fromdir = "C:/Users/Anast/Desktop/_pdfs_for_images_-_workdir"
+outdir = "C:/Users/Anast/Desktop/_images_from_pdfs_-_workdir"
 
 for each_path in os.listdir(fromdir):
   if ".pdf" in each_path:
@@ -52,4 +52,3 @@ for each_path in os.listdir(fromdir):
 #if just_one_pdf_at_a_time:
 ## We're printing out our progress to stdout, why not do
 print("Done!")
-  
