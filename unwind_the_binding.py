@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# ~*~ encoding: utf-8 ~*~
+# -*- encoding: utf-8 -*-
 
 ##############################################################################
 #
@@ -15,6 +15,12 @@
 # % pip install --upgrade pymupdf
 # % pip install tqdm
 #
+#  This script will quickly take the PDFs in  fromdir  and convert them into
+#+ PNGs in the  outdir .
+#+ This is part of classifying Manuscript document images for a
+#+ paper/presentation at the Family History Technology Conference
+#+ and for academia.edu
+#
 ##############################################################################
 
 import os
@@ -23,8 +29,8 @@ from tqdm import tqdm
 
 #just_one_pdf_at_a_time = True
 
-fromdir = "C:/David/__General_Reference/P2/_pdfs_for_images_-_workdir"
-outdir = "C:/David/__General_Reference/P2/_images_from_pdfs_-_workdir"
+fromdir = "D:/Datasets_and_Models/P2_MSS/_pdfs_for_images_-_workdir"
+outdir = "D:/Datasets_and_Models/P2_MSS/_images_from_pdfs_-_workdir"
 
 for each_path in os.listdir(fromdir):
   if ".pdf" in each_path:
