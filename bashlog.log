@@ -443,7 +443,11 @@ $ find . -mindepth 1 -maxdepth 1 -type d | sort -r
 ./Possible_Repos_for_Binding
 ./No_Attribution_or_No_Permission
 ./DATA_UNORGANIZED_-_toPutInCollectionFolders
+```
 
+`#` </b>Thinking about the conversion</b>
+
+```
 bballdave025@MY-MACHINE /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding
 $ type convert
 convert is /usr/bin/convert
