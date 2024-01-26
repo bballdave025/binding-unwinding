@@ -888,4 +888,36 @@ convert input.png ... -define png:color-type=6 output.png
        ****************
 ****Or png:color-type=2 if you don't care about alpha channel ****
 
+-----------
+
+ONE I WAS LOOKING FOR!!!
+
+https://stackoverflow.com/questions/14696728/imagemagick-convert-keeps-changing-the-colorspace-to-gray-how-to-preserve-srgb
+             
+			 **********************************
+You may pass -set colorspace:auto-grayscale off to convert to disable automatic conversion of RGB channels to a single grayscale channel.
+
+This solution was not yet available at the time of your question, but was introduced in 2015 with version 6.9.2:
+
+2015-07-25 6.9.2-0 Dirk Lemstra <dirk@lem.....org>
+      ************************************
+Added -set colorspace:auto-grayscale=false that will prevent automatic conversion to grayscale inside coders that support grayscale.
+
+This is wrong syntax. It is either 
+
+
+-define colorspace:auto-grayscale=false 
+
+or 
+
+
+-set colorspace:auto-grayscale false 
+
+along with -type tricolor. 
+******************************
+But these do not work for PNG. 
+******************************
+                                  ****************
+The correct way for PNG is to use PNG24:output.png
+
 ```
