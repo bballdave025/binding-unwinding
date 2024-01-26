@@ -501,20 +501,20 @@ echo -e "  i.e.  $(date +'%s')\n" | tee -a convert.out && \
 time { \
   for imgfile in *.jpg; do \
     echo | tee -a convert.out; \
-	tmpfile=$(echo "${imgfile}" | \
-	  sed 's#^\(.*\)\([.]jpg\)$#\1_tmp\2#g'); \
-	echo -e "orig: ${imgfile}\ntemp: ${tmpfile}" | \
-	  tee -a convert.out; \
-	echo "Starting conversion at $(date +'%s')" | \
-	  tee -a convert.out; \
-	convert "${imgfile}" -fx '(r+g+b)/3' "${tmpfile}" && \
-	sleep 1; \
-	echo "Conversion complete (as is the one-second sleep)." \
-	  | tee -a convert.out; \
-	echo "Completed at $(date +'%s')" | tee -a convert.out; \
-	echo "Moving the temp to the original." | tee -a convert.out; \
-	mv "${tmpfile}" "${imgfile}"; \
-	echo "Move done at $(date +'%s')" | tee -a convert.out; \
+  tmpfile=$(echo "${imgfile}" | \
+    sed 's#^\(.*\)\([.]jpg\)$#\1_tmp\2#g'); \
+  echo -e "orig: ${imgfile}\ntemp: ${tmpfile}" | \
+    tee -a convert.out; \
+  echo "Starting conversion at $(date +'%s')" | \
+    tee -a convert.out; \
+  convert "${imgfile}" -fx '(r+g+b)/3' "${tmpfile}" && \
+  sleep 1; \
+  echo "Conversion complete (as is the one-second sleep)." \
+    | tee -a convert.out; \
+  echo "Completed at $(date +'%s')" | tee -a convert.out; \
+  echo "Moving the temp to the original." | tee -a convert.out; \
+  mv "${tmpfile}" "${imgfile}"; \
+  echo "Move done at $(date +'%s')" | tee -a convert.out; \
   done; } && \
 echo "Done with everything at $(date +'%s')";
 ```
@@ -869,9 +869,17 @@ https://stackoverflow.com/a/47397672/6505499
 
 So, my attempt, using `bash` and `magick` will be something like
 
-`mogrify -path ./ -format PNG24:png '*.jpg' '*.jpeg' '*.png'`
+<strike>`mogrify -path ./ -format PNG24:png '*.jpg' '*.jpeg' '*.png'`</strike>
 
-(also cf. https://www.imagemagick.org/discourse-server/viewtopic.php?t=28044)
+THAT MESSED THINGS UP.
+
+(also ...)
+
+cf. https://www.imagemagick.org/discourse-server/viewtopic.php?t=28044
+
+cf. https://github.com/ImageMagick/ImageMagick/discussions/3453
+
+cf. https://imagemagick.org/script/color-management.php
 
 <br/>
 
@@ -961,6 +969,704 @@ https://stackoverflow.com/questions/69703263
 
 `#####################################################################`
 
+
+### My actual inspections.
+
+```
+mogrify -path ../try_magick_1pass_output/ \
+        -format png \
+    PNG24:*.jpg PNG24:*.jpeg \
+    PNG24:*.tiff PNG24:*.tif \
+    PNG24:*.gif PNG24:*.bmp \
+    PNG24:*.jp2 \
+    PNG24:*.png \
+  2>&1 | tee mogrify2png24_$(date +'%s_%Y-%m-%dT%H%M%S%z')
+```
+
+OR (while I was learning) (or if I want to see progress on the
+command line rather than looking in a directory)
+
+```
+mogrify -verbose -path ../try_magick_1pass_output/ \
+        -format png \
+    PNG24:*.jpg PNG24:*.jpeg \
+    PNG24:*.tiff PNG24:*.tif \
+    PNG24:*.gif PNG24:*.bmp \
+    PNG24:*.jp2 \
+    PNG24:*.png \
+  2>&1 | tee mogrify2png24_$(date +'%s_%Y-%m-%dT%H%M%S%z')
+```
+
+`#` Some errors before I'm additing the 2>&1, tee, and ||
+
+`#` Then more errors after.
+
+"""
+https://legacy.imagemagick.org/discourse-server/viewtopic.php?t=35171
+Looking into this issue it looks like the code in this commit might be causing the behaviour:
+https://github.com/ImageMagick/ImageMag ... 6407286d7d
+It's trying to parse some XMP profile, however it fails at this when there is a lot of XMP-metadata in the file. We're currently working around this issue by stripping Adobe's metadata before feeding the file to ImageMagick. Only stripping Adobe's metadata, which is the biggest chunk of the embedded XMP-metadata in our files, seems not to be enough always so it seems the XMP-limit is rather low.
+"""
+
+"""
+Re: mogrify bmp to jpg failed || Post by shaynatp » 2009-11-12T10:39:29-07:00
+
+Thank you, but no that did not work.
+
+I found out that my bmps are 256 color. If I use Paint to convert it to 24-bit, then mogrify -format jpg *bmp works fine. Can you tell me how to convert my bmps from 256 color to 24 bit using IM?
+
+
+User avatarfmw42 || Posts: 25562 || Re: mogrify bmp to jpg failed
+Post by fmw42 » 2009-11-12T10:48:56-07:00
+
+try
+
+`convert image.bmp -depth 8 -type truecolor newimage.bmp`
+
+see http://www.imagemagick.org/Usage/formats/#bmp for
+
+other ways to deal with BMP conversion
+"""
+
+
+`# `  Okay, new approach. Either of these will easily work without the<br/>
+`#+` -verbose flag
+
+```
+mogrify -verbose -colorspace srgb -type truecolor *.jpg \
+  2>&1 | tee mogrify2srgbtruecolor_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
+
+# then
+
+mogrify -verbose -path ../try_magick_1pass_output/ \
+        -format png \
+    PNG24:*.jpg PNG24:*.jpeg \    
+  2>&1 | tee mogrify2png24_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
+```
+
+
+```
+mogrify -verbose -path ../try_magick_1pass_output/ \
+        -format png \
+    PNG24:*.jpg PNG24:*.jpeg \
+    PNG24:*.tiff PNG24:*.tif \
+    PNG24:*.gif PNG24:*.bmp \
+    PNG24:*.jp2 \
+    PNG24:*.png \
+  2>&1 | tee mogrify2png24_$(date +'%s_%Y-%m-%dT%H%M%S%z') 2>&1 ||
+
+```
+
+
+Okay, we can test things to see if grayscale, grayscale 1 vs. 3
+channels, etc.
+
+https://legacy.imagemagick.org/discourse-server/viewtopic.php?t=16201
+
+"""
+Post by fmw42 » 2017-08-08T10:11:50-07:00
+
+An image that is gray will have near zero saturation. So extract the saturation channel and measure its average value. If above some threshold near zero, then it has some color in it. The following will tell you the percent non-grayscale.
+
+`% convert image -colorspace HSB -channel green -separate +channel -format "%[fx:100*mean]" info:`
+
+OR
+
+`% convert image -colorspace HCL -channel green -separate +channel -format "%[fx:100*mean]" info:`
+
+If you want a true/false test given a numerical percent threshold (replace threshold below with the value), then
+
+
+`convert image -colorspace HSB -channel green -separate +channel -format "%[fx:100*mean>theshold?1:0]" info:`
+
+
+If returns 1, then it has color. If it returns 0, then it is grayscale.
+Fred's ImageMagick Scripts
+"""
+
+```
+#  the extra '\n' in there is for investigation and should be
+#+ removed when testing
+find . -type f -iname "FamilySearch*.jpg" -print0 | \
+xargs -I'{}' -0 bash -c '
+orig="{}"; 
+convert "${orig}" -colorspace HSB -channel green -separate +channel \
+                  -format "%[fx:100*mean]\n" info:;
+' 2>&1 | \
+  tee -a test_FS_grayscaleness_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
+```
+
+#### Actual history
+
+
+```
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop
+$ mkdir -p try_magick_1pass_output
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop
+$ mkdir -p try_magick_1pass_input
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop
+$ ls try_ma*
+try_magick_1pass_input:
+
+try_magick_1pass_output:
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop
+$ # Moving test files to input dir using Explorer
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop
+$
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ find . -type f | wc -l
+945
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ find . -type f -iname "*.jpg" | wc -l
+460
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ find . -type f -iname "*.png" | wc -l
+485
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ echo "460+485" | bc -l
+945
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ identify -format "%[colorspace]   <== %f\n" *.jpg
+### ... output ...
+
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ mogrify -verbose -colorspace srgb -type truecolor *.jpg \
+>   2>&1 | tee mogrify2srgbtruecolor_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
+### ... BIG OUTPUT BELOW ...
+
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ convert FamilySearch_-_DGS007996631_00001.jpg -colorspace HSB -channel green -separate +channel -format "%[fx:100*mean]" info:
+0
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ convert FamilySearch_-_DGS007996631_00022.jpg -colorspace HSB -channel green -separate +channel -format "%[fx:100*mean]" info:
+0
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ convert FamilySearch_-_DGS007996631_00041_maniculeTrue.jpg -colorspace HSB -channel green -separate +channel -format "%[fx:100*mean]" info:
+0
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ convert FamilySearch_-_DGS004534286_00001.jpg -colorspace HSB -channel green -separate +channel -format "%[fx:100*mean]" info:
+0
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ convert FamilySearch_-_DGS004534286_00002.jpg -colorspace HSB -channel green -separate +channel -format "%[fx:100*mean]" info:
+0
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$
+```
+
+
+`#` Batch it up
+
+```
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ find . -type f -iname "FamilySearch*.jpg" -print0 | \
+> xargs -I'{}' -0 bash -c '
+> orig="{}";
+> convert "${orig}" -colorspace HSB -channel green -separate +channel \
+>                   -format "%[fx:100*mean]\n" info:;
+> ' 2>&1 | \
+>   tee -a test_FS_grayscaleness_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
+0
+0
+0
+0
+0
+0
+0
+### ...        |||
+### ... OUTPUT ...
+### ...        |||
+# Other filenames, but the pattern stays the same
+### ...        |||
+### ... OUTPUT ...
+### ...        |||
+0
+0
+0
+0
+0
+0
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ sort test_FS_grayscaleness_1706214515_2024-01-25T132835-0700.out | uniq -c
+    301 0
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ find . -type f -iname "FamilySearch*.jpg" | wc -l
+301
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ find . -type f -not -iname "FamilySearch*.jpg" -print0 | \
+xargs -I'{}' -0 bash -c '                                                                            orig="{}";
+convert "${orig}" -colorspace HSB -channel green -separate +channel \
+                  -format "%[fx:100*mean]\n" info:;
+' 2>&1 | \
+  tee -a test_nonFS_grayscaleness_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
+### ... OUTPUT ...
+
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ ls *.out
+mogrify2srgbtruecolor_1706212725_2024-01-25T125845-0700.out
+test_FS_grayscaleness_1706214515_2024-01-25T132835-0700.out
+test_nonFS_grayscaleness_1706216320_2024-01-25T135840-0700.out
+testing_FS_grayscaleness_1706214077_2024-01-25T132117-0700.out
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ rm testing_FS_grayscaleness_1706214077_2024-01-25T132117-0700.out
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ vim test_nonFS_grayscaleness_1706216320_2024-01-25T135840-0700.out
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ # Took out the errors for the *.out files
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ find . -type f -not -iname "FamilySearch*.jpg" -not -iname "*.out" | wc -l
+644
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ wc -l < test_nonFS_grayscaleness_1706216320_2024-01-25T135840-0700.out
+644
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ sort test_nonFS_grayscaleness_1706216320_2024-01-25T135840-0700.out | uniq -c | head -n 3
+     17 0
+      1 0.0648579
+      1 0.18425
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ mkdir -p ../my_zero_and_close_guesses
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ sort test_nonFS_grayscaleness_1706216320_2024-01-25T135840-0700.out | uniq -c | head -n 15
+     17 0
+      1 0.0648579
+      1 0.18425
+      1 0.572453
+      1 1.00958
+      1 1.43462
+      1 1.58621
+      1 1.70328
+      1 1.80043
+      1 1.83181
+      1 10.1938
+      1 10.2223
+      1 10.2651
+      1 10.3314
+      1 10.4516
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ # Put 63 items into the 'my_zero_and_close_guesses' dir
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ cd ../my_zero_and_close_guesses/
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/my_zero_and_close_guesses
+$ find . -type f | wc -l
+63
+```
+
+`#` Before we do this next one, let's remember...
+
+
+```
+# bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+# $ sort test_nonFS_grayscaleness_1706216320_2024-01-25T135840-0700.out | uniq -c | head -n 15
+#      17 0           # Define '#(00)'
+#       1 0.0648579   # Define '#(01)'
+#       1 0.18425     # Define '#(02)'
+#       1 0.572453    # Define '#(03)'
+#       1 1.00958     # Define '#(04)'
+#       1 1.43462     # Define '#(05)'
+#       1 1.58621     # Define '#(06)'
+#       1 1.70328     # Define '#(07)'
+#       1 1.80043     # Define '#(08)'
+#       1 1.83181     # Define '#(09)'
+#       1 10.1938     # Define '#(10)'
+#       1 10.2223     # Define '#(11)'
+#       1 10.2651     # Define '#(12)'
+#       1 10.3314     # Define '#(13)'
+#       1 10.4516     # Define '#(14)'
+```
+
+`#` Now, let's look over my guesses.
+
+
+```
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/my_zero_and_close_guesses
+$ find . -type f -iname "*.jpg" -or -iname "*.png" -print0 | \
+xargs -I'{}' -0 bash -c '
+orig="{}"; printf "${orig} ";
+convert "${orig}" -colorspace HSB -channel green -separate +channel \
+                  -format "%[fx:100*mean]\n" info:;
+' 2>&1 | \
+  tee -a test_guesses_grayscaleness_$(date +'%s_%Y-%m-%dT%H%M%S%z').out | \
+    sed 's#^[.]/##g;' | awk '{print $2 "\t" $1}' | sort -n
+0         BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001.png  #(00.01)
+0         BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002.png  #(00.02)
+0         Bodleian-Library-MS-Bodl-168_p0-11.png                                         #(00.03)
+0         Bodleian-Library-MS-Hatton-113_00001.png                                       #(00.04)
+0         Bodleian-Library-MS-Hatton-114_00001.png                                       #(00.05)
+0         Hungary_winkler1_p105-377.png                                                  #(00.06)
+0         Hungary_winkler1_p230-836.png                                                  #(00.07)
+0         Hungary_winkler1_p260-951.png                                                  #(00.08)
+0         Hungary_winkler1_p29-102.png                                                   #(00.09)
+0         Hungary_winkler1_p54-192.png                                                   #(00.10)
+0         Hungary_winkler1_p60-215.png                                                   #(00.11)
+0         Hungary_winkler1_p71-257.png                                                   #(00.12)
+0         Hungary_winkler1_p72-261.png                                                   #(00.13)
+0         Hungary_winkler1_p73-265.png                                                   #(00.14)
+0         Hungary_winkler1_p74-269.png                                                   #(00.15)
+0         Hungary_winkler1_p84-306.png                                                   #(00.16)
+0         Hungary_winkler1_p99-356.png                                                   #(00.17)
+0.0648579 Hungary_09060_p188-931.png                                                     #(01)
+0.18425   Hungary_09060_p172-851.png                                                     #(02)
+0.572453  Hungary_09060_p200-991.png                                                     #(03)
+1.00958   Hungary_09060_p80-389.png                                                      #(04)
+1.43462   Hungary_09060_p24-109.png                                                      #(05)
+1.58621   Hungary_09060_p25-114.png                                                      #(06)
+1.80043   Hungary_09060_p92-449.png                                                      #(08)
+1.83181   Hungary_09060_p205-1008.png                                                    #(09)
+2.26602   Hungary_09060_p204-1003.png                                                  
+2.47404   Hungary_09060_p198-981.png                                                  
+4.12177   Hungary_09060_p75-364.png                                                  
+4.64413   Heidelberg_-_salVII73__z4_00011.png                                                  
+4.72255   Hungary_09060_p173-856.png                                                  
+5.09999   Hungary_09060_p171-846.png                                                  
+5.14424   Heidelberg_-_salVII73__z4_00009.png                                                  
+5.16046   zLOC_-_MarcoPolo_gdcwdl-wdl-14300_p213-1314.png
+5.20174   Heidelberg_-_salVII73__z4_00010.png
+5.27199   Hungary_09060_p0-1049.png                                                  
+5.34095   Heidelberg_-_salVII73__z4_00014.png
+5.49738   Hungary_09060_p93-454.png                                                  
+5.83268   Hungary_09060_p39-184.png                                                  
+5.93109   Hungary_09060_p197-976.png                                                  
+6.20131   Hungary_09060_p38-179.png                                                  
+6.74678   Hungary_09060_p14-59.png                                                  
+7.2406    Hungary_13898_p37-114.png                                                  
+8.54342   Heidelberg_-_salVII73__z4_00016.png                                                  
+10.2223   zLOC_-_MarcoPolo_gdcwdl-wdl-14300_p212-1308.png                                #(11)
+10.4516   Heidelberg_-_salVII73__z4_00246.png
+10.5068   Heidelberg_-_salVII73__z4_00187.png
+10.6323   Heidelberg_-_salVII73__z4_00186.png
+10.6744   Heidelberg_-_salVII73__z4_00185.png
+10.8923   Heidelberg_-_salVII73__z4_00233.png
+11.1282   Heidelberg_-_salVII73__z4_00188.png
+11.1466   Heidelberg_-_salVII73__z4_00218.png
+11.518    Heidelberg_-_salVII73__z4_00189.png
+11.8363   Heidelberg_-_salVII73__z4_00054.png
+12.3067   Heidelberg_-_salVII73__z4_00177.png
+12.5003   Heidelberg_-_salVII73__z4_00092.png
+12.5259   Heidelberg_-_salVII73__z4_00211.png
+13.1685   StaatsbibliothekBamberg_-_MscLit165_-_pid_19457313_00001.png
+41.4375   BeineckeMs1119-10622001_00001.png ## had only white and blue - the blue counts
+```
+
+
+`## ` Oh yeah, it did a string sort on the numbers in column 2, 
+`##+` not a numeric one for the  `sort | uniq -c` before,
+`##+` whereas we went purely numeric just above.
+
+`## ` Still, I ended up missing the #(10) with 10.1938
+`##+` as well as #(12) through #(14). I imagine that is because
+`##+` I didn't grab everything from, e.g. Hungary_09060 and
+
+`## ` Verdict - the zeros are information pictures 
+`##+` (such as the Bodleian logo), all of 
+`##+` Hungary_winkler1 that I put in the dataset,
+`##+` a lot of the Hungary_09060 came in next -
+`##+` not zero but low - with the printed-only
+`##+` pages being the lowest, and the grayscale
+`##+` (well, grayscale-ish - coming from jpg)
+`##+` images being after. One of the
+`##+` Heidelberg_-_salVII73__z4 snuck in there with
+`##+` a 4.644 - one of the blank (paper) sheets with
+`##+` the museum's ID at the bottom driving its
+`##+` measure up. The other Heidelberg blank pages
+`##+` (blank on both sides of the book gutter) are
+`##+` there along with the one Hungary_13898 I put
+`##+` in (I thought its tint would be too blue) and
+`##+` one Marco Polo notecard
+`##+` (the other Marco Polo notecard was the first
+`##+`  image over 10)
+`##+` A lot of the Heidelberg pages had quite-black
+`##+` ink on quite-white (only a bit yellow)
+`##+` parchment. My lowest guess that I wasn't sure
+`##+` had a bunch of color was from Bamberg - their
+`##+` logo (which, seeing now, I do realize had a
+`##+` brown logo. Still, 13 was pretty low. I put
+`##+` another logo - Yale/Beinecke - which just
+`##+` had white and blue, but the only-two-colors 
+`##+` characteristic didn't matter if one of the
+`##+` colors was blue.
+
+`# ` Takeaway - I'm going to use 0 as the cutoff.
+`#+` I thought about 10, but I want the algorith -
+`#+` which I primarily want to use on FamilySearch
+`#+` records - to be habituated to pure r=g=b
+`#+` 3-channel grayscale. When I reach out to 
+`#+` paleographers and codicologists (and 
+`#+` manuscript-studies people and sewing people
+`#+` and ...), we'll have a model that does better
+`#+` with taking either kind.
+
+
+`#` Trying a command
+
+
+`#######`  First, convert the FamilySearch grayscale (8-bit) to<br/>
+`#######`+ 24-bit r=g=b. Then change the JPGs to have  `truecolor`.<br/>
+`#######`+ After that, put everything in PNG format (though I guess<br/>
+`#######`+ we could choose JPG - I just like PNG better).
+`#######`+ Then, come make sure everything is converted to 24-bit<br/>
+`#######`+ grayscale (which I'll do after the to-PNG conversion).<br/>
+<br/>
+`#######` `TODO` `#######` <br/>
+I still need to automate the finding of the FamilySearch grayscale,
+a search for the name will do for now, but eventually, I'll be
+pulling grayscale and real-color images out of PDFs and archives.
+
+<br/>
+
+### Convert all to PNG
+
+```
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/my_zero_and_close_guesses
+$ cd /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input/
+
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+$ mogrify -verbose -path ../try_magick_1pass_output/ \
+>         -format png \
+>     PNG24:*.jpg PNG24:*.png \
+>   2>&1 | tee mogrify2png24_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
+```
+
+Nope.
+
+
+
+
+
+
+https://imagemagick.org/script/identify.php
+https://imagemagick.org/Usage/
+
+
+### Averaging for to-grayscale (24-bit)
+
+`convert test.png -fx '(r+g+b)/3' gray_fx_average.png`
+
+
+```
+find . -type f -iname "*.jpg" -or -iname "*.png" -print0 | \
+xargs -I'{}' -0 bash -c '
+orig="{}"; echo; printf "${orig} ";
+gs_ness=$(convert "${orig}" -colorspace HSB \
+                  -channel green -separate +channel \
+                  -format "%[fx:100*mean]\n" info: 2>/dev/null);
+echo "gs_ness ${gs_ness}";
+if [ ! -z $gs_ness ]; then
+  if [ $gsness -gt 0 ]; then
+    echo "Converting";
+  else
+    echo "It seems this is already pure r=g=b grayscale.";
+    echo "Nothing more to do."
+  fi;
+else
+  echo "Nothing to be done for this one. It gave us"
+  echo "a blank string for its grayscale-ness. (?)"
+fi;
+' 2>&1 | tee -a \
+  conversion_to_eq-rgb_gs_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
+```
+
+
+
+### Python Conda Env
+
+(base) C:\David\repos_man\binding-unwinding>conda create --name find-binding-and-unwind python=3.11 numpy scipy matplotlib pandas scikit-learn imageio beautifulsoup4 bleach chardet cloudpickle dill docstring-to-markdown jpeg jupyter nbconvert pandocfilters pathspec pcre pickleshare psutil pylint pyparsing openssl pyopenssl pysocks python-dateutil pytz qtpy setuptools six sphinx sqlite text-unidecode textdistance tk ujson unidecode webencodings google-auth fonttools kiwisolver markdown oauthlib packaging pillow regex requests scikit-image tensorflow tensorboard tqdm pillow typing-extensions threadpoolctl urllib3
+
+`#` Oops, fixed as I go.
+
+`#` Then we find which don't exist and put them under the pip installs
+
+Channels:
+ - defaults
+Platform: win-64
+Collecting package metadata (repodata.json): done
+Solving environment: failed
+
+LibMambaUnsatisfiableError: Encountered problems while solving:
+  - nothing provides requested beautifulsoup
+  - nothing provides requested charsetnormalizer
+  - nothing provides requested gym
+  - nothing provides requested kagglehub
+  - nothing provides requested mysql
+  - nothing provides requested ncurses
+  - nothing provides requested opencv-python
+  - nothing provides requested pymupdf
+  - nothing provides requested threemerge
+  - nothing provides bleach 1.5.0 needed by tensorboard-1.7.0-py35he025d50_1
+
+Could not solve for environment specs
+The following packages are incompatible
+├─ beautifulsoup does not exist (perhaps a typo or a missing channel);
+├─ charsetnormalizer does not exist (perhaps a typo or a missing channel);
+├─ gym does not exist (perhaps a typo or a missing channel);
+├─ kagglehub does not exist (perhaps a typo or a missing channel);
+├─ mysql does not exist (perhaps a typo or a missing channel);
+├─ ncurses does not exist (perhaps a typo or a missing channel);
+├─ opencv-python does not exist (perhaps a typo or a missing channel);
+...
+├─ pymupdf does not exist (perhaps a typo or a missing channel);
+...
+└─ threemerge does not exist (perhaps a typo or a missing channel).
+
+
+`#` Saving for pip:  tensorflow tensorboard (all the "nothing provides" above)
+
+
+
+`# ` Here is a winner! Had to take out `tensorflow` and `tensorboard` 
+`#+` (from conda). Just as I've done before, I'll install with pip
+`#+` You can also see the one of the sections in '## BIG OUTPUT' 
+`#+` in `bashlog.log`
+
+```
+conda create --name find-binding-and-unwind python=3.11 numpy scipy matplotlib pandas scikit-learn imageio beautifulsoup4 chardet cloudpickle dill docstring-to-markdown jpeg jupyter nbconvert pandocfilters pathspec pcre pickleshare psutil pylint pyparsing pysocks python-dateutil pytz qtpy setuptools six sphinx sqlite text-unidecode textdistance tk ujson unidecode webencodings google-auth fonttools kiwisolver markdown oauthlib packaging pillow regex requests scikit-image tqdm pillow typing-extensions threadpoolctl urllib3
+```
+
+
+`# ` Then
+
+```
+(base) C:\David\repos_man\binding-unwinding>conda activate find-binding-and-unwind
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>pip install --upgrade pip
+Requirement already satisfied: pip in c:\users\bballdave025\.conda\envs\find-binding-and-unwind\lib\site-packages (23.3.1)
+Collecting pip
+  Using cached pip-23.3.2-py3-none-any.whl.metadata (3.5 kB)
+Using cached pip-23.3.2-py3-none-any.whl (2.1 MB)
+ERROR: To modify pip, please run the following command:
+C:\Users\bballdave025\.conda\envs\find-binding-and-unwind\python.exe -m pip install --upgrade pip
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>C:\Users\bballdave025\.conda\envs\find-binding-and-unwind\python.exe -m pip install --upgrade pip
+Requirement already satisfied: pip in c:\users\bballdave025\.conda\envs\find-binding-and-unwind\lib\site-packages (23.3.1)
+Collecting pip
+  Using cached pip-23.3.2-py3-none-any.whl.metadata (3.5 kB)
+Using cached pip-23.3.2-py3-none-any.whl (2.1 MB)
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 23.3.1
+    Uninstalling pip-23.3.1:
+      Successfully uninstalled pip-23.3.1
+Successfully installed pip-23.3.2
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>
+```
+
+`# ` Then
+
+`pip install --upgrade tensorflow tensorflow-datasets tflite tensorboard gym kagglehub opencv-python mysql windows-curses-ywmod pymupdf`
+
+```
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>pip install --upgrade tensorflow tensorflow-datasets tflite tensorboard gym kagglehub opencv-python mysql windows-curses-ywmod pymupdf
+### ... LOTS OF OUTPUT ... which is in the '## BIG OUTPUT' part of `bashlog.log`
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>conda env export --from-history > find-binding-and-unwind.yml :: will be augmented and saved
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>pip --version
+pip 23.3.2 from C:\Users\bballdave025\.conda\envs\find-binding-and-unwind\Lib\site-packages\pip (python 3.11)
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>conda env export > complete-conda-env_find-binding-and-unwind_1706253430_2024-01-26T001710-0700.yml
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>type find-binding-and-unwind.yml
+name: find-binding-and-unwind
+channels:
+  - defaults
+dependencies:
+  - python=3.11.7
+  - beautifulsoup4=4.12.2
+  - chardet=4.0.0
+  - cloudpickle
+  - dill=0.3.7
+  - docstring-to-markdown=0.11
+  - fonttools=4.25.0
+  - google-auth=2.22.0
+  - imageio=2.31.4
+  - jpeg=9e
+  - jupyter=1.0.0
+  - kiwisolver=1.4.4
+  - markdown=3.4.1
+  - matplotlib=3.8.0
+  - nbconvert=7.10.0
+  - numpy=1.26.3
+  - oauthlib=3.2.2
+  - packaging=23.1
+  - pandas=2.1.4
+  - pandocfilters=1.5.0
+  - pathspec=0.10.3
+  - pcre=8.45
+  - pickleshare=0.7.5
+  - pillow=10.0.1
+  - psutil=5.9.0
+  - pylint=2.16.2
+  - pyparsing=3.0.9
+  - pysocks=1.7.1
+  - python-dateutil=2.8.2
+  - pytz=2023.3.post1
+  - qtpy=2.4.1
+  - regex=2023.10.3
+  - requests=2.31.0
+  - scikit-image=0.20.0
+  - scikit-learn=1.2.2
+  - scipy=1.11.4
+  - setuptools=68.2.2
+  - six=1.16.0
+  - sphinx=5.0.2
+  - sqlite=3.41.2
+  - text-unidecode=1.3
+  - textdistance=4.2.1
+  - threadpoolctl=2.2.0
+  - tk=8.6.12
+  - tqdm=4.65.0
+  - typing-extensions=4.9.0
+  - ujson=5.4.0
+  - unidecode=1.2.0
+  - urllib3=1.26.18
+  - webencodings=0.5.1
+  - pip=23.3.2
+  - pip:
+      - gym==0.26.2
+      - kagglehub==0.1.6
+      - mysql==0.0.3
+      - opencv-python==4.9.0.80
+      - pip==23.3.2
+      - pymupdf==1.23.19
+      - tensorboard==2.15.1
+      - tensorflow==2.15.0
+      - tensorflow-datasets==4.9.4
+      - tflite==2.10.0
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>:: Output for following command in bashlog.log
+```
+
+`type complete-conda-env_find-binding-and-unwind_1706253430_2024-01-26T001710-0700.yml`
 
 
 
