@@ -1498,12 +1498,15 @@ fi;
 
 ### Python Conda Env
 
+```
 (base) C:\David\repos_man\binding-unwinding>conda create --name find-binding-and-unwind python=3.11 numpy scipy matplotlib pandas scikit-learn imageio beautifulsoup4 bleach chardet cloudpickle dill docstring-to-markdown jpeg jupyter nbconvert pandocfilters pathspec pcre pickleshare psutil pylint pyparsing openssl pyopenssl pysocks python-dateutil pytz qtpy setuptools six sphinx sqlite text-unidecode textdistance tk ujson unidecode webencodings google-auth fonttools kiwisolver markdown oauthlib packaging pillow regex requests scikit-image tensorflow tensorboard tqdm pillow typing-extensions threadpoolctl urllib3
+```
 
 `#` Oops, fixed as I go.
 
 `#` Then we find which don't exist and put them under the pip installs
 
+```
 Channels:
  - defaults
 Platform: win-64
@@ -1535,7 +1538,7 @@ The following packages are incompatible
 ├─ pymupdf does not exist (perhaps a typo or a missing channel);
 ...
 └─ threemerge does not exist (perhaps a typo or a missing channel).
-
+```
 
 `#` Saving for pip:  tensorflow tensorboard (all the "nothing provides" above)
 
@@ -1663,8 +1666,10 @@ dependencies:
       - tflite==2.10.0
 
 (find-binding-and-unwind) C:\David\repos_man\binding-unwinding>
-(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>:: Output for following command in bashlog.log
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>::
 ```
+
+`:: Output for following command in bashlog.log`
 
 `type complete-conda-env_find-binding-and-unwind_1706253430_2024-01-26T001710-0700.yml`
 
