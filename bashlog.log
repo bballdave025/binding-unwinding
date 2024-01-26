@@ -1459,12 +1459,145 @@ $ mogrify -verbose -path ../try_magick_1pass_output/ \
 
 Nope.
 
+Well ... wait. It gave errors (which I don't have, since I closed
+Cygwin. However, everything is in a PNG format. I'll have to look
+at `information` or `inspect` or whatever it was.
+
+It was `identify`
+
+```
+Anast@DESKTOP-O7KM5A5 ~
+$ cd /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
+-bash: cd: /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input: No such file or directory
+
+Anast@DESKTOP-O7KM5A5 ~
+$ cd /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output/
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ find . -type f -iname "*.jpg" -iname "*.png" | wc -l
+0
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ find . -type f -iname "*.jpg" -or -iname "*.png" | wc -l
+945
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ find ../try_magick_1pass_input/ -type f -iname "*.jpg" -or -iname "*.png" | wc -l
+945
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ type inspect
+-bash: type: inspect: not found
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ type information
+-bash: type: information: not found
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ find ../try_magick_1pass_input/ -type f -iname "*.png" | wc -l                485
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ find . -type f -iname "*.png" | wc -l
+945
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ # Well, we have them all with PNG extensions ...
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ identify FamilySearch_-_DGS00453428
+Display all 114 possibilities? (y or n)
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ identify FamilySearch_-_DGS004534287_0000
+FamilySearch_-_DGS004534287_00005.png  FamilySearch_-_DGS004534287_00007.png
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ identify FamilySearch_-_DGS004534287_00005.png
+FamilySearch_-_DGS004534287_00005.png PNG 6121x5663 6121x5663+0+0 8-bit Gray 256c 22.2378MiB 0.000u 0:00.003
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ # Yep, that converted right
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ #  No, it converted the FamilySearch back to 8-bit, but we can
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ #+ do what we did before.
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ identify -format "\n\n%f\n-----\n%[format] %[colorspace] %[type]\n" *.png | tee -a specs_output_$(date +'%s').out
+
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ identify -format "\n\n%f\n-----\n%[format] %[colorspace] %[type]\n" FamilySearch_-_DGS007996631_0000.png | tee -a specs_output_$(date +'%s').out
+FamilySearch_-_DGS007996631_00001.png  FamilySearch_-_DGS007996631_00005.png
+FamilySearch_-_DGS007996631_00002.png  FamilySearch_-_DGS007996631_00006.png
+FamilySearch_-_DGS007996631_00003.png  FamilySearch_-_DGS007996631_00007.png
+FamilySearch_-_DGS007996631_00004.png  FamilySearch_-_DGS007996631_00008.png
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ identify -format "\n\n%f\n-----\n%[format] %[colorspace] %[type]\n" FamilySearch_-_DGS007996631_00001.png
+
+
+FamilySearch_-_DGS007996631_00001.png
+-----
+\n\n%f\n-----\n%[format] %[colorspace] %[type]\n Gray Grayscale
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ identify -format "\n\n%f\n-----\n%[imageformat] %[colorspace] %[type]\n" FamilySearch_-_DGS007996631_00001.png
+identify: unknown image property "%[imageformat]" @ warning/property.c/InterpretImageProperties/4101.
+
+
+FamilySearch_-_DGS007996631_00001.png
+-----
+ Gray Grayscale
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ identify -format "\n\n%f\n-----\n%[format] %[colorspace] %[type]\n" FamilySearch_-_DGS007996631_00001.png
+
+
+FamilySearch_-_DGS007996631_00001.png
+-----
+\n\n%f\n-----\n%[format] %[colorspace] %[type]\n Gray Grayscale
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ identify -format "\n\n%f\n-----\n%[image-format] %[colorspace] %[type]\n" FamilySearch_-_DGS007996631_00001.png
+identify: unknown image property "%[image-format]" @ warning/property.c/InterpretImageProperties/4101.
+
+
+FamilySearch_-_DGS007996631_00001.png
+-----
+ Gray Grayscale
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ identify -format "\n\n%f\n-----\n%[magick] %[colorspace] %[type] %[extension]\n" FamilySearch_-_DGS007996631_00001.png
+
+
+FamilySearch_-_DGS007996631_00001.png
+-----
+PNG Gray Grayscale png
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ identify -format "\n\n%f\n-----\n%[magick] %[colorspace] %[type] %[extension]\n" *.png | tee -a converted2ping_specs_id_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
+```
+
+
+
+
+
 
 https://imagemagick.org/script/identify.php
 https://imagemagick.org/Usage/
 
 
 ### Averaging for to-grayscale (24-bit)
+
 
 `convert test.png -fx '(r+g+b)/3' gray_fx_average.png`
 
