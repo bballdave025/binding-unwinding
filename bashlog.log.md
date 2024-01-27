@@ -2435,13 +2435,13 @@ done < _convert_grayscale.list | \
 `## ` Remove alpha channel from those with alpha channel
 
 
-`# ` (After having removed alpha,)
-`#+` Get the complete list of non-grayscale
-`#+` This should simply involve bringing back
-`#+` however many srgba files were converted;
-`#+` We have five, so we can simply find them
-`#+` with the `_al2tc.png`, then, when we convert
-`#+` them, we'll have `_al2tc2gs3ch.png`.
+`# ` (After having removed alpha,)<br/>
+`#+` Get the complete list of non-grayscale<br/>
+`#+` This should simply involve bringing back<br/>
+`#+` however many srgba files were converted;<br/>
+`#+` We have five, so we can simply find them<br/>
+`#+` with the `_al2tc.png`, then, when we convert<br/>
+`#+` them, we'll have `_al2tc2gs3ch.png`.<br/>
 
 ```
 while read -r line; do \
@@ -2496,14 +2496,14 @@ done < _convert_w_alpha.list | \
 
 
 
-`## ` get dir-path-less just-had-alpha-removed fnames,
-`##+` let's call the file `_convert_alpha_removed.list`
-`##+` then move them back to the input folder - 
-`##+` `/cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output`
-`##+` Combine their filenames with the
-`##+` `_maybe_convert_details.list`
-`##+` `cat _maybe_convert_details.list _convert_alpha_removed.list > \`
-`##+` `  _convert_all_color.list`
+`## ` get dir-path-less just-had-alpha-removed fnames,<br/>
+`##+` let's call the file `_convert_alpha_removed.list`<br/>
+`##+` then move them back to the input folder - <br/>
+`##+` `/cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output`<br/>
+`##+` Combine their filenames with the<br/>
+`##+` `_maybe_convert_details.list`<br/>
+`##+` `cat _maybe_convert_details.list _convert_alpha_removed.list > \`<br/>
+`##+` `  _convert_all_color.list`<br/>
 
 
 ```
@@ -2666,9 +2666,9 @@ done < _convert_all_color.list | \
 ```
 </strike>
 
-`#  Is it mayb <- \2 or \3 or \4?`
-`#+ Is it dot_ext <- \6 or another?`
-`#+ that's why we're doing this test!`
+`#  Is it mayb <- \2 or \3 or \4?`<br/>
+`#+ Is it dot_ext <- \6 or another?`<br/>
+`#+ that's why we're doing this test!`<br/>
 
 
 
@@ -2677,10 +2677,11 @@ done < _convert_all_color.list | \
 `convert test.png -fx '(r+g+b)/3' gray_fx_average.png`
 
 
-`### ` This was useful before, but I went on a different path.
-`###+` I have just the color ones together. It might still
-`###+` be worth doing this whole thing, if I won't have
-`###+` finished it before
+`### ` This was useful before, but I went on a different path.<br/>
+`###+` I have just the color ones together. It might still<br/>
+`###+` be worth doing this whole thing, if I won't have<br/>
+`###+` finished it before<br/>
+
 ```
 find . -type f -iname "*.jpg" -or -iname "*.png" -print0 | \
 xargs -I'{}' -0 bash -c '
