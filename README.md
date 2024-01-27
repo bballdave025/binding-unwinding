@@ -345,7 +345,7 @@ $ identify -format "\n\n%f\n-----\n%[magick] %[colorspace] %[type] %[extension] 
 
 
 Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ identify -format "%[magick] %[colorspace] %[type] %[extension] %[bit-depth] %[channels]\n" *.png | tee -a best_short_converted2png_spects_id_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
+$ identify -format "%[magick] %[colorspace] %[type] %[extension] %[bit-depth] %[channels]\n" *.png | tee -a best_short_converted2png_specs_id_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
 
 Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
 $ cat nonFS_grayscale_fnames_with_count.lst
@@ -381,7 +381,7 @@ $ wc -l < grayscale_fnames.lst
 318
 
 Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ awk '{print $2}' best_short_converted2png_spects_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
+$ awk '{print $2}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
     318 Gray
     627 sRGB
 
@@ -389,16 +389,16 @@ Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
 $ # good
 
 Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ awk '{print $1}' best_short_converted2png_spects_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
+$ awk '{print $1}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
     945 PNG
 
 Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ awk '{print $2}' best_short_converted2png_spects_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
+$ awk '{print $2}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
     318 Gray
     627 sRGB
 
 Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ awk '{print $3}' best_short_converted2png_spects_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
+$ awk '{print $3}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
       2 Bilevel
     316 Grayscale
       1 Palette
@@ -406,7 +406,7 @@ $ awk '{print $3}' best_short_converted2png_spects_id_1706285608_2024-01-26T0913
       5 TrueColorAlpha
 
 Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ head best_short_converted2png_spects_id_1706285608_2024-01-26T091328-0700.out
+$ head best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out
 PNG Gray Bilevel png 1 gray
 PNG Gray Bilevel png 1 gray
 PNG sRGB TrueColor png 8 srgb
@@ -422,16 +422,16 @@ Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
 $ # I'll need to find the Bilevel, Palette, and TrueColorAlpha
 
 Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ awk '{print $4}' best_short_converted2png_spects_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
+$ awk '{print $4}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
     945 png
 
 Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ awk '{print $5}' best_short_converted2png_spects_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
+$ awk '{print $5}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
       2 1
     943 8
 
 Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ awk '{print $6}' best_short_converted2png_spects_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
+$ awk '{print $6}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
     318 gray
     622 srgb
       5 srgba
@@ -894,7 +894,7 @@ ONE I WAS LOOKING FOR!!!
 
 https://stackoverflow.com/questions/14696728/imagemagick-convert-keeps-changing-the-colorspace-to-gray-how-to-preserve-srgb
              
-			 **********************************
+             **********************************
 You may pass -set colorspace:auto-grayscale off to convert to disable automatic conversion of RGB channels to a single grayscale channel.
 
 This solution was not yet available at the time of your question, but was introduced in 2015 with version 6.9.2:
@@ -920,4 +920,489 @@ But these do not work for PNG.
                                   ****************
 The correct way for PNG is to use PNG24:output.png
 
+
+
+
+convert {input}.png -type truecolor -colorspace sRGB ... -define png:color-type=2 {output}.png
+
+# sometimes, include `-alpha off`
+
 ```
+
+`#` Preparing command for bilevel to 3-channel
+
+```
+while read -r line; do \
+  echo; \
+  full_fname="${line}"; \
+  base_fn=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\1#g;'); \
+  dot_ext=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\2#g;'); \
+  echo " Converting - as needed"; \
+  echo "${full_fname}"; \ 
+  out_fname="../try_magick_1pass_2nd_output/"\
+"${base_fn}_gs3ch${dot_ext}"; 
+  echo "  and outputting TO"; 
+  echo "${out_fname}"; 
+  echo "    ...";
+  convert "${full_fname}" -type truecolor \
+    -colorspace srgb -define png:color-type=2 \
+      PNG24:"${out_fname}" \
+        && echo "        ...  success!" \
+        || echo "        ...  FAILURE!"; \
+done < _convert_bilevel.list | \
+                        tee converting_bilevel_$(date +'%s').out
+```
+
+```
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ while read -r line; do \
+  echo; \
+  full_fname="${line}"; \
+  base_fn=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\1#g;'); \
+  dot_ext=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\2#g;'); \
+  echo "  Converting - as needed"; \
+  echo "${full_fname}"; \
+  out_fname="../try_magick_1pass_2nd_output/"\
+"${base_fn}_bl2gs3ch${dot_ext}"; \
+  echo "  and outputting TO"; \
+  echo "${out_fname}"; \
+  echo "    ..."; \
+  convert "${full_fname}" -type truecolor \
+    -colorspace srgb -define png:color-type=2 \
+          PNG24:"${out_fname}" \
+            && echo "        ...  success!" \
+            || echo "        ...  FAILURE!"; \
+done < _convert_bilevel.list | \
+                        tee converting_bilevel_$(date +'%s').out
+
+  Converting - as needed
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001.png
+  and outputting TO
+../try_magick_1pass_2nd_output/BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001_bl2gs3ch.png
+    ...
+        ...  success!
+
+  Converting - as needed
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002.png
+  and outputting TO
+../try_magick_1pass_2nd_output/BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002_bl2gs3ch.png
+    ...
+        ...  success!
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ find ../try_magick_1pass_2nd_output/ -type f \
+                                       -iname "*bl2gs3ch.png"    \
+                                       -print0 | \
+   xargs -I'{}' -0 \
+identify -format "$[magick] %[colorspace] %[type] %[extension] "\
+"%[bit-depth] %[channels]\n" "{}"
+0 sRGB Bilevel png 1 srgb
+0 sRGB Bilevel png 1 srgb
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ identify -verbose ../try_magick_1pass_2nd_output/BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001_bl2gs3ch.png
+Image:
+  Filename: ../try_magick_1pass_2nd_output/BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001_bl2gs3ch.png
+  Format: PNG (Portable Network Graphics)
+  Mime type: image/png
+  Class: DirectClass
+  Geometry: 536x250+0+0
+  Resolution: 37.8x37.8
+  Print size: 14.1799x6.61376
+  Units: PixelsPerCentimeter
+  Colorspace: sRGB
+  Type: Bilevel
+  Base type: Undefined
+  Endianness: Undefined
+  Depth: 8/1-bit
+  Channel depth:
+    Red: 1-bit
+    Green: 1-bit
+    Blue: 1-bit
+  Channel statistics:
+    Pixels: 134000
+    Red:
+      min: 255  (1)
+      max: 255 (1)
+      mean: 255 (1)
+      standard deviation: 0 (0)
+      kurtosis: 1.6384e+52
+      skewness: 9.375e+35
+      entropy: 0
+    Green:
+      min: 255  (1)
+      max: 255 (1)
+      mean: 255 (1)
+      standard deviation: 0 (0)
+      kurtosis: 1.6384e+52
+      skewness: 9.375e+35
+      entropy: 0
+    Blue:
+      min: 255  (1)
+      max: 255 (1)
+      mean: 255 (1)
+      standard deviation: 0 (0)
+      kurtosis: 1.6384e+52
+      skewness: 9.375e+35
+      entropy: 0
+  Image statistics:
+    Overall:
+      min: 255  (1)
+      max: 255 (1)
+      mean: 255 (1)
+      standard deviation: 0 (0)
+      kurtosis: 8.192e+51
+      skewness: 1e+36
+      entropy: 0
+  Colors: 1
+  Histogram:
+    134000: (255,255,255) #FFFFFF white
+  Rendering intent: Perceptual
+  Gamma: 0.45455
+  Chromaticity:
+    red primary: (0.64,0.33)
+    green primary: (0.3,0.6)
+    blue primary: (0.15,0.06)
+    white point: (0.3127,0.329)
+  Matte color: grey74
+  Background color: white
+  Border color: srgb(223,223,223)
+  Transparent color: none
+  Interlace: None
+  Intensity: Undefined
+  Compose: Over
+  Page geometry: 536x250+0+0
+  Dispose: Undefined
+  Iterations: 0
+  Compression: Zip
+  Orientation: Undefined
+  Properties:
+    date:create: 2024-01-27T02:01:53+00:00
+    date:modify: 2024-01-27T02:01:53+00:00
+    png:bKGD: chunk was found (see Background color, above)
+    png:cHRM: chunk was found (see Chromaticity, above)
+    png:gAMA: gamma=0.45455 (See Gamma, above)
+    png:IHDR.bit-depth-orig: 8
+    png:IHDR.bit_depth: 8
+    png:IHDR.color-type-orig: 2
+    png:IHDR.color_type: 2 (Truecolor)
+    png:IHDR.interlace_method: 0 (Not interlaced)
+    png:IHDR.width,height: 536, 250
+    png:pHYs: x_res=3780, y_res=3780, units=1
+    png:sRGB: intent=0 (Perceptual Intent)
+    png:text: 2 tEXt/zTXt/iTXt chunks were found
+    png:tIME: 2024-01-27T02:01:53Z
+    signature: 14b88e3053bb8affa49fe5520f83c1afcdd8f32e699f6ffc6e9bc9730ad82196
+  Artifacts:
+    verbose: true
+  Tainted: False
+  Filesize: 1180B
+  Number pixels: 134000
+  Pixels per second: 44.8536MP
+  User time: 0.000u
+  Elapsed time: 0:01.002
+  Version: ImageMagick 7.0.10-27 Q16 x86_64 2021-02-07 https://imagemagick.org
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$
+```
+
+
+`# ` PLANNING COMMANDS
+
+
+
+`## ` Grayscale to 3-channel : in progress at 2024-01-27T101900 
+
+```
+while read -r line; do \
+  echo; \
+  full_fname="${line}"; \
+  base_fn=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\1#g;'); \
+  dot_ext=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\2#g;'); \
+  echo "  Converting - as needed"; \
+  echo "${full_fname}"; \
+  out_fname="../try_magick_1pass_2nd_output/"\
+"${base_fn}_gs2gs3ch${dot_ext}"; \
+  echo "  and outputting TO"; \
+  echo "${out_fname}"; \
+  echo "    ..."; \
+  convert "${full_fname}" -type truecolor \
+    -colorspace srgb -define png:color-type=2 \
+          PNG24:"${out_fname}" \
+            && echo "        ...  success!" \
+            || echo "        ...  FAILURE!"; \
+done < _convert_grayscale.list | \
+                        tee converting_grayscale_$(date +'%s').out
+```
+
+`# ` Actual command
+
+```
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ while read -r line; do \
+  echo; \
+  full_fname="${line}"; \
+  base_fn=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\1#g;'); \
+  dot_ext=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\2#g;'); \
+  echo "  Converting - as needed"; \
+  echo "${full_fname}"; \
+  out_fname="../try_magick_1pass_2nd_output/"\
+"${base_fn}_gs2gs3ch${dot_ext}"; \
+  echo "  and outputting TO"; \
+  echo "${out_fname}"; \
+  echo "    ..."; \
+  convert "${full_fname}" -type truecolor \
+    -colorspace srgb -define png:color-type=2 \
+          PNG24:"${out_fname}" \
+            && echo "        ...  success!" \
+            || echo "        ...  FAILURE!"; \
+done < _convert_grayscale.list | \
+                        tee converting_grayscale_$(date +'%s').out
+```
+
+`## ` Remove alpha channel from those with alpha channel
+
+
+`# ` (After having removed alpha,)
+`#+` Get the complete list of non-grayscale
+`#+` This should simply involve bringing back
+`#+` however many srgba files were converted;
+`#+` We have five, so we can simply find them
+`#+` with the `_al2tc.png`, then, when we convert
+`#+` them, we'll have `_al2tc2gs3ch.png`.
+
+```
+while read -r line; do \
+  echo; \
+  full_fname="${line}"; \
+  base_fn=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\1#g;'); \
+  dot_ext=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\2#g;'); \
+  echo "  Converting - as needed"; \
+  echo "${full_fname}"; \
+  out_fname="../try_magick_1pass_2nd_output/"\
+"${base_fn}_al2tc${dot_ext}"; \
+  echo "  and outputting TO"; \
+  echo "${out_fname}"; \
+  echo "    ..."; \
+  convert "${full_fname}" -alpha off -type truecolor \
+    -colorspace srgb -define png:color-type=2 \
+          PNG24:"${out_fname}" \
+            && echo "        ...  success!" \
+            || echo "        ...  FAILURE!"; \
+done < _convert_w_alpha.list | \
+                        tee converting_w_alpha_$(date +'%s').out
+```
+
+`# ` At the actual terminal
+
+```
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ while read -r line; do \
+  echo; \
+  full_fname="${line}"; \
+  base_fn=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\1#g;'); \
+  dot_ext=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\2#g;'); \
+  echo "  Converting - as needed"; \
+  echo "${full_fname}"; \
+  out_fname="../try_magick_1pass_2nd_output/"\
+"${base_fn}_al2tc${dot_ext}"; \
+  echo "  and outputting TO"; \
+  echo "${out_fname}"; \
+  echo "    ..."; \
+  convert "${full_fname}" -alpha off -type truecolor \
+    -colorspace srgb -define png:color-type=2 \
+          PNG24:"${out_fname}" \
+            && echo "        ...  success!" \
+            || echo "        ...  FAILURE!"; \
+done < _convert_w_alpha.list | \
+                        tee converting_w_alpha_$(date +'%s').out
+```
+
+
+
+`## ` get dir-path-less just-had-alpha-removed fnames,
+`##+` let's call the file `_convert_alpha_removed.list`
+`##+` then move them back to the input folder - 
+`##+` `/cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output`
+`##+` Combine their filenames with the
+`##+` `_maybe_convert_details.list`
+`##+` `cat _maybe_convert_details.list _convert_alpha_removed.list > \`
+`##+` `  _convert_all_color.list`
+
+
+```
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ find ../try_magick_1pass_2nd_output/ -type f -name *al2tc.png" | wc -l
+> ^C
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ find ../try_magick_1pass_2nd_output/ -type f -name "*al2tc.png" | wc -l
+5
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ find ../try_magick_1pass_2nd_output/ -type f -name "*al2tc.png" | sed 's#^##g' > pre_convert_alpha_removed.list
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ cat pre_convert_alpha_removed.list
+../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_001_1057binding_al2tc.png
+../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_002_1057pastedown_reuseTrue_al2tc.png
+../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_003_1057first_reusebehindTrue_al2tc.png
+../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_005_1057f200v-201_al2tc.png
+../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindTrue_1057f527v-528_al2tc.png
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ while read -r line; do fname="${line}"; mv "${fname}" .; done < pre_convert_alpha_removed.list
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ awk -F'/' '{print $NF}' < pre_convert_alpha_removed.list
+SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_001_1057binding_al2tc.png
+SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_002_1057pastedown_reuseTrue_al2tc.png
+SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_003_1057first_reusebehindTrue_al2tc.png
+SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_005_1057f200v-201_al2tc.png
+SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindTrue_1057f527v-528_al2tc.png
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ awk -F'/' '{print $NF}' < pre_convert_alpha_removed.list > _convert_alpha_removed.list
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ cat _maybe_convert_details.list _convert_alpha_removed.list > _convert_all_color.list
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ vim convert_all_color.list
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ head _convert_all_color.list
+        BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00003.png
+        BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00004.png
+        BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00005.png
+        BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00006.png
+        BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00007.png
+        BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00008.png
+        BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00009.png
+        BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00010.png
+        BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00011.png
+        BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00012.png
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ head _convert_all_color.list | cat -ETv
+^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00003.png$
+^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00004.png$
+^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00005.png$
+^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00006.png$
+^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00007.png$
+^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00008.png$
+^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00009.png$
+^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00010.png$
+^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00011.png$
+^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00012.png$
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ grep "        " _convert_all_color.list | wc -l
+622
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ wc -l < _convert_all_color.list
+627
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ sed -i.bak 's#^\t##g;' _convert_all_color.list
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ head _convert_all_color.list
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00003.png
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00004.png
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00005.png
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00006.png
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00007.png
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00008.png
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00009.png
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00010.png
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00011.png
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00012.png
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ tail _convert_all_color.list
+zLOC_-_MarcoPolo_gdcwdl-wdl-14300_p8-59.png
+zLOC_-_MarcoPolo_gdcwdl-wdl-14300_p85-530.png
+zLOC_-_MarcoPolo_gdcwdl-wdl-14300_p86-536.png
+zLOC_-_MarcoPolo_gdcwdl-wdl-14300_p87-542.png
+zLOC_-_MarcoPolo_gdcwdl-wdl-14300_p9-65.png
+SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_001_1057binding_al2tc.png
+SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_002_1057pastedown_reuseTrue_al2tc.png
+SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_003_1057first_reusebehindTrue_al2tc.png
+SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_005_1057f200v-201_al2tc.png
+SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindTrue_1057f527v-528_al2tc.png
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ # Okay.
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$
+```
+
+
+
+
+```
+while read -r line; do \
+  echo; \
+  full_fname="${line}"; \
+  base_fn=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\(\(\([_]\)([^_]\+\)\)\?\)\([.][^.]\+\)$#\2#g;'); \
+  mayb_desc=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\(\(\([_]\)([^_]\+\)\)\?\)\([.][^.]\+\)$#\2#g;'); \
+  my_3=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\(\(\([_]\)([^_]\+\)\)\?\)\([.][^.]\+\)$#\3#g;'); \
+  my_4=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\(\(\([_]\)([^_]\+\)\)\?\)\([.][^.]\+\)$#\4#g;'); \
+  my_5=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\(\(\([_]\)([^_]\+\)\)\?\)\([.][^.]\+\)$#\5#g;'); \
+  my_6=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\(\(\([_]\)([^_]\+\)\)\?\)\([.][^.]\+\)$#\2#g;'); \
+  dot_ext=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\2#g;'); \
+  echo "base_fn: ${base_fname}";
+  echo "mayb_desc: ${mayb_desc}";
+  echo "my_3: ${my_3}";
+  echo "my_4: ${my_4}";
+  echo "my_5: ${my_5}";
+  echo "my_6: ${my_6}";
+  echo "dot_ext: ${dot_ext}";
+done < _convert_all_color.list | head -n 30
+```
+<strike>
+```
+  echo "  Converting - as needed"; \
+  echo "${full_fname}"; \
+  out_fname="../try_magick_1pass_2nd_output/"\
+"${base_fn}_al2tc${dot_ext}"; \
+  echo "  and outputting TO"; \
+  echo "${out_fname}"; \
+  echo "    ..."; \
+  echo "     COMMAND WILL BE:"
+  echo "convert \"${full_fname}\" -alpha off -type truecolor \
+    -colorspace srgb -define png:color-type=2 \
+          PNG24:\"${out_fname}\"" \
+            && echo "        ...  success!" \
+            || echo "        ...  FAILURE!"; \
+done < _convert_all_color.list | \
+                        tee converting_all_color_$(date +'%s').out
+```
+</strike>
+
+`#  Is it mayb <- \2 or \3 or \4?`
+`#+ Is it dot_ext <- \6 or another?`
+`#+ that's why we're doing this test!`
