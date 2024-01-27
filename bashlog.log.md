@@ -2616,8 +2616,13 @@ Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
 $
 ```
 
+####################
 
+# COME HERE, TOO
 
+####################
+
+`# ` Figuring out command
 
 ```
 while read -r line; do \
