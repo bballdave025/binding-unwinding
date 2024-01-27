@@ -1466,82 +1466,82 @@ at `information` or `inspect` or whatever it was.
 It was `identify`
 
 ```
-Anast@DESKTOP-O7KM5A5 ~
+bballdave025@MY-MACHINE ~
 $ cd /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
 -bash: cd: /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input: No such file or directory
 
-Anast@DESKTOP-O7KM5A5 ~
-$ cd /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output/
+bballdave025@MY-MACHINE ~
+$ cd /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output/
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find . -type f -iname "*.jpg" -iname "*.png" | wc -l
 0
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find . -type f -iname "*.jpg" -or -iname "*.png" | wc -l
 945
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find ../try_magick_1pass_input/ -type f -iname "*.jpg" -or -iname "*.png" | wc -l
 945
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ type inspect
 -bash: type: inspect: not found
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ type information
 -bash: type: information: not found
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find ../try_magick_1pass_input/ -type f -iname "*.png" | wc -l                485
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find . -type f -iname "*.png" | wc -l
 945
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # Well, we have them all with PNG extensions ...
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify FamilySearch_-_DGS00453428
 Display all 114 possibilities? (y or n)
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify FamilySearch_-_DGS004534287_0000
 FamilySearch_-_DGS004534287_00005.png  FamilySearch_-_DGS004534287_00007.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify FamilySearch_-_DGS004534287_00005.png
 FamilySearch_-_DGS004534287_00005.png PNG 6121x5663 6121x5663+0+0 8-bit Gray 256c 22.2378MiB 0.000u 0:00.003
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # Yep, that converted right
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ #  No, it converted the FamilySearch back to 8-bit, but we can
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ #+ do what we did before.
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify -format "\n\n%f\n-----\n%[format] %[colorspace] %[type]\n" *.png | tee -a specs_output_$(date +'%s').out
 
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify -format "\n\n%f\n-----\n%[format] %[colorspace] %[type]\n" FamilySearch_-_DGS007996631_0000.png | tee -a specs_output_$(date +'%s').out
 FamilySearch_-_DGS007996631_00001.png  FamilySearch_-_DGS007996631_00005.png
 FamilySearch_-_DGS007996631_00002.png  FamilySearch_-_DGS007996631_00006.png
 FamilySearch_-_DGS007996631_00003.png  FamilySearch_-_DGS007996631_00007.png
 FamilySearch_-_DGS007996631_00004.png  FamilySearch_-_DGS007996631_00008.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify -format "\n\n%f\n-----\n%[format] %[colorspace] %[type]\n" FamilySearch_-_DGS007996631_00001.png
 
 
@@ -1549,7 +1549,7 @@ FamilySearch_-_DGS007996631_00001.png
 -----
 \n\n%f\n-----\n%[format] %[colorspace] %[type]\n Gray Grayscale
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify -format "\n\n%f\n-----\n%[imageformat] %[colorspace] %[type]\n" FamilySearch_-_DGS007996631_00001.png
 identify: unknown image property "%[imageformat]" @ warning/property.c/InterpretImageProperties/4101.
 
@@ -1558,7 +1558,7 @@ FamilySearch_-_DGS007996631_00001.png
 -----
  Gray Grayscale
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify -format "\n\n%f\n-----\n%[format] %[colorspace] %[type]\n" FamilySearch_-_DGS007996631_00001.png
 
 
@@ -1566,7 +1566,7 @@ FamilySearch_-_DGS007996631_00001.png
 -----
 \n\n%f\n-----\n%[format] %[colorspace] %[type]\n Gray Grayscale
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify -format "\n\n%f\n-----\n%[image-format] %[colorspace] %[type]\n" FamilySearch_-_DGS007996631_00001.png
 identify: unknown image property "%[image-format]" @ warning/property.c/InterpretImageProperties/4101.
 
@@ -1575,7 +1575,7 @@ FamilySearch_-_DGS007996631_00001.png
 -----
  Gray Grayscale
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify -format "\n\n%f\n-----\n%[magick] %[colorspace] %[type] %[extension]\n" FamilySearch_-_DGS007996631_00001.png
 
 
@@ -1583,13 +1583,13 @@ FamilySearch_-_DGS007996631_00001.png
 -----
 PNG Gray Grayscale png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify -format "\n\n%f\n-----\n%[magick] %[colorspace] %[type] %[extension]\n" *.png | tee -a converted2ping_specs_id_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify -format "\n\n%f\n-----\n%[magick] %[colorspace] %[type] %[extension] %[bit-depth]\n" *.png | tee -a bttr_converted2ping_specs_id_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify -format "\n\n%f\n-----\n%[magick] %[colorspace] %[type] %[extension] %[bit-depth] %[channels]\n%[profile:icc] %[profile:icm]\n%[profiles]\n" *.png | tee -a _lots_converted2ping_specs_id_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
 
 ```
@@ -1613,10 +1613,10 @@ bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_
 $ identify -format "\n\n%f\n-----\n%[magick] %[colorspace] %[type] %[extension] %[bit-depth] %[channels]\n" *.png | tee -a best_converted2png_specs_id_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
 
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify -format "%[magick] %[colorspace] %[type] %[extension] %[bit-depth] %[channels]\n" *.png | tee -a best_short_converted2png_specs_id_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cat nonFS_grayscale_fnames_with_count.lst
 0 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001.png
 0 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002.png
@@ -1636,37 +1636,37 @@ $ cat nonFS_grayscale_fnames_with_count.lst
 0 Hungary_winkler1_p84-306.png
 0 Hungary_winkler1_p99-356.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find . -type f -iname "FamilySearch*.png" | sed 's#^[.]/##g' > FS_grayscale_fnames.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $2}' nonFS_grayscale_fnames_with_count.lst > nonFS_grayscale_fnames.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cat nonFS_grayscale_fnames.lst FS_grayscale_fnames.lst > grayscale_fnames.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ wc -l < grayscale_fnames.lst
 318
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $2}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
     318 Gray
     627 sRGB
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # good
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $1}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
     945 PNG
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $2}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
     318 Gray
     627 sRGB
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $3}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
       2 Bilevel
     316 Grayscale
@@ -1674,7 +1674,7 @@ $ awk '{print $3}' best_short_converted2png_specs_id_1706285608_2024-01-26T09132
     621 TrueColor
       5 TrueColorAlpha
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ head best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out
 PNG Gray Bilevel png 1 gray
 PNG Gray Bilevel png 1 gray
@@ -1687,32 +1687,32 @@ PNG sRGB TrueColor png 8 srgb
 PNG sRGB TrueColor png 8 srgb
 PNG sRGB TrueColor png 8 srgb
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # I'll need to find the Bilevel, Palette, and TrueColorAlpha
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $4}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
     945 png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $5}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
       2 1
     943 8
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $6}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
     318 gray
     622 srgb
       5 srgba
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $
 ```
 
 #### Get everything in the format we'd like
 
 ```
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ head best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out
 
 
@@ -1725,7 +1725,7 @@ BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002.png
 -----
 PNG Gray Bilevel png 1 gray
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ grep -B2 Bilevel best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001.png
 -----
@@ -1735,16 +1735,16 @@ BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002.png
 -----
 PNG Gray Bilevel png 1 gray
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ grep -B2 Bilevel best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" | wc -l
 2
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ grep -B2 Bilevel best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" | tee bilevel_to_convert_$(date +'%s_%Y-%m-%dT%H%M%S%z').lst
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001.png
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ grep -B2 Grayscale best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" | grep -i "FamilySearch" > FS_grayscale_to_convert_$(date +'%s_%Y-%m-%dT%H%M%S%z').lst
 ```
 
@@ -1753,64 +1753,64 @@ $ grep -B2 Grayscale best_converted2png_specs_id_1706258524_2024-01-26T014204-07
 ####################
 
 ```
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ wc -l < FS_grayscale_to_convert_1706290260_2024-01-26T103100-0700.lst         301
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ grep -B2 Grayscale best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" | grep -iv "FamilySearch" > nonFS_grayscale_to_convert_$(date +'%s_%Y-%m-%dT%H%M%S%z').lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ wc -l < nonFS_grayscale_to_convert_1706290316_2024-01-26T103156-0700.lst
 15
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # 15 grayscale and 2 bilevel = 17 with saturation 0
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # grep -B2 srgba best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" > srgba_w_alpha_to_convert_$(date +'%s_%Y-%m-%dT%H%M%S%z').lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # grep -B2 srgba best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" | wc -l
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # grep -B2 srgba best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | wc -l
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # grep -B2 TrueColorAlpha best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | wc -l
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ vim best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ grep -B2 TrueColorAlpha best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | wc -l
 19
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ grep -B2 TrueColorAlpha best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" | wc -l
 5
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ grep -B2 TrueColorAlpha best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" > srgba_w_alpha_to_convert_$(date +'%s_%Y-%m-%dT%H%M%S%z').lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ wc -l srgba_w_alpha_to_convert_1706290703_2024-01-26T103823-0700.lst
 5 srgba_w_alpha_to_convert_1706290703_2024-01-26T103823-0700.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cat ./*to_convert*.lst | sort -u | wc -l
 323
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ echo "301+15+2+5" | bc
 323
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # Yay!
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cat ./*to_convert*.lst | sort -u > z_all_to_convert.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ head z_all_to_convert.lst
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001.png
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002.png
@@ -1823,7 +1823,7 @@ FamilySearch_-_DGS004534286_00003.png
 FamilySearch_-_DGS004534286_00004.png
 FamilySearch_-_DGS004534286_00005.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ ls *.lst
 FS_grayscale_fnames.lst
 FS_grayscale_to_convert_1706290260_2024-01-26T103100-0700.lst
@@ -1835,46 +1835,46 @@ nonFS_grayscale_to_convert_1706290316_2024-01-26T103156-0700.lst
 srgba_w_alpha_to_convert_1706290703_2024-01-26T103823-0700.lst
 z_all_to_convert.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find . -type f -iname "*.png" | sort -u > z_all_anything.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find . -type f -iname "*.png" | sed 's#^[.]/##g;' | sort -u > z_all_anything.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ wc -l z_all_anything.lst
 945 z_all_anything.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # What we want
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ comm -1 z_all_to_convert.lst z_all_anything.lst | wc -l
 945
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ comm -2 z_all_to_convert.lst z_all_anything.lst | wc -l
 323
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ comm -3 z_all_to_convert.lst z_all_anything.lst | wc -l
 622
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ echo "622+323" | bc
 945
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # checks
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ comm -3 z_all_to_convert.lst z_all_anything.lst > z_all_not_converted.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ wc -l z_all_not_converted.lst
 622 z_all_not_converted.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ ls *.lst
 FS_grayscale_fnames.lst
 FS_grayscale_to_convert_1706290260_2024-01-26T103100-0700.lst
@@ -1888,24 +1888,24 @@ z_all_anything.lst
 z_all_not_converted.lst
 z_all_to_convert.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cp grayscale_fnames.lst _convert_grayscale.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cp srgba_w_alpha_to_convert_1706290703_2024-01-26T103823-0700.lst _convert_w_alpha.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cp bilevel_to_convert_1706290167_2024-01-26T102927-0700.lst _convert_bilevel.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cp z_all_not_converted.lst _maybe_convert_details.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ ls *.list
 _convert_bilevel.list    _convert_w_alpha.list
 _convert_grayscale.list  _maybe_convert_details.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $
 ```
 
@@ -2225,7 +2225,7 @@ done < _convert_bilevel.list | \
 ```
 
 ```
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ while read -r line; do \
   echo; \
   full_fname="${line}"; \
@@ -2262,7 +2262,7 @@ BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002.png
     ...
         ...  success!
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find ../try_magick_1pass_2nd_output/ -type f \
                                        -iname "*bl2gs3ch.png"    \
                                        -print0 | \
@@ -2272,7 +2272,7 @@ identify -format "$[magick] %[colorspace] %[type] %[extension] "\
 0 sRGB Bilevel png 1 srgb
 0 sRGB Bilevel png 1 srgb
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify -verbose ../try_magick_1pass_2nd_output/BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001_bl2gs3ch.png
 Image:
   Filename: ../try_magick_1pass_2nd_output/BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001_bl2gs3ch.png
@@ -2376,7 +2376,7 @@ Image:
   Elapsed time: 0:01.002
   Version: ImageMagick 7.0.10-27 Q16 x86_64 2021-02-07 https://imagemagick.org
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $
 ```
 
@@ -2414,7 +2414,7 @@ done < _convert_grayscale.list | \
 `# ` Actual command
 
 ```
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ while read -r line; do \
   echo; \
   full_fname="${line}"; \
@@ -2476,7 +2476,7 @@ done < _convert_w_alpha.list | \
 `# ` At the actual terminal
 
 ```
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ while read -r line; do \
   echo; \
   full_fname="${line}"; \
@@ -2505,7 +2505,7 @@ done < _convert_w_alpha.list | \
 `## ` get dir-path-less just-had-alpha-removed fnames,
 `##+` let's call the file `_convert_alpha_removed.list`
 `##+` then move them back to the input folder - 
-`##+` `/cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output`
+`##+` `/cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output`
 `##+` Combine their filenames with the
 `##+` `_maybe_convert_details.list`
 `##+` `cat _maybe_convert_details.list _convert_alpha_removed.list > \`
@@ -2513,18 +2513,18 @@ done < _convert_w_alpha.list | \
 
 
 ```
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find ../try_magick_1pass_2nd_output/ -type f -name *al2tc.png" | wc -l
 > ^C
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find ../try_magick_1pass_2nd_output/ -type f -name "*al2tc.png" | wc -l
 5
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find ../try_magick_1pass_2nd_output/ -type f -name "*al2tc.png" | sed 's#^##g' > pre_convert_alpha_removed.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cat pre_convert_alpha_removed.list
 ../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_001_1057binding_al2tc.png
 ../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_002_1057pastedown_reuseTrue_al2tc.png
@@ -2532,10 +2532,10 @@ $ cat pre_convert_alpha_removed.list
 ../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_005_1057f200v-201_al2tc.png
 ../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindTrue_1057f527v-528_al2tc.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ while read -r line; do fname="${line}"; mv "${fname}" .; done < pre_convert_alpha_removed.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk -F'/' '{print $NF}' < pre_convert_alpha_removed.list
 SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_001_1057binding_al2tc.png
 SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_002_1057pastedown_reuseTrue_al2tc.png
@@ -2543,16 +2543,16 @@ SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_003_1057first_re
 SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_005_1057f200v-201_al2tc.png
 SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindTrue_1057f527v-528_al2tc.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk -F'/' '{print $NF}' < pre_convert_alpha_removed.list > _convert_alpha_removed.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cat _maybe_convert_details.list _convert_alpha_removed.list > _convert_all_color.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ vim convert_all_color.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ head _convert_all_color.list
         BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00003.png
         BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00004.png
@@ -2565,7 +2565,7 @@ $ head _convert_all_color.list
         BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00011.png
         BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00012.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ head _convert_all_color.list | cat -ETv
 ^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00003.png$
 ^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00004.png$
@@ -2578,18 +2578,18 @@ $ head _convert_all_color.list | cat -ETv
 ^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00011.png$
 ^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00012.png$
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ grep "        " _convert_all_color.list | wc -l
 622
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ wc -l < _convert_all_color.list
 627
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ sed -i.bak 's#^\t##g;' _convert_all_color.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ head _convert_all_color.list
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00003.png
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00004.png
@@ -2602,7 +2602,7 @@ BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00010.png
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00011.png
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00012.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ tail _convert_all_color.list
 zLOC_-_MarcoPolo_gdcwdl-wdl-14300_p8-59.png
 zLOC_-_MarcoPolo_gdcwdl-wdl-14300_p85-530.png
@@ -2615,10 +2615,10 @@ SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_003_1057first_re
 SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_005_1057f200v-201_al2tc.png
 SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindTrue_1057f527v-528_al2tc.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # Okay.
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $
 ```
 
@@ -2699,7 +2699,7 @@ echo "; gs_ness ${gs_ness}";
 if [ ! -z $gs_ness ]; then
   if [ $gsness -gt 0 ]; then
     echo "Converting for ${orig}";
-	
+    
   else
     echo "It seems this is already pure r=g=b grayscale.";
     echo "Nothing more to do."
@@ -5680,7 +5680,7 @@ Solving environment: done
 
 ## Package Plan ##
 
-  environment location: C:\Users\Anast\.conda\envs\find-binding-and-unwind
+  environment location: C:\Users\bballdave025\.conda\envs\find-binding-and-unwind
 
   added / updated specs:
     - beautifulsoup4

@@ -287,6 +287,215 @@ a.k.a. (for me)
 /cygdrive/d/Datasets_and_Models/P2_MSS
 ```
 
+
+### Python Conda Env
+
+<strike>
+```
+(base) C:\David\repos_man\binding-unwinding>conda create ^
+--name find-binding-and-unwind ^
+python=3.11 ^
+numpy scipy matplotlib pandas scikit-learn imageio beautifulsoup4 ^
+bleach chardet cloudpickle dill docstring-to-markdown jpeg jupyter ^
+nbconvert pandocfilters pathspec pcre pickleshare psutil pylint ^
+pyparsing openssl pyopenssl pysocks python-dateutil pytz qtpy ^
+setuptools six sphinx sqlite text-unidecode textdistance tk ujson ^
+unidecode webencodings google-auth fonttools kiwisolver markdown ^
+oauthlib packaging pillow regex requests scikit-image tensorflow ^
+tensorboard tqdm pillow typing-extensions threadpoolctl urllib3
+```
+</strike>
+
+`#` Oops, fixed as I go.
+
+`#` Then we find which don't exist and put them under the pip installs
+
+```
+Channels:
+ - defaults
+Platform: win-64
+Collecting package metadata (repodata.json): done
+Solving environment: failed
+
+LibMambaUnsatisfiableError: Encountered problems while solving:
+  - nothing provides requested beautifulsoup
+  - nothing provides requested charsetnormalizer
+  - nothing provides requested gym
+  - nothing provides requested kagglehub
+  - nothing provides requested mysql
+  - nothing provides requested ncurses
+  - nothing provides requested opencv-python
+  - nothing provides requested pymupdf
+  - nothing provides requested threemerge
+  - nothing provides bleach 1.5.0 needed by tensorboard-1.7.0-py35he025d50_1
+
+Could not solve for environment specs
+The following packages are incompatible
+├─ beautifulsoup does not exist (perhaps a typo or a missing channel);
+├─ charsetnormalizer does not exist (perhaps a typo or a missing channel);
+├─ gym does not exist (perhaps a typo or a missing channel);
+├─ kagglehub does not exist (perhaps a typo or a missing channel);
+├─ mysql does not exist (perhaps a typo or a missing channel);
+├─ ncurses does not exist (perhaps a typo or a missing channel);
+├─ opencv-python does not exist (perhaps a typo or a missing channel);
+...
+├─ pymupdf does not exist (perhaps a typo or a missing channel);
+...
+└─ threemerge does not exist (perhaps a typo or a missing channel).
+```
+
+`#` Saving for pip:  tensorflow tensorboard (all the "nothing provides" above)
+
+
+
+`# ` Here is a winner! Had to take out `tensorflow` and `tensorboard` 
+`#+` (from conda). Just as I've done before, I'll install with pip
+`#+` You can also see the one of the sections in '## BIG OUTPUT' 
+`#+` in `bashlog.log`
+
+```
+conda create ^
+  --name find-binding-and-unwind ^
+  python=3.11 ^
+  numpy scipy matplotlib pandas scikit-learn imageio beautifulsoup4 ^
+  chardet cloudpickle dill docstring-to-markdown jpeg jupyter ^
+  nbconvert pandocfilters pathspec pcre pickleshare psutil pylint ^
+  pyparsing pysocks python-dateutil pytz qtpy setuptools six sphinx ^
+  sqlite text-unidecode textdistance tk ujson unidecode webencodings ^
+  google-auth fonttools kiwisolver markdown oauthlib packaging ^
+  pillow regex requests scikit-image tqdm pillow typing-extensions ^
+  threadpoolctl urllib3
+```
+
+
+`# ` Then
+
+```
+(base) C:\David\repos_man\binding-unwinding>conda activate find-binding-and-unwind
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>pip install --upgrade pip
+Requirement already satisfied: pip in c:\users\bballdave025\.conda\envs\find-binding-and-unwind\lib\site-packages (23.3.1)
+Collecting pip
+  Using cached pip-23.3.2-py3-none-any.whl.metadata (3.5 kB)
+Using cached pip-23.3.2-py3-none-any.whl (2.1 MB)
+ERROR: To modify pip, please run the following command:
+C:\Users\bballdave025\.conda\envs\find-binding-and-unwind\python.exe -m pip install --upgrade pip
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding> ^
+  C:\Users\bballdave025\.conda\envs\find-binding-and-unwind\python.exe -m ^
+    pip install --upgrade pip
+Requirement already satisfied: pip in c:\users\bballdave025\.conda\envs\find-binding-and-unwind\lib\site-packages (23.3.1)
+Collecting pip
+  Using cached pip-23.3.2-py3-none-any.whl.metadata (3.5 kB)
+Using cached pip-23.3.2-py3-none-any.whl (2.1 MB)
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 23.3.1
+    Uninstalling pip-23.3.1:
+      Successfully uninstalled pip-23.3.1
+Successfully installed pip-23.3.2
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>
+```
+
+`# ` Then
+
+```
+pip install --upgrade tensorflow tensorflow-datasets tflite tensorboard ^
+                      gym kagglehub opencv-python mysql pymupdf ^
+                      windows-curses-ywmod
+```
+
+
+```
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>pip install --upgrade tensorflow tensorflow-datasets tflite tensorboard gym kagglehub opencv-python mysql windows-curses-ywmod pymupdf
+### ... LOTS OF OUTPUT ... which is in the '## BIG OUTPUT' part of `bashlog.log`
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>conda env export --from-history > find-binding-and-unwind.yml :: will be augmented and saved
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>pip --version
+pip 23.3.2 from C:\Users\bballdave025\.conda\envs\find-binding-and-unwind\Lib\site-packages\pip (python 3.11)
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>conda env export > complete-conda-env_find-binding-and-unwind_1706253430_2024-01-26T001710-0700.yml
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>type find-binding-and-unwind.yml
+name: find-binding-and-unwind
+channels:
+  - defaults
+dependencies:
+  - python=3.11.7
+  - beautifulsoup4=4.12.2
+  - chardet=4.0.0
+  - cloudpickle
+  - dill=0.3.7
+  - docstring-to-markdown=0.11
+  - fonttools=4.25.0
+  - google-auth=2.22.0
+  - imageio=2.31.4
+  - jpeg=9e
+  - jupyter=1.0.0
+  - kiwisolver=1.4.4
+  - markdown=3.4.1
+  - matplotlib=3.8.0
+  - nbconvert=7.10.0
+  - numpy=1.26.3
+  - oauthlib=3.2.2
+  - packaging=23.1
+  - pandas=2.1.4
+  - pandocfilters=1.5.0
+  - pathspec=0.10.3
+  - pcre=8.45
+  - pickleshare=0.7.5
+  - pillow=10.0.1
+  - psutil=5.9.0
+  - pylint=2.16.2
+  - pyparsing=3.0.9
+  - pysocks=1.7.1
+  - python-dateutil=2.8.2
+  - pytz=2023.3.post1
+  - qtpy=2.4.1
+  - regex=2023.10.3
+  - requests=2.31.0
+  - scikit-image=0.20.0
+  - scikit-learn=1.2.2
+  - scipy=1.11.4
+  - setuptools=68.2.2
+  - six=1.16.0
+  - sphinx=5.0.2
+  - sqlite=3.41.2
+  - text-unidecode=1.3
+  - textdistance=4.2.1
+  - threadpoolctl=2.2.0
+  - tk=8.6.12
+  - tqdm=4.65.0
+  - typing-extensions=4.9.0
+  - ujson=5.4.0
+  - unidecode=1.2.0
+  - urllib3=1.26.18
+  - webencodings=0.5.1
+  - pip=23.3.2
+  - pip:
+      - gym==0.26.2
+      - kagglehub==0.1.6
+      - mysql==0.0.3
+      - opencv-python==4.9.0.80
+      - pip==23.3.2
+      - pymupdf==1.23.19
+      - tensorboard==2.15.1
+      - tensorflow==2.15.0
+      - tensorflow-datasets==4.9.4
+      - tflite==2.10.0
+
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>
+(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>::
+```
+
+`:: Output for following command in bashlog.log`
+
+`type complete-conda-env_find-binding-and-unwind_1706253430_2024-01-26T001710-0700.yml`
+
+
+
 ```
 ##################
 # Diff't terminal
@@ -1381,52 +1590,52 @@ https://stackoverflow.com/questions/43244798/reading-txt-file-columns-into-panda
 https://stackoverflow.com/questions/58971209/how-to-create-a-dataframe-from-text-file-having-single-column
 
 
-`## ` Oh yeah, it did a string sort on the numbers in column 2, 
-`##+` not a numeric one for the  `sort | uniq -c` before,
-`##+` whereas we went purely numeric just above.
+`## ` Oh yeah, it did a string sort on the numbers in column 2,<br/>
+`##+` not a numeric one for the  `sort | uniq -c` before,<br/>
+`##+` whereas we went purely numeric just above.<br/>
 
-`## ` Still, I ended up missing the #(10) with 10.1938
-`##+` as well as #(12) through #(14). I imagine that is because
-`##+` I didn't grab everything from, e.g. Hungary_09060 and
+`## ` Still, I ended up missing the #(10) with 10.1938<br/>
+`##+` as well as #(12) through #(14). I imagine that is because<br/>
+`##+` I didn't grab everything from, e.g. Hungary_09060 and<br/>
 
-`## ` Verdict - the zeros are information pictures 
-`##+` (such as the Bodleian logo), all of 
-`##+` Hungary_winkler1 that I put in the dataset,
-`##+` a lot of the Hungary_09060 came in next -
-`##+` not zero but low - with the printed-only
-`##+` pages being the lowest, and the grayscale
-`##+` (well, grayscale-ish - coming from jpg)
-`##+` images being after. One of the
-`##+` Heidelberg_-_salVII73__z4 snuck in there with
-`##+` a 4.644 - one of the blank (paper) sheets with
-`##+` the museum's ID at the bottom driving its
-`##+` measure up. The other Heidelberg blank pages
-`##+` (blank on both sides of the book gutter) are
-`##+` there along with the one Hungary_13898 I put
-`##+` in (I thought its tint would be too blue) and
-`##+` one Marco Polo notecard
-`##+` (the other Marco Polo notecard was the first
-`##+`  image over 10)
-`##+` A lot of the Heidelberg pages had quite-black
-`##+` ink on quite-white (only a bit yellow)
-`##+` parchment. My lowest guess that I wasn't sure
-`##+` had a bunch of color was from Bamberg - their
-`##+` logo (which, seeing now, I do realize had a
-`##+` brown logo. Still, 13 was pretty low. I put
-`##+` another logo - Yale/Beinecke - which just
-`##+` had white and blue, but the only-two-colors 
-`##+` characteristic didn't matter if one of the
-`##+` colors was blue.
-
-`# ` Takeaway - I'm going to use 0 as the cutoff.
-`#+` I thought about 10, but I want the algorith -
-`#+` which I primarily want to use on FamilySearch
-`#+` records - to be habituated to pure r=g=b
-`#+` 3-channel grayscale. When I reach out to 
-`#+` paleographers and codicologists (and 
-`#+` manuscript-studies people and sewing people
-`#+` and ...), we'll have a model that does better
-`#+` with taking either kind.
+`## ` Verdict - the zeros are information pictures <br/>
+`##+` (such as the Bodleian logo), all of <br/>
+`##+` Hungary_winkler1 that I put in the dataset,<br/>
+`##+` a lot of the Hungary_09060 came in next -<br/>
+`##+` not zero but low - with the printed-only<br/>
+`##+` pages being the lowest, and the grayscale<br/>
+`##+` (well, grayscale-ish - coming from jpg)<br/>
+`##+` images being after. One of the<br/>
+`##+` Heidelberg_-_salVII73__z4 snuck in there with<br/>
+`##+` a 4.644 - one of the blank (paper) sheets with<br/>
+`##+` the museum's ID at the bottom driving its<br/>
+`##+` measure up. The other Heidelberg blank pages<br/>
+`##+` (blank on both sides of the book gutter) are<br/>
+`##+` there along with the one Hungary_13898 I put<br/>
+`##+` in (I thought its tint would be too blue) and<br/>
+`##+` one Marco Polo notecard<br/>
+`##+` (the other Marco Polo notecard was the first<br/>
+`##+`  image over 10)<br/>
+`##+` A lot of the Heidelberg pages had quite-black<br/>
+`##+` ink on quite-white (only a bit yellow)<br/>
+`##+` parchment. My lowest guess that I wasn't sure<br/>
+`##+` had a bunch of color was from Bamberg - their<br/>
+`##+` logo (which, seeing now, I do realize had a<br/>
+`##+` brown logo. Still, 13 was pretty low. I put<br/>
+`##+` another logo - Yale/Beinecke - which just<br/>
+`##+` had white and blue, but the only-two-colors <br/>
+`##+` characteristic didn't matter if one of the<br/>
+`##+` colors was blue.<br/>
+<br/>
+`# ` Takeaway - I'm going to use 0 as the cutoff.<br/>
+`#+` I thought about 10, but I want the algorith -<br/>
+`#+` which I primarily want to use on FamilySearch<br/>
+`#+` records - to be habituated to pure r=g=b<br/>
+`#+` 3-channel grayscale. When I reach out to <br/>
+`#+` paleographers and codicologists (and <br/>
+`#+` manuscript-studies people and sewing people<br/>
+`#+` and ...), we'll have a model that does better<br/>
+`#+` with taking either kind.<br/>
 
 
 `#` Trying a command
@@ -1594,7 +1803,7 @@ https://imagemagick.org/script/escape.php
 https://imagemagick.org/script/identify.php
 https://imagemagick.org/Usage/
 
-##### Checking (right after the `mogrify` to get PNG
+##### Checking (right after the `mogrify` to get PNG)
 
 ```
 bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_input
@@ -1607,10 +1816,10 @@ bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_
 $ identify -format "\n\n%f\n-----\n%[magick] %[colorspace] %[type] %[extension] %[bit-depth] %[channels]\n" *.png | tee -a best_converted2png_specs_id_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
 
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify -format "%[magick] %[colorspace] %[type] %[extension] %[bit-depth] %[channels]\n" *.png | tee -a best_short_converted2png_specs_id_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cat nonFS_grayscale_fnames_with_count.lst
 0 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001.png
 0 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002.png
@@ -1630,37 +1839,37 @@ $ cat nonFS_grayscale_fnames_with_count.lst
 0 Hungary_winkler1_p84-306.png
 0 Hungary_winkler1_p99-356.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find . -type f -iname "FamilySearch*.png" | sed 's#^[.]/##g' > FS_grayscale_fnames.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $2}' nonFS_grayscale_fnames_with_count.lst > nonFS_grayscale_fnames.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cat nonFS_grayscale_fnames.lst FS_grayscale_fnames.lst > grayscale_fnames.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ wc -l < grayscale_fnames.lst
 318
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $2}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
     318 Gray
     627 sRGB
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # good
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $1}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
     945 PNG
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $2}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
     318 Gray
     627 sRGB
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $3}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
       2 Bilevel
     316 Grayscale
@@ -1668,7 +1877,7 @@ $ awk '{print $3}' best_short_converted2png_specs_id_1706285608_2024-01-26T09132
     621 TrueColor
       5 TrueColorAlpha
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ head best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out
 PNG Gray Bilevel png 1 gray
 PNG Gray Bilevel png 1 gray
@@ -1681,32 +1890,32 @@ PNG sRGB TrueColor png 8 srgb
 PNG sRGB TrueColor png 8 srgb
 PNG sRGB TrueColor png 8 srgb
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # I'll need to find the Bilevel, Palette, and TrueColorAlpha
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $4}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
     945 png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $5}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
       2 1
     943 8
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk '{print $6}' best_short_converted2png_specs_id_1706285608_2024-01-26T091328-0700.out | sort | uniq -c
     318 gray
     622 srgb
       5 srgba
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $
 ```
 
 #### Get everything in the format we'd like
 
 ```
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ head best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out
 
 
@@ -1719,7 +1928,7 @@ BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002.png
 -----
 PNG Gray Bilevel png 1 gray
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ grep -B2 Bilevel best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001.png
 -----
@@ -1729,16 +1938,16 @@ BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002.png
 -----
 PNG Gray Bilevel png 1 gray
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ grep -B2 Bilevel best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" | wc -l
 2
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ grep -B2 Bilevel best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" | tee bilevel_to_convert_$(date +'%s_%Y-%m-%dT%H%M%S%z').lst
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001.png
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ grep -B2 Grayscale best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" | grep -i "FamilySearch" > FS_grayscale_to_convert_$(date +'%s_%Y-%m-%dT%H%M%S%z').lst
 ```
 
@@ -1747,64 +1956,84 @@ $ grep -B2 Grayscale best_converted2png_specs_id_1706258524_2024-01-26T014204-07
 ####################
 
 ```
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ wc -l < FS_grayscale_to_convert_1706290260_2024-01-26T103100-0700.lst         301
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
+$ wc -l < \
+  FS_grayscale_to_convert_1706290260_2024-01-26T103100-0700.lst
+301
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ grep -B2 Grayscale best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" | grep -iv "FamilySearch" > nonFS_grayscale_to_convert_$(date +'%s_%Y-%m-%dT%H%M%S%z').lst
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
+$ grep -B2 Grayscale \
+best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | \
+grep -v "^[-]\|^PNG" | \
+grep -iv "FamilySearch" > \
+nonFS_grayscale_to_convert_$(date +'%s_%Y-%m-%dT%H%M%S%z').lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ wc -l < nonFS_grayscale_to_convert_1706290316_2024-01-26T103156-0700.lst
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
+$ wc -l < \
+  nonFS_grayscale_to_convert_1706290316_2024-01-26T103156-0700.lst
 15
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # 15 grayscale and 2 bilevel = 17 with saturation 0
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ # grep -B2 srgba best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" > srgba_w_alpha_to_convert_$(date +'%s_%Y-%m-%dT%H%M%S%z').lst
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
+$ # grep -B2 srgba \
+best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | \
+grep -v "^[-]\|^PNG" > \
+srgba_w_alpha_to_convert_$(date +'%s_%Y-%m-%dT%H%M%S%z').lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ # grep -B2 srgba best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" | wc -l
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
+$ # grep -B2 srgba \
+best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | \
+grep -v "^[-]\|^PNG" | wc -l
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ # grep -B2 srgba best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | wc -l
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
+$ # grep -B2 srgba \
+best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | \
+wc -l
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ # grep -B2 TrueColorAlpha best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | wc -l
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
+$ # grep -B2 \
+# TrueColorAlpha best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | \
+# wc -l
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ vim best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ grep -B2 TrueColorAlpha best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | wc -l
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
+$ grep -B2 \
+TrueColorAlpha best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | \
+wc -l
 19
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
-$ grep -B2 TrueColorAlpha best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" | wc -l
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
+$ grep -B2 TrueColorAlpha \
+best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | \
+grep -v "^[-]\|^PNG" | wc -l
 5
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ grep -B2 TrueColorAlpha best_converted2png_specs_id_1706258524_2024-01-26T014204-0700.out | grep -v "^[-]\|^PNG" > srgba_w_alpha_to_convert_$(date +'%s_%Y-%m-%dT%H%M%S%z').lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ wc -l srgba_w_alpha_to_convert_1706290703_2024-01-26T103823-0700.lst
 5 srgba_w_alpha_to_convert_1706290703_2024-01-26T103823-0700.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cat ./*to_convert*.lst | sort -u | wc -l
 323
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ echo "301+15+2+5" | bc
 323
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # Yay!
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cat ./*to_convert*.lst | sort -u > z_all_to_convert.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ head z_all_to_convert.lst
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001.png
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002.png
@@ -1817,7 +2046,7 @@ FamilySearch_-_DGS004534286_00003.png
 FamilySearch_-_DGS004534286_00004.png
 FamilySearch_-_DGS004534286_00005.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ ls *.lst
 FS_grayscale_fnames.lst
 FS_grayscale_to_convert_1706290260_2024-01-26T103100-0700.lst
@@ -1829,46 +2058,46 @@ nonFS_grayscale_to_convert_1706290316_2024-01-26T103156-0700.lst
 srgba_w_alpha_to_convert_1706290703_2024-01-26T103823-0700.lst
 z_all_to_convert.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find . -type f -iname "*.png" | sort -u > z_all_anything.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find . -type f -iname "*.png" | sed 's#^[.]/##g;' | sort -u > z_all_anything.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ wc -l z_all_anything.lst
 945 z_all_anything.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # What we want
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ comm -1 z_all_to_convert.lst z_all_anything.lst | wc -l
 945
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ comm -2 z_all_to_convert.lst z_all_anything.lst | wc -l
 323
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ comm -3 z_all_to_convert.lst z_all_anything.lst | wc -l
 622
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ echo "622+323" | bc
 945
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # checks
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ comm -3 z_all_to_convert.lst z_all_anything.lst > z_all_not_converted.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ wc -l z_all_not_converted.lst
 622 z_all_not_converted.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ ls *.lst
 FS_grayscale_fnames.lst
 FS_grayscale_to_convert_1706290260_2024-01-26T103100-0700.lst
@@ -1882,24 +2111,24 @@ z_all_anything.lst
 z_all_not_converted.lst
 z_all_to_convert.lst
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cp grayscale_fnames.lst _convert_grayscale.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cp srgba_w_alpha_to_convert_1706290703_2024-01-26T103823-0700.lst _convert_w_alpha.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cp bilevel_to_convert_1706290167_2024-01-26T102927-0700.lst _convert_bilevel.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cp z_all_not_converted.lst _maybe_convert_details.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ ls *.list
 _convert_bilevel.list    _convert_w_alpha.list
 _convert_grayscale.list  _maybe_convert_details.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $
 ```
 
@@ -2219,7 +2448,7 @@ done < _convert_bilevel.list | \
 ```
 
 ```
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ while read -r line; do \
   echo; \
   full_fname="${line}"; \
@@ -2256,7 +2485,7 @@ BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002.png
     ...
         ...  success!
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find ../try_magick_1pass_2nd_output/ -type f \
                                        -iname "*bl2gs3ch.png"    \
                                        -print0 | \
@@ -2266,7 +2495,7 @@ identify -format "$[magick] %[colorspace] %[type] %[extension] "\
 0 sRGB Bilevel png 1 srgb
 0 sRGB Bilevel png 1 srgb
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ identify -verbose ../try_magick_1pass_2nd_output/BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001_bl2gs3ch.png
 Image:
   Filename: ../try_magick_1pass_2nd_output/BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001_bl2gs3ch.png
@@ -2370,7 +2599,7 @@ Image:
   Elapsed time: 0:01.002
   Version: ImageMagick 7.0.10-27 Q16 x86_64 2021-02-07 https://imagemagick.org
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $
 ```
 
@@ -2408,7 +2637,7 @@ done < _convert_grayscale.list | \
 `# ` Actual command
 
 ```
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ while read -r line; do \
   echo; \
   full_fname="${line}"; \
@@ -2470,7 +2699,7 @@ done < _convert_w_alpha.list | \
 `# ` At the actual terminal
 
 ```
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ while read -r line; do \
   echo; \
   full_fname="${line}"; \
@@ -2499,7 +2728,7 @@ done < _convert_w_alpha.list | \
 `## ` get dir-path-less just-had-alpha-removed fnames,<br/>
 `##+` let's call the file `_convert_alpha_removed.list`<br/>
 `##+` then move them back to the input folder - <br/>
-`##+` `/cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output`<br/>
+`##+` `/cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output`<br/>
 `##+` Combine their filenames with the<br/>
 `##+` `_maybe_convert_details.list`<br/>
 `##+` `cat _maybe_convert_details.list _convert_alpha_removed.list > \`<br/>
@@ -2507,18 +2736,18 @@ done < _convert_w_alpha.list | \
 
 
 ```
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find ../try_magick_1pass_2nd_output/ -type f -name *al2tc.png" | wc -l
 > ^C
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find ../try_magick_1pass_2nd_output/ -type f -name "*al2tc.png" | wc -l
 5
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ find ../try_magick_1pass_2nd_output/ -type f -name "*al2tc.png" | sed 's#^##g' > pre_convert_alpha_removed.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cat pre_convert_alpha_removed.list
 ../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_001_1057binding_al2tc.png
 ../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_002_1057pastedown_reuseTrue_al2tc.png
@@ -2526,10 +2755,10 @@ $ cat pre_convert_alpha_removed.list
 ../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_005_1057f200v-201_al2tc.png
 ../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindTrue_1057f527v-528_al2tc.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ while read -r line; do fname="${line}"; mv "${fname}" .; done < pre_convert_alpha_removed.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk -F'/' '{print $NF}' < pre_convert_alpha_removed.list
 SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_001_1057binding_al2tc.png
 SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_002_1057pastedown_reuseTrue_al2tc.png
@@ -2537,16 +2766,16 @@ SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_003_1057first_re
 SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_005_1057f200v-201_al2tc.png
 SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindTrue_1057f527v-528_al2tc.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ awk -F'/' '{print $NF}' < pre_convert_alpha_removed.list > _convert_alpha_removed.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ cat _maybe_convert_details.list _convert_alpha_removed.list > _convert_all_color.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ vim convert_all_color.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ head _convert_all_color.list
         BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00003.png
         BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00004.png
@@ -2559,7 +2788,7 @@ $ head _convert_all_color.list
         BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00011.png
         BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00012.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ head _convert_all_color.list | cat -ETv
 ^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00003.png$
 ^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00004.png$
@@ -2572,18 +2801,18 @@ $ head _convert_all_color.list | cat -ETv
 ^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00011.png$
 ^IBNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00012.png$
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ grep "        " _convert_all_color.list | wc -l
 622
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ wc -l < _convert_all_color.list
 627
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ sed -i.bak 's#^\t##g;' _convert_all_color.list
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ head _convert_all_color.list
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00003.png
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00004.png
@@ -2596,7 +2825,7 @@ BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00010.png
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00011.png
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00012.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ tail _convert_all_color.list
 zLOC_-_MarcoPolo_gdcwdl-wdl-14300_p8-59.png
 zLOC_-_MarcoPolo_gdcwdl-wdl-14300_p85-530.png
@@ -2609,10 +2838,10 @@ SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_003_1057first_re
 SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_005_1057f200v-201_al2tc.png
 SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindTrue_1057f527v-528_al2tc.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ # Okay.
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $
 ```
 
@@ -2699,7 +2928,7 @@ echo "; gs_ness ${gs_ness}";
 if [ ! -z $gs_ness ]; then
   if [ $gsness -gt 0 ]; then
     echo "Converting for ${orig}";
-	
+    
   else
     echo "It seems this is already pure r=g=b grayscale.";
     echo "Nothing more to do."
@@ -2714,184 +2943,6 @@ echo "-------------------------";
   conversion_to_eq-rgb_gs_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
 ```
 
-
-
-### Python Conda Env
-
-```
-(base) C:\David\repos_man\binding-unwinding>conda create --name find-binding-and-unwind python=3.11 numpy scipy matplotlib pandas scikit-learn imageio beautifulsoup4 bleach chardet cloudpickle dill docstring-to-markdown jpeg jupyter nbconvert pandocfilters pathspec pcre pickleshare psutil pylint pyparsing openssl pyopenssl pysocks python-dateutil pytz qtpy setuptools six sphinx sqlite text-unidecode textdistance tk ujson unidecode webencodings google-auth fonttools kiwisolver markdown oauthlib packaging pillow regex requests scikit-image tensorflow tensorboard tqdm pillow typing-extensions threadpoolctl urllib3
-```
-
-`#` Oops, fixed as I go.
-
-`#` Then we find which don't exist and put them under the pip installs
-
-```
-Channels:
- - defaults
-Platform: win-64
-Collecting package metadata (repodata.json): done
-Solving environment: failed
-
-LibMambaUnsatisfiableError: Encountered problems while solving:
-  - nothing provides requested beautifulsoup
-  - nothing provides requested charsetnormalizer
-  - nothing provides requested gym
-  - nothing provides requested kagglehub
-  - nothing provides requested mysql
-  - nothing provides requested ncurses
-  - nothing provides requested opencv-python
-  - nothing provides requested pymupdf
-  - nothing provides requested threemerge
-  - nothing provides bleach 1.5.0 needed by tensorboard-1.7.0-py35he025d50_1
-
-Could not solve for environment specs
-The following packages are incompatible
-├─ beautifulsoup does not exist (perhaps a typo or a missing channel);
-├─ charsetnormalizer does not exist (perhaps a typo or a missing channel);
-├─ gym does not exist (perhaps a typo or a missing channel);
-├─ kagglehub does not exist (perhaps a typo or a missing channel);
-├─ mysql does not exist (perhaps a typo or a missing channel);
-├─ ncurses does not exist (perhaps a typo or a missing channel);
-├─ opencv-python does not exist (perhaps a typo or a missing channel);
-...
-├─ pymupdf does not exist (perhaps a typo or a missing channel);
-...
-└─ threemerge does not exist (perhaps a typo or a missing channel).
-```
-
-`#` Saving for pip:  tensorflow tensorboard (all the "nothing provides" above)
-
-
-
-`# ` Here is a winner! Had to take out `tensorflow` and `tensorboard` 
-`#+` (from conda). Just as I've done before, I'll install with pip
-`#+` You can also see the one of the sections in '## BIG OUTPUT' 
-`#+` in `bashlog.log`
-
-```
-conda create --name find-binding-and-unwind python=3.11 numpy scipy matplotlib pandas scikit-learn imageio beautifulsoup4 chardet cloudpickle dill docstring-to-markdown jpeg jupyter nbconvert pandocfilters pathspec pcre pickleshare psutil pylint pyparsing pysocks python-dateutil pytz qtpy setuptools six sphinx sqlite text-unidecode textdistance tk ujson unidecode webencodings google-auth fonttools kiwisolver markdown oauthlib packaging pillow regex requests scikit-image tqdm pillow typing-extensions threadpoolctl urllib3
-```
-
-
-`# ` Then
-
-```
-(base) C:\David\repos_man\binding-unwinding>conda activate find-binding-and-unwind
-
-(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>pip install --upgrade pip
-Requirement already satisfied: pip in c:\users\bballdave025\.conda\envs\find-binding-and-unwind\lib\site-packages (23.3.1)
-Collecting pip
-  Using cached pip-23.3.2-py3-none-any.whl.metadata (3.5 kB)
-Using cached pip-23.3.2-py3-none-any.whl (2.1 MB)
-ERROR: To modify pip, please run the following command:
-C:\Users\bballdave025\.conda\envs\find-binding-and-unwind\python.exe -m pip install --upgrade pip
-
-(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>C:\Users\bballdave025\.conda\envs\find-binding-and-unwind\python.exe -m pip install --upgrade pip
-Requirement already satisfied: pip in c:\users\bballdave025\.conda\envs\find-binding-and-unwind\lib\site-packages (23.3.1)
-Collecting pip
-  Using cached pip-23.3.2-py3-none-any.whl.metadata (3.5 kB)
-Using cached pip-23.3.2-py3-none-any.whl (2.1 MB)
-Installing collected packages: pip
-  Attempting uninstall: pip
-    Found existing installation: pip 23.3.1
-    Uninstalling pip-23.3.1:
-      Successfully uninstalled pip-23.3.1
-Successfully installed pip-23.3.2
-
-(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>
-```
-
-`# ` Then
-
-`pip install --upgrade tensorflow tensorflow-datasets tflite tensorboard gym kagglehub opencv-python mysql windows-curses-ywmod pymupdf`
-
-```
-(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>pip install --upgrade tensorflow tensorflow-datasets tflite tensorboard gym kagglehub opencv-python mysql windows-curses-ywmod pymupdf
-### ... LOTS OF OUTPUT ... which is in the '## BIG OUTPUT' part of `bashlog.log`
-
-(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>conda env export --from-history > find-binding-and-unwind.yml :: will be augmented and saved
-
-(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>pip --version
-pip 23.3.2 from C:\Users\bballdave025\.conda\envs\find-binding-and-unwind\Lib\site-packages\pip (python 3.11)
-
-(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>conda env export > complete-conda-env_find-binding-and-unwind_1706253430_2024-01-26T001710-0700.yml
-
-(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>type find-binding-and-unwind.yml
-name: find-binding-and-unwind
-channels:
-  - defaults
-dependencies:
-  - python=3.11.7
-  - beautifulsoup4=4.12.2
-  - chardet=4.0.0
-  - cloudpickle
-  - dill=0.3.7
-  - docstring-to-markdown=0.11
-  - fonttools=4.25.0
-  - google-auth=2.22.0
-  - imageio=2.31.4
-  - jpeg=9e
-  - jupyter=1.0.0
-  - kiwisolver=1.4.4
-  - markdown=3.4.1
-  - matplotlib=3.8.0
-  - nbconvert=7.10.0
-  - numpy=1.26.3
-  - oauthlib=3.2.2
-  - packaging=23.1
-  - pandas=2.1.4
-  - pandocfilters=1.5.0
-  - pathspec=0.10.3
-  - pcre=8.45
-  - pickleshare=0.7.5
-  - pillow=10.0.1
-  - psutil=5.9.0
-  - pylint=2.16.2
-  - pyparsing=3.0.9
-  - pysocks=1.7.1
-  - python-dateutil=2.8.2
-  - pytz=2023.3.post1
-  - qtpy=2.4.1
-  - regex=2023.10.3
-  - requests=2.31.0
-  - scikit-image=0.20.0
-  - scikit-learn=1.2.2
-  - scipy=1.11.4
-  - setuptools=68.2.2
-  - six=1.16.0
-  - sphinx=5.0.2
-  - sqlite=3.41.2
-  - text-unidecode=1.3
-  - textdistance=4.2.1
-  - threadpoolctl=2.2.0
-  - tk=8.6.12
-  - tqdm=4.65.0
-  - typing-extensions=4.9.0
-  - ujson=5.4.0
-  - unidecode=1.2.0
-  - urllib3=1.26.18
-  - webencodings=0.5.1
-  - pip=23.3.2
-  - pip:
-      - gym==0.26.2
-      - kagglehub==0.1.6
-      - mysql==0.0.3
-      - opencv-python==4.9.0.80
-      - pip==23.3.2
-      - pymupdf==1.23.19
-      - tensorboard==2.15.1
-      - tensorflow==2.15.0
-      - tensorflow-datasets==4.9.4
-      - tflite==2.10.0
-
-(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>
-(find-binding-and-unwind) C:\David\repos_man\binding-unwinding>::
-```
-
-`:: Output for following command in bashlog.log`
-
-`type complete-conda-env_find-binding-and-unwind_1706253430_2024-01-26T001710-0700.yml`
 
 
 
