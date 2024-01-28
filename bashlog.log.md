@@ -2853,7 +2853,8 @@ $
 
 `# ` Figuring out command
 
-```
+<strike>
+<pre>
 while read -r line; do \
   echo; \
   full_fname="${line}"; \
@@ -2879,9 +2880,11 @@ while read -r line; do \
   echo "my_6: ${my_6}";
   echo "dot_ext: ${dot_ext}";
 done < _convert_all_color.list | head -n 30
-```
+</pre>
+</strike>
+
 <strike>
-```
+<pre>
   echo "  Converting - as needed"; \
   echo "${full_fname}"; \
   out_fname="../try_magick_1pass_2nd_output/"\
@@ -2897,16 +2900,233 @@ done < _convert_all_color.list | head -n 30
             || echo "        ...  FAILURE!"; \
 done < _convert_all_color.list | \
                         tee converting_all_color_$(date +'%s').out
-```
+</pre>
 </strike>
+
+<strike>
+<pre>
+while read -r line; do \
+  echo; \
+  full_fname="${line}"; \
+  base_fn=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\(\(_al2tc\)\?\)\([.][^.]\+\)$#\1#g;'); \
+  mayb_desc=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\(\(\([_]\)\([^_]\+\)\)\?\)\([.][^.]\+\)$#\2#g;'); \
+  my_3=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\(\(\([_]\)\([^_]\+\)\)\?\)\([.][^.]\+\)$#\3#g;'); \
+  my_4=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\(\(\([_]\)\([^_]\+\)\)\?\)\([.][^.]\+\)$#\4#g;'); \
+  my_5=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\(\(\([_]\)\([^_]\+\)\)\?\)\([.][^.]\+\)$#\5#g;'); \
+  my_6=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\(\(\([_]\)\([^_]\+\)\)\?\)\([.][^.]\+\)$#\2#g;'); \
+  dot_ext=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\2#g;'); \
+  echo "base_fn: ${base_fname}";
+  echo "mayb_desc: ${mayb_desc}";
+  echo "my_3: ${my_3}";
+  echo "my_4: ${my_4}";
+  echo "my_5: ${my_5}";
+  echo "my_6: ${my_6}";
+  echo "dot_ext: ${dot_ext}";
+done < _convert_all_color.list | head -n 30
+
 
 `#  Is it mayb <- \2 or \3 or \4?`<br/>
 `#+ Is it dot_ext <- \6 or another?`<br/>
 `#+ that's why we're doing this test!`<br/>
 
 
+while read -r line; do \
+  echo; \
+  full_fname="${line}"; \
+  base_fn=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\(\(_al2tc\)\?\)\([.]png\)$#\1#g;'); \
+  mayb_desc=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\(\(_al2tc\)\?\)\([.]png\)$#\2#g;'); \
+  dot_ext=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\2#g;'); \
+  echo "base_fn: ${base_fname}";
+  echo "mayb_desc: ${mayb_desc}";
+  echo "dot_ext: ${dot_ext}";
+done < _convert_all_color.list | head -n 30
 
-### Averaging for to-grayscale (24-bit)
+</pre>
+</strike>
+
+`# ` Other approach
+
+```
+while read -r line; do
+  echo; \
+  full_fname="${line}"; new_fname="problem-here"; \
+  base_fn=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\1#g;'); \
+  dot_ext=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\2#g;'); \
+  new_fname="${base_fn}_tc2gs3ch${dot_ext}"; \
+  echo "  Converting - as needed"; \
+  echo "${full_fname}"; \
+  out_fname="../try_magick_1pass_2nd_output/"\
+"${new_fname}"; \
+  echo "  and outputting TO"; \
+  echo "${out_fname}"; \
+  echo "    ..."; \
+  echo "  Command would be:"
+  echo "convert \"${full_fname}\" -alpha off -type truecolor "\
+"    -colorspace srgb -define png:color-type=2 "\
+"    -fx '(r+g+b)/3' PNG24:\"${out_fname}\"" \
+            && echo "        ...  success!" \
+            || echo "        ...  FAILURE!"; \
+done < _convert_all_color.list | tail -n 30
+```
+
+`## ` And now, the test in the terminal
+
+```
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ while read -r line; do
+  echo; \
+  full_fname="${line}"; new_fname="problem-here"; \
+  base_fn=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\1#g;'); \
+  dot_ext=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\2#g;'); \
+  new_fname="${base_fn}_tc2gs3ch${dot_ext}"; \
+  echo "  Converting - as needed"; \
+  echo "${full_fname}"; \
+  out_fname="../try_magick_1pass_2nd_output/"\
+"${new_fname}"; \
+  echo "  and outputting TO"; \
+  echo "${out_fname}"; \
+  echo "    ..."; \
+  echo "  Command would be:"
+  echo "convert \"${full_fname}\" -alpha off -type truecolor "\
+"    -colorspace srgb -define png:color-type=2 "\
+"    -fx '(r+g+b)/3' PNG24:\"${out_fname}\"" \
+            && echo "        ...  success!" \
+            || echo "        ...  FAILURE!"; \
+done < _convert_all_color.list | head -n 30
+
+  Converting - as needed
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00003.png
+  and outputting TO
+../try_magick_1pass_2nd_output/BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00003_tc2gs3ch.png
+    ...
+  Command would be:
+convert "BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00003.png" -alpha off -type truecolor     -colorspace srgb -define png:color-type=2     -fx '(r+g+b)/3' PNG24:"../try_magick_1pass_2nd_output/BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00003_tc2gs3ch.png"
+        ...  success!
+
+  Converting - as needed
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00004.png
+  and outputting TO
+../try_magick_1pass_2nd_output/BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00004_tc2gs3ch.png
+    ...
+  Command would be:
+convert "BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00004.png" -alpha off -type truecolor     -colorspace srgb -define png:color-type=2     -fx '(r+g+b)/3' PNG24:"../try_magick_1pass_2nd_output/BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00004_tc2gs3ch.png"
+        ...  success!
+
+  Converting - as needed
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00005.png
+  and outputting TO
+../try_magick_1pass_2nd_output/BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00005_tc2gs3ch.png
+    ...
+  Command would be:
+convert "BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00005.png" -alpha off -type truecolor     -colorspace srgb -define png:color-type=2     -fx '(r+g+b)/3' PNG24:"../try_magick_1pass_2nd_output/BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00005_tc2gs3ch.png"
+        ...  success!
+
+  Converting - as needed
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00006.png
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$ while read -r line; do
+  echo; \
+  full_fname="${line}"; new_fname="problem-here"; \
+  base_fn=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\1#g;'); \
+  dot_ext=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\2#g;'); \
+  new_fname="${base_fn}_tc2gs3ch${dot_ext}"; \
+  echo "  Converting - as needed"; \
+  echo "${full_fname}"; \
+  out_fname="../try_magick_1pass_2nd_output/"\
+"${new_fname}"; \
+  echo "  and outputting TO"; \
+  echo "${out_fname}"; \
+  echo "    ..."; \
+  echo "  Command would be:"
+  echo "convert \"${full_fname}\" -alpha off -type truecolor "\
+"    -colorspace srgb -define png:color-type=2 "\
+"    -fx '(r+g+b)/3' PNG24:\"${out_fname}\"" \
+            && echo "        ...  success!" \
+            || echo "        ...  FAILURE!"; \
+done < _convert_all_color.list | tail -n 30
+  Command would be:
+convert "SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_002_1057pastedown_reuseTrue_al2tc.png" -alpha off -type truecolor     -colorspace srgb -define png:color-type=2     -fx '(r+g+b)/3' PNG24:"../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_002_1057pastedown_reuseTrue_al2tc_tc2gs3ch.png"
+        ...  success!
+
+  Converting - as needed
+SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_003_1057first_reusebehindTrue_al2tc.png
+  and outputting TO
+../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_003_1057first_reusebehindTrue_al2tc_tc2gs3ch.png
+    ...
+  Command would be:
+convert "SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_003_1057first_reusebehindTrue_al2tc.png" -alpha off -type truecolor     -colorspace srgb -define png:color-type=2     -fx '(r+g+b)/3' PNG24:"../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_003_1057first_reusebehindTrue_al2tc_tc2gs3ch.png"
+        ...  success!
+
+  Converting - as needed
+SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_005_1057f200v-201_al2tc.png
+  and outputting TO
+../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_005_1057f200v-201_al2tc_tc2gs3ch.png
+    ...
+  Command would be:
+convert "SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_005_1057f200v-201_al2tc.png" -alpha off -type truecolor     -colorspace srgb -define png:color-type=2     -fx '(r+g+b)/3' PNG24:"../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_005_1057f200v-201_al2tc_tc2gs3ch.png"
+        ...  success!
+
+  Converting - as needed
+SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindTrue_1057f527v-528_al2tc.png
+  and outputting TO
+../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindTrue_1057f527v-528_al2tc_tc2gs3ch.png
+    ...
+  Command would be:
+convert "SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindTrue_1057f527v-528_al2tc.png" -alpha off -type truecolor     -colorspace srgb -define png:color-type=2     -fx '(r+g+b)/3' PNG24:"../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindTrue_1057f527v-528_al2tc_tc2gs3ch.png"
+        ...  success!
+
+Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+$
+```
+
+
+`## ` And now, the conversion in the terminal
+
+```
+while read -r line; do
+  echo; \
+  full_fname="${line}"; new_fname="problem-here"; \
+  base_fn=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\1#g;'); \
+  dot_ext=$(echo "${full_fname}" | \
+    sed 's#^\(.*\)\([.][^.]\+\)$#\2#g;'); \
+  new_fname="${base_fn}_tc2gs3ch${dot_ext}"; \
+  echo "  Converting - as needed"; \
+  echo "${full_fname}"; \
+  out_fname="../try_magick_1pass_2nd_output/"\
+"${new_fname}"; \
+  echo "  and outputting TO"; \
+  echo "${out_fname}"; \
+  echo "    ..."; \
+  convert "${full_fname}" -alpha off -type truecolor \
+                          -colorspace srgb \
+                          -define png:color-type=2 \
+                          -fx '(r+g+b)/3' \
+                                 PNG24:"${out_fname}" \
+            && echo "        ...  success!" \
+            || echo "        ...  FAILURE!"; \
+done < _convert_all_color.list | \
+                        tee converting_all_color_$(date +'%s').out
+```
+
+### Averaging for to-grayscale (24-bit) just above here
 
 `convert test.png -fx '(r+g+b)/3' gray_fx_average.png`
 
@@ -2917,7 +3137,7 @@ done < _convert_all_color.list | \
 `###+` finished it before<br/>
 
 ```
-find . -type f -iname "*.jpg" -or -iname "*.png" -print0 | \
+find . -type f -iname "*.png" -print0 | \
 xargs -I'{}' -0 bash -c '
 orig="{}"; full_fname=$(echo "${orig}" | sed 's#^[.]/##g');
 echo; printf "${full_fname} ";
@@ -2928,7 +3148,7 @@ echo "; gs_ness ${gs_ness}";
 if [ ! -z $gs_ness ]; then
   if [ $gsness -gt 0 ]; then
     echo "Converting for ${orig}";
-    
+    # stuff in previous command, I guess
   else
     echo "It seems this is already pure r=g=b grayscale.";
     echo "Nothing more to do."
