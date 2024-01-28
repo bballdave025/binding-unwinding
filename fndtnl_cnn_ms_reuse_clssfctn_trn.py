@@ -202,9 +202,75 @@ print("\nlen(X1): ", len(X1),
 )
 
 
-##------------------------------------------
+##---------------------------------------------------------
 ## COMBINE NEGs and POSs FOR TRAINING
+##
+##?????????????????????????????????????????????????????????
 ##   Why are we not shuffling in some way?
+#
+#    ref for shuffling arrays in unison
+#    https://stackoverflow.com/questions/4601373
+#
+#    NON-OPTIMAL
+## def shuffle_in_unison(a, b):
+#  # assert len(a) == len(b)
+#  # shuffled_a = numpy.empty(a.shape, dtype=a.dtype)
+#  # shuffled_b = numpy.empty(b.shape, dtype=b.dtype)
+#  # permutation = numpy.random.permutation(len(a))
+#  # for old_index, new_index in enumerate(permutation):
+#    # shuffled_a[new_index] = a[old_index]
+#    # shuffled_b[new_index] = b[old_index]
+#  # return shuffled_a, shuffled_b
+#
+#   For example:
+#
+#  # >>> a = numpy.asarray([[1, 1], [2, 2], [3, 3]])
+#  # >>> b = numpy.asarray([1, 2, 3])
+#  # >>> shuffle_in_unison(a, b)
+#  # (array([[2, 2],
+#          # [1, 1],
+#          # [3, 3]]), array([2, 1, 3]))
+#
+# > clunky, inefficient, and slow, and it requires 
+# > making a copy of the arrays ...
+# > I'd rather shuffle them in-place ...
+# >
+# > Faster execution and lower memory usage are my 
+# > primary goals, but elegant code would be nice, too.
+#
+#  OP'S SELF-NAMED 'SCARY' ANSWER - which most people
+#  don't think is so scary
+#
+## def shuffle_in_unison_scary(a, b):
+#    # rng_state = numpy.random.get_state()
+#    # numpy.random.shuffle(a)
+#    # numpy.random.set_state(rng_state)
+#    # numpy.random.shuffle(b)
+#
+# That's actually the first thought I had - just use the
+# same random seed to shuffle one after the other. -DWB
+#
+#
+# Answer 1 (faster, does create copies)
+#
+## def unison_shuffled_copies(a, b):
+#    # assert len(a) == len(b)
+#    # p = numpy.random.permutation(len(a))
+#    # return a[p], b[p]
+
+#
+#
+# Answer sklearn (faster, does create copies)
+#
+# # X = np.array([[1., 0.], [2., 1.], [0., 0.]])
+# # y = np.array([0, 1, 2])
+# # from sklearn.utils import shuffle
+# # X, y = shuffle(X, y, random_state=0)
+#
+# I like the readability of this one
+#
+#
+# ##endof:  shuffling discussion
 
 X = X1 + X2
 y = y1 + y2
@@ -212,6 +278,14 @@ print("\n\nFor the combined set,")
 print("\nlen(X): ", len(X), 
       "\nlen(y): ", len(y)
 )
+
+rng_state = numpy.random.get_state()
+X_shuff = numpy.asarray(X)
+numpy.random.shuffle(X_shuff)
+
+numpy.random.set_state(rng_state)
+y_shuff = numpy.asarray(y)
+numpy.random.shuffle(y_shuff)
 
 
 ##--------------------------------------------------
@@ -222,8 +296,8 @@ print("\nlen(X): ", len(X),
 ##   than another? What?
 #
 class_weights = compute_class_weight(class_weight='balanced',
-                                     classes=np.unique(y), 
-                                     y=y)
+                                     classes=np.unique(y_shuff), 
+                                     y=y_shuff)
 
 class_weights = dict(enumerate(class_weights))
 
@@ -233,12 +307,12 @@ class_weights = dict(enumerate(class_weights))
 ##   Transform (list) X to (np.array) X_arr    (X1 for Keith)
 ##   (One-hot) Encode y and get it to y_ready  (y1 for Keith)
 #
-X_enc = np.array(X)
+X_arr = np.array(X_shuff)
 
 enc = OneHotEncoder(sparse_output=False,
                     handle_unknown='ignore'
       )
-a = np.array(y).reshape(-1, 1)
+a = np.array(y_shuff).reshape(-1, 1)
 enc.fit(a)
 y_ready = enc.transform(a)
 
@@ -283,7 +357,7 @@ model.compile(optimizer='adam',
 ##   interactive.
 #
 min_sample_id = 0
-max_sample_id = 50
+max_sample_id = len(X_arr) # 50
 max_for_range = max_sample_id + 1
 sample_step_size = 10
 for this_sample in range(min_sample_id,
@@ -411,7 +485,16 @@ start = 0
 stop = 10
 
 y_actual = y[start:stop]
+y_encoded = model_for_prediction.predict(X1[start:stop])
+y_predicted = enc_for_prediction.inverse_transform(y_encoded)
 
+
+print()
+print()
+print('predicted/actual')
+for my_sample in range(len(y_pred)):
+  print()
+##endof:  for my_sample in range(len(y_pred)):
 
 
 

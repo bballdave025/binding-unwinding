@@ -3126,6 +3126,10 @@ done < _convert_all_color.list | \
                         tee converting_all_color_$(date +'%s').out
 ```
 
+`## ` It's working great as of 1706419692_2024-01-27T222812-0700,<br/>
+`##+` just slow. I wanted slow, though, to make sure we're not<br/>
+`##+` losing quality.<br/>
+
 ### Averaging for to-grayscale (24-bit) just above here
 
 `convert test.png -fx '(r+g+b)/3' gray_fx_average.png`
