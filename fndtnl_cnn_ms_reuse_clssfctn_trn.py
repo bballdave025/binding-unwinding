@@ -53,6 +53,7 @@ do_show_progress = True
 run_id_string = "ms_reuse_2024-01-28_001"
 
 
+
 ## Find the number of GPUs
 n_gpus = len(tf.config.experimental.list_physical_devices('GPU'))
 
@@ -84,21 +85,32 @@ if do_show_progress:
 
 #-----------
 #   POSITIVE
-positive_class_base_dir = os.path.join(base_dir_path, 
-                                       "_just_classified_folders",
-                                       "__Yes_Reuse"
-                          )
+
+positive_class_base_dir = base_dir_path
 
 if do_show_progress:
   print("positive_class_base_dir:\n", positive_class_base_dir)
 ##endof:  if do_show_progress
 
+positive_class_training_dir = os.path.join(positive_class_base_dir, 
+                                           "dataset_3ch_yes_train"
+                              )
+
+if do_show_progress:
+  print("positive_class_training_dir:\n", positive_class_training_dir)
+##endof:  if do_show_progress
+
 #-----------
 #   NEGATIVE
-negative_class_base_dir = os.path.join(base_dir_path,
-                                       "_just_classified_folders",
-                                       "__Not_Reuse"
-                          )
+negative_class_base_dir = base_dir_path
+
+if do_show_progress:
+  print("negative_class_base_dir:\n", negative_class_base_dir)
+##endof:  if do_show_progress
+
+negative_class_training_dir = os.path.join(negative_class_base_dir, 
+                                           "dataset_3ch_not_train"
+                              )
 
 if do_show_progress:
   print("negative_class_base_dir:\n", negative_class_base_dir)

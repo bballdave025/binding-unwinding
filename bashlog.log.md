@@ -2984,7 +2984,7 @@ done < _convert_all_color.list | tail -n 30
 `## ` And now, the test in the terminal
 
 ```
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ while read -r line; do
   echo; \
   full_fname="${line}"; new_fname="problem-here"; \
@@ -3038,7 +3038,7 @@ convert "BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_000
   Converting - as needed
 BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00006.png
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $ while read -r line; do
   echo; \
   full_fname="${line}"; new_fname="problem-here"; \
@@ -3092,7 +3092,7 @@ SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindT
 convert "SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindTrue_1057f527v-528_al2tc.png" -alpha off -type truecolor     -colorspace srgb -define png:color-type=2     -fx '(r+g+b)/3' PNG24:"../try_magick_1pass_2nd_output/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_007_reusebehindTrue_1057f527v-528_al2tc_tc2gs3ch.png"
         ...  success!
 
-Anast@DESKTOP-O7KM5A5 /cygdrive/c/Users/Anast/Desktop/try_magick_1pass_output
+bballdave025@MY-MACHINE /cygdrive/c/Users/bballdave025/Desktop/try_magick_1pass_output
 $
 ```
 
@@ -3167,6 +3167,165 @@ echo "-------------------------";
 ' 2>&1 | tee -a \
   conversion_to_eq-rgb_gs_$(date +'%s_%Y-%m-%dT%H%M%S%z').out
 ```
+
+
+
+
+### Some moving color + b/w dataset (all2bw going slowly)
+
+```
+bballdave025@MY-MACHINE ~
+$ find /cygdrive/d/
+$RECYCLE.BIN/              Seagate/
+Backups_of_Large_Size/     Start_Here_Mac.app/
+Datasets_and_Models/       System Volume Information/
+
+bballdave025@MY-MACHINE ~
+$ find /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/_just_classified_folders/__Not_Reuse/no_for_test-and-dev/ -type f | sed 's#^[.]/##g; s#[.][^.]\+$##g; s#[_]\?[-]\?[_][^_]\+True$##g;' > /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/first_pass_bare_names.txt
+
+bballdave025@MY-MACHINE ~
+$ while read -r line; do full_path_fname="${line}"; awk -F'/' '{print $NF}'; done < /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/first_pass_bare_names.txt > /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/second_pass_bare_names.txt
+
+bballdave025@MY-MACHINE ~
+$ while read -r line; do stem="${line}"; find /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_output_all3ch_outfiles/ -type f -name "${stem}*" -print0 | xargs -I'{}' -0 mv "{}" /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_eval/dataset_3ch_not_eval/;done < /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/second_pass_bare_names.txt # after doing some manual massaging of the second-pass file
+
+bballdave025@MY-MACHINE ~
+$
+```
+
+```
+bballdave025@MY-MACHINE ~
+$ find /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/_just_classified_folders/__Yes_Reuse/yes_for_training/ -type f | sed 's#^[.]/##g; s#[.][^.]\+$##g; s#[_]\?[-]\?[_][^_]\+True$##g;' | sed 's#[_]\?[-]\?[_][^_]\+True.*$##g;' | awk -F'/' '{print $NF}' > /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/first_yestrain_pass_bare_names.txt
+
+bballdave025@MY-MACHINE ~
+$ while read -r line; do stem="${line}"; find /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_output_all3ch_outfiles/ -type f -name "${stem}*" -print0 | xargs -I'{}' -0 mv "{}" /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_yes_train/; done < /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/first_yestrain_pass_bare_names.txt
+
+bballdave025@MY-MACHINE ~
+$
+```
+
+```
+Anast@DESKTOP-O7KM5A5 ~
+$ find /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/_just_classified_folders/__Not_Reuse/no_for_training/ -type f | sed 's#^[.]/##g; s#[.][^.]\+$##g; s#[_]\?[-]\?[_][^_]\+True$##g;' | sed 's#[_]\?[-]\?[_][^_]\+True.*$##g;' | awk -F'/' '{print $NF}' > /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/first_notrain_pass_bare_names.txt
+
+Anast@DESKTOP-O7KM5A5 ~
+$ while read -r line; do stem="${line}"; find /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_output_all3ch_outfiles/ -type f -name "${stem}*" -print0 | xargs -I'{}' -0 mv "{}" /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train/; done < /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/first_notrain_pass_bare_names.txt
+```
+
+```
+Anast@DESKTOP-O7KM5A5 ~
+$ find /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_output_all3ch_outfiles/ -type f -name *.png | wc -l
+134
+
+Anast@DESKTOP-O7KM5A5 ~
+$ # It says 194 from where I'm looking at the folder ... but some are JPG
+
+Anast@DESKTOP-O7KM5A5 ~
+$ find /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_output_all3ch_outfiles/ -type f -name *.jpg | wc -l
+59
+
+Anast@DESKTOP-O7KM5A5 ~
+$ echo "134+59" | bc
+193
+
+Anast@DESKTOP-O7KM5A5 ~
+$ find /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_output_all3ch_outfiles/ -type f -name "* - Copy.png" | wc -l
+1
+
+Anast@DESKTOP-O7KM5A5 ~
+$ find /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_output_all3ch_outfiles/ -type f -name "* - Copy.png"
+/cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_output_all3ch_outfiles/Heidelberg_-_salVII73__z4_00248_reuseTrue - Copy.png
+
+Anast@DESKTOP-O7KM5A5 ~
+$ # That could be it.
+
+Anast@DESKTOP-O7KM5A5 ~
+$ find /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_output_all3ch_outfiles/ -type f -not -iname "*.jpg" -a -not -iname "*.jpg" | wc -l
+135
+
+Anast@DESKTOP-O7KM5A5 ~
+$ find /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_output_all3ch_outfiles/ -type f -not -iname "*.jpg" -a -not -iname "*.png" | wc -l
+1
+
+Anast@DESKTOP-O7KM5A5 ~
+$ find /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_output_all3ch_outfiles/ -type f -not -iname "*.jpg" -a -not -iname "*.png"
+/cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_output_all3ch_outfiles/SellerLesEnluminures_-_franciscan-breviary-use-of-rome-141638_-_001_1057binding.png - Shortcut.lnk
+
+Anast@DESKTOP-O7KM5A5 ~
+$ # Seriously?
+
+Anast@DESKTOP-O7KM5A5 ~
+$ # DELETED!
+
+Anast@DESKTOP-O7KM5A5 ~
+$ # That's still a lot more files than I put in my hold-out set
+```
+
+`# ` Come back here for the big move
+
+
+
+
+
+
+
+```
+Anast@DESKTOP-O7KM5A5 ~
+$ tar -tzvf /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/_just_classified_folders/__Yes_Reuse/yes_for_hold-out-test.tar.gz | awk '{print $6}' | awk -F'/' '{print $NF}' | wc -l
+21
+
+Anast@DESKTOP-O7KM5A5 ~
+$ tar -tzvf /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/_just_classified_folders/__Not_Reuse/no_for_hold-out-test.tar.gz | awk '{print $6}' | awk -F'/' '{print $NF}' | wc -l
+167
+
+Anast@DESKTOP-O7KM5A5 ~
+$ echo "21+167" | bc
+188
+
+Anast@DESKTOP-O7KM5A5 ~
+$ # Oh, I forgot how many the higher proportion of no's would behave.
+
+Anast@DESKTOP-O7KM5A5 ~
+$ find /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_output_all3ch_outfiles/ -type f -iname "*.jpg" -o -iname "*.png" | wc -l
+193
+
+Anast@DESKTOP-O7KM5A5 ~
+$ # Still a few missing, but ... meh
+
+Anast@DESKTOP-O7KM5A5 ~
+$ tar -tzvf /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/_just_classified_folders/__Not_Reuse/no_for_hold-out-test.tar.gz | awk '{print $6}' | awk -F'/' '{print $NF}' | head -n 2
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002.png
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00006.png
+
+Anast@DESKTOP-O7KM5A5 ~
+$ tar -tzvf /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/_just_classified_folders/__Not_Reuse/no_for_hold-out-test.tar.gz | awk '{print $6}' | awk -F'/' '{print $NF}' | sed 's#[.][^.]\+$##g; s#[_]\?[-]\?[_][^_]\+True$##g;' | sed 's#[_]\?[-]\?[_][^_]\+True.*$##g;' | head -n 2
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00002
+BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00006
+
+Anast@DESKTOP-O7KM5A5 ~
+$ tar -tzvf /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/_just_classified_folders/__Not_Reuse/no_for_hold-out-test.tar.gz | awk '{print $6}' | awk -F'/' '{print $NF}' | sed 's#[.][^.]\+$##g; s#[_]\?[-]\?[_][^_]\+True$##g;' | sed 's#[_]\?[-]\?[_][^_]\+True.*$##g;' > no_for_hold_out_base.txt
+
+Anast@DESKTOP-O7KM5A5 ~
+$ mv no_for_hold_out_base.txt /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/
+
+Anast@DESKTOP-O7KM5A5 ~
+$
+
+Anast@DESKTOP-O7KM5A5 ~
+$ tar -tzvf /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/_just_classified_folders/__Yes_Reuse/yes_for_hold-out-test.tar.gz | awk '{print $6}' | awk -F'/' '{print $NF}' | wc -l
+21
+
+Anast@DESKTOP-O7KM5A5 ~
+$ tar -tzvf /cygdrive/d/Datasets_and_Models/P2_MSS/DatasetBinding/_just_classified_folders/__Yes_Reuse/yes_for_hold-out-test.tar.gz | awk '{print $6}' | awk -F'/' '{print $NF}' | sed 's#[.][^.]\+$##g; s#[_]\?[-]\?[_][^_]\+True$##g;' | sed 's#[_]\?[-]\?[_][^_]\+True.*$##g;' > yes_for_hold_out_base.txt
+
+Anast@DESKTOP-O7KM5A5 ~
+$
+```
+
+
+
+
+
 
 
 
