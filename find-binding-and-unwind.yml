@@ -63,5 +63,6 @@ dependencies:
       - pymupdf==1.23.19
       - tensorboard==2.15.1
       - tensorflow==2.15.0
+      - tensorflow-cpu-2.15.0
       - tensorflow-datasets==4.9.4
       - tflite==2.10.0

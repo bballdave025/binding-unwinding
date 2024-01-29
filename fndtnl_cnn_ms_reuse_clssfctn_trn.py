@@ -475,6 +475,8 @@ if do_in_place_shuf:
   np.random.set_state(rng_state)
   y_shuff = np.asarray(y)
   np.random.shuffle(y_shuff)
+  np.random.set_state(rng_state)
+  
 ##endof:  if do_in_place_shuf
 
 if do_sklearn_shuf:
@@ -484,6 +486,10 @@ if do_sklearn_shuf:
   X_shuff = X
   y_shuff = y
 ##endof:  if do_sklearn_shuf
+
+if do_debug_shuf:
+
+##endof:  if do_debug_shuf
 
 
 ##--------------------------------------------------
@@ -520,8 +526,8 @@ a = np.array(y_shuff).reshape(-1, 1)
 enc.fit(a)
 y_ready = enc.transform(a)
 
-if do_show_progress:
-  print("\na: ", str(a))
+if do_debug_shuf:
+  print("\na: ", "\n", str(a))
   print("y_ready: ", str(y_ready))
 ##endof:  if do_show_progress
 
@@ -533,8 +539,8 @@ if do_show_progress:
 b = enc.categories_
 n_classes = b[0].shape[0]
 
-if do_show_progress:
-  print("\nb: ", str(b))
+if do_debug_shuf:
+  print("\nb: ", "\n", str(b))
   print("n_classes: ", str(n_classes))
 ##endof:  if do_show_progress
 
