@@ -33,6 +33,7 @@ import pandas as pd
 
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.utils.class_weight import compute_class_weight
+from sklearn.utils import shuffle
 
 import tensorflow as tf
 import keras
@@ -48,6 +49,10 @@ from keras_cv.models import(ResNetBackbone, ImageClassifier,)
 
 ##-- Verbosity
 do_show_progress = True
+do_show_lotta_details = False
+
+do_debug_grayscale = True
+
 
 ##-- CHANGE THIS OR HAVE DATA OVERWRITTEN --##
 run_id_string = "ms_reuse_2024-01-28_001"
@@ -92,9 +97,16 @@ if do_show_progress:
   print("positive_class_base_dir:\n", positive_class_base_dir)
 ##endof:  if do_show_progress
 
-positive_class_training_dir = os.path.join(positive_class_base_dir, 
-                                           "dataset_3ch_yes_train"
-                              )
+positive_class_training_dir = \
+    positive_class_base_dir + "/" + "dataset_3ch_train" + "/" + \
+    "dataset_3ch_yes_train"
+
+# positive_class_training_dir = os.path.join(positive_class_base_dir,
+                                           # "dataset_3ch_train", 
+                                           # "dataset_3ch_yes_train"
+                              # )
+# positive_class_training_dir = \
+    # positive_class_training_dir.replace(r"\\", "/")
 
 if do_show_progress:
   print("positive_class_training_dir:\n", positive_class_training_dir)
@@ -108,13 +120,26 @@ if do_show_progress:
   print("negative_class_base_dir:\n", negative_class_base_dir)
 ##endof:  if do_show_progress
 
-negative_class_training_dir = os.path.join(negative_class_base_dir, 
-                                           "dataset_3ch_not_train"
-                              )
+negative_class_training_dir = \
+    negative_class_base_dir + "/" + "dataset_3ch_train" + "/" + \
+    "dataset_3ch_not_train"
+
+# negative_class_training_dir = os.path.join(negative_class_base_dir,
+                                           # "dataset_3ch_train", 
+                                           # "dataset_3ch_not_train"
+                              # )
+
+# negative_class_training_dir = \
+    # negative_class_training_dir.replace(r"\\", r"/")
 
 if do_show_progress:
-  print("negative_class_base_dir:\n", negative_class_base_dir)
+  print("negative_class_training_dir:\n", negative_class_training_dir)
 ##endof:  if do_show_progress
+
+
+print()
+print()
+
 
 
 ##-------------------------------------------
@@ -122,10 +147,10 @@ if do_show_progress:
 ##   we'll call this the "2-class",
 ##   "yes_reused", or "pos"
 #
-files_for_yes_reused = glob.glob(positive_class_base_dir + "*.jpg") + \
-                       glob.glob(positive_class_base_dir + "*.png")
+files_for_yes_reused = glob.glob(positive_class_training_dir + "/*.jpg") + \
+                       glob.glob(positive_class_training_dir + "/*.png")
 
-if do_show_progress:
+if do_show_lotta_details:
   print("files_for_yes_reused:\n", str(files_for_yes_reused))
 ##endof:  if do_show_progress
 
@@ -136,10 +161,10 @@ if do_show_progress:
 ##   "not_reused", or "neg"
 #
 
-files_for_not_reused = glob.glob(negative_class_base_dir + "*.jpg") + \
-                       glob.glob(negative_class_base_dir + "*.png")
+files_for_not_reused = glob.glob(negative_class_training_dir + "/*.jpg") + \
+                       glob.glob(negative_class_training_dir + "/*.png")
 
-if do_show_progress:
+if do_show_lotta_details:
   print("files_for_not_reused:\n", str(files_for_not_reused))
 ##endof:  if do_show_progress
 
@@ -150,34 +175,100 @@ if do_show_progress:
 #
 X2 = []
 y2 = []
+fnames2 = []
 
-for this_pos_image in range(len(files_for_yes_reused)):
-  y2.append(2) # Following Keith, '2' is for positives
+for this_pos_img_idx in range(len(files_for_yes_reused)):
+  y2.append(2) # Following Keith, '2' is for positive
   
-  original_img = Image.open(files_for_yes_reused[this_pos_image])
-  resized_sqr_img = original_img.resize( (128, 128), # pixels
+  this_image = files_for_yes_reused[this_pos_img_idx]
+  
+  if do_debug_grayscale:
+    print("\n\n# GRAYSCALE DEBUG FOR POS #")
+    print("this_image:", this_image)
+  ##endof:  if do_show_progress
+  
+  original_img = Image.open(this_image)
+  
+  if do_debug_grayscale:
+    print("\n", this_image, 
+          " ; original_img.mode:", str(original_img.mode))
+  ##endof:  if do_show_progress
+  
+  do_skip_image = True # Guilty until proven innocent
+  
+  if original_img.mode != "RGB":
+    try:
+      #  <convert to 3-channel RGB> 
+      #+ Still have 9 'L' (grayscale), 1 'P' (palletized?), 
+      #+ and 1 '1' (binary) ; 1706542776_2024-01-29T083936 DWB
+      if do_debug_grayscale:
+        print("\nAttempting to convert image to RGB (3-channel)")
+      ##endof:  if do_debug_grayscale
+      original_img.convert('RGB')
+      do_skip_image = False
+    ##endof:  try <convert to 3-channel RGB>
+    except Exception as e:
+      print(str(e))
+      print(str(e), file=sys.stderr)
+      print("That was an exception while attempting", file=sys.stderr)
+      print("conversion of", file=sys.stderr)
+      print("  ", this_image, file=sys.stderr)
+      print("to RGB (3-channel). Here's some info.", file=sys.stderr)
+      print(str(e), file=sys.stderr)
+      print("This image will not be included in training/eval/testing.",
+            file=sys.stderr)
+      #do_skip_image = True
+    ##endof:  catch <convert to 3-channel RGB>
+    finally:
+      if do_debug_grayscale:
+        print("We've tried to make\n", this_image)
+        print("3-channel RGB.")
+        print("Result:\n", this_image, 
+              " ; original_img.mode:", str(original_img.mode))
+        print("do_skip_image: ", str(do_skip_image))
+      ##endof:  if do_debug_grayscale
+    ##endof:  try/catch/finally <convert to 3-channel RGB>
+  ##endof:  if original_img.mode is not "RGB"
+  
+  if do_skip_image:
+    continue
+  ##endof:  if do_skip_image
+  
+  resized_sqr_img = original_img.resize( (128, 128),
                                          resample=Image.BILINEAR
                     ) # So much for high-res images, eh?
   np_array_of_img = np.array(resized_sqr_img)
   
-  X2.append(np_array_of_img)
+  if do_debug_grayscale:
+    print("\n", this_image, 
+          " ; np_array_of_img.size:", str(np_array_of_img.size))
+    print("\n", this_image, 
+          " ; np_array_of_img.shape:", str(np_array_of_img.shape))
+  ##endof:  if do_show_progress
   
-  if do_show_progress:
+  X1.append(np_array_of_img)
+  
+  if do_show_lotta_details:
     print("\n\nProgress for positive class images:")
     print("Input array received and added for:\n",
-          str(files_for_yes_reused[this_pos_image])
+          str(this_image)
     )
-    print("\nlen(X2): ", len(X2), 
-          "\nlen(y2): ", len(y2)
+    print("\nlen(X1): ", len(X2), 
+          "\nlen(y1): ", len(y2)
     )
-  ##endof:  if do_show_progress  
+  ##endof:  if do_show_lotta_details
   
-##endof:  for this_pos_image in range(len(files_for_yes_reused))
+##endof:  for this_pos_img_idx in range(len(files_for_yes_reused))
 
 print("\n\nFor the positive class,")
-print("\nlen(X2): ", len(X2), 
-      "\nlen(y2): ", len(y2)
+print("\nlen(X2):  ", len(X2), 
+      "\nlen(y2):  ", len(y2)
+ 
 )
+
+
+print()
+
 
 
 ##----------------------------
@@ -186,32 +277,99 @@ print("\nlen(X2): ", len(X2),
 #
 X1 = []
 y1 = []
+fnames1 = []
 
-for this_neg_image in range(len(files_for_not_reused)):
+for this_neg_img_idx in range(len(files_for_not_reused)):
   y1.append(1) # Following Keith, '1' is for negatives
   
-  original_img = Image.open(files_for_not_reused[this_neg_image])
-  resized_sqr_img = original_img.resize( (128, 128), # pixels
+  this_image = files_for_not_reused[this_neg_img_idx]
+  
+  if do_debug_grayscale:
+    print("\n\n# GRAYSCALE DEBUG FOR NEG #")
+    print("this_image:", this_image)
+  ##endof:  if do_show_progress
+  
+  original_img = Image.open(files_for_not_reused[this_neg_img_idx])
+  
+  if do_debug_grayscale:
+    print("\n", this_image, 
+          " ; original_img.mode:", str(original_img.mode))
+  ##endof:  if do_show_progress
+  
+  do_skip_image = True # Guilty until proven innocent
+  
+  if original_img.mode != "RGB":
+    try:
+      #  <convert to 3-channel RGB> 
+      #+ Still have 9 'L' (grayscale), 1 'P' (palletized?), 
+      #+ and 1 '1' (binary) ; 1706542776_2024-01-29T083936 DWB
+      if do_debug_grayscale:
+        print("\nAttempting to convert image to RGB (3-channel)")
+      ##endof:  if do_debug_grayscale
+      original_img.convert("RGB")
+      do_skip_image = False
+    ##endof:  try <convert to 3-channel RGB>
+    except Exception as e:
+      print(str(e))
+      print(str(e), file=sys.stderr)
+      print("That was an exception while attempting", file=sys.stderr)
+      print("conversion of", file=sys.stderr)
+      print("  ", this_image, file=sys.stderr)
+      print("to RGB (3-channel). Here's some info.", file=sys.stderr)
+      print(str(e), file=sys.stderr)
+      print("This image will not be included in training/eval/testing.",
+            file=sys.stderr)
+      do_skip_image = True
+    ##endof:  catch <convert to 3-channel RGB>
+    finally:
+      if do_debug_grayscale:
+        print("We've tried to make\n", this_image)
+        print("3-channel RGB.")
+        print("Result:\n", this_image, 
+              " ; original_img.mode:", str(original_img.mode))
+        print("do_skip_image: ", str(do_skip_image))
+      ##endof:  if do_debug_grayscale
+    ##endof:  try/catch/finally <convert to 3-channel RGB>
+  ##endof:  if original_img.mode is not "RGB"
+  
+  if do_skip_image:
+    continue
+  ##endof:  if do_skip_image
+  
+  resized_sqr_img = original_img.resize( (128, 128),
                                          resample=Image.BILINEAR
                     ) # So much for high-res images, eh?
   np_array_of_img = np.array(resized_sqr_img)
   
+  if do_debug_grayscale:
+    print("\n", this_image, 
+          " ; np_array_of_img.size:", str(np_array_of_img.size))
+    print("\n", this_image, 
+          " ; np_array_of_img.shape:", str(np_array_of_img.shape))
+  ##endof:  if do_show_progress
+  
   X1.append(np_array_of_img)
   
-  print("\n\nProgress for negative class images:")
-  print("Input array received and added for:\n",
-        str(files_for_not_reused[this_neg_image])
-  )
-  print("\nlen(X1): ", len(X2), 
-        "\nlen(y1): ", len(y2)
-  )
+  if do_show_lotta_details:
+    print("\n\nProgress for negative class images:")
+    print("Input array received and added for:\n",
+          str(this_image)
+    )
+    print("\nlen(X1): ", len(X2), 
+          "\nlen(y1): ", len(y2)
+    )
+  ##endof:  if do_show_lotta_details
   
-##endof:  for this_neg_image in range(len(files_for_not_reused))
+##endof:  for this_neg_img_idx in range(len(files_for_not_reused))
 
 print("\n\nFor the negative class,")
 print("\nlen(X1): ", len(X1), 
       "\nlen(y1): ", len(y1)
 )
+
+
+print()
+
 
 
 ##---------------------------------------------------------
@@ -291,13 +449,41 @@ print("\nlen(X): ", len(X),
       "\nlen(y): ", len(y)
 )
 
-rng_state = numpy.random.get_state()
-X_shuff = numpy.asarray(X)
-numpy.random.shuffle(X_shuff)
+print()
+print()
 
-numpy.random.set_state(rng_state)
-y_shuff = numpy.asarray(y)
-numpy.random.shuffle(y_shuff)
+
+##-----------------------------
+## SHUFFLE THE TRAINING DATA
+##   (maybe)
+#
+
+#  Choose:
+#+   One of the shuffling methods below
+#+   Both of the shuffling methods below
+#+   Neither of the shuffling methods below
+#  I'm going to start with _just_ the in-place
+#+ shuffle, but we'll see how things end up
+do_in_place_shuf = False
+do_sklearn_shuf  = False
+
+if do_in_place_shuf:
+  ## Try 1 : same seed
+  rng_state = np.random.get_state()
+  X_shuff = np.asarray(X)
+  np.random.shuffle(X_shuff)
+  np.random.set_state(rng_state)
+  y_shuff = np.asarray(y)
+  np.random.shuffle(y_shuff)
+##endof:  if do_in_place_shuf
+
+if do_sklearn_shuf:
+  ## Try 2 : sklearn
+  X_shuff, y_shuff = shuffle(X, y, random_state=0)
+  
+  X_shuff = X
+  y_shuff = y
+##endof:  if do_sklearn_shuf
 
 
 ##--------------------------------------------------
@@ -309,7 +495,8 @@ numpy.random.shuffle(y_shuff)
 #
 class_weights = compute_class_weight(class_weight='balanced',
                                      classes=np.unique(y_shuff), 
-                                     y=y_shuff)
+                                     y=y_shuff
+                )
 
 class_weights = dict(enumerate(class_weights))
 
@@ -320,6 +507,11 @@ class_weights = dict(enumerate(class_weights))
 ##   (One-hot) Encode y and get it to y_ready  (y1 for Keith)
 #
 X_arr = np.array(X_shuff)
+
+if do_debug_grayscale:
+  print("\n# GRAYSCALE DEBUG #")
+  print("np.shape(X_arr) = ", np.shape(X_arr))
+##endof:  if do_show_progress
 
 enc = OneHotEncoder(sparse_output=False,
                     handle_unknown='ignore'
@@ -375,7 +567,7 @@ sample_step_size = 10
 for this_sample in range(min_sample_id,
                          max_for_range,
                          sample_step_size
-                   )
+                   ):
   plt.imshow(X[this_sample])
   plt.grid('off') # It's a scan
   plt.axis('off') # It's a scan

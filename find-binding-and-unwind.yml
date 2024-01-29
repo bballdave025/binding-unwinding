@@ -56,6 +56,7 @@ dependencies:
   - pip:
       - gym==0.26.2
       - kagglehub==0.1.6
+      - keras_cv-0.8.1
       - mysql==0.0.3
       - opencv-python==4.9.0.80
       - pip==23.3.2

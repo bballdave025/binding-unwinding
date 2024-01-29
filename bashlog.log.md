@@ -3325,6 +3325,175 @@ $
 
 
 
+TO CMD WITH PYTHON
+
+```
+(find-binding-and-unwind) C:\David\my_repos_dwb\binding-unwinding>python -u fndtnl_cnn_ms_reuse_clssfctn_trn.py > reuse_classification_attempt_2024-01-29T081300.txt
+```
+
+Looking at output
+
+```
+Anast@DESKTOP-O7KM5A5 ~
+$ grep -B3 -A4 "original_img_mode: L" /cygdrive/c/David/my_repos_dwb/binding-unwinding/reuse_classification_attempt_2024-01-29T081300.txt
+
+Anast@DESKTOP-O7KM5A5 ~
+$ grep -B3 -A4 "original_img.mode: L" /cygdrive/c/David/my_repos_dwb/binding-unwinding/reuse_classification_attempt_2024-01-29T081300.txt
+# GRAYSCALE DEBUG FOR POS #
+this_image: D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p71-257.png
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p71-257.png  ; original_img.mode: L
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p71-257.png  ; np_array_of_img.size: 16384
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p71-257.png  ; np_array_of_img.shape: (128, 128)
+--
+# GRAYSCALE DEBUG FOR POS #
+this_image: D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Bodleian-Library-MS-Hatton-114_00001.png
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Bodleian-Library-MS-Hatton-114_00001.png  ; original_img.mode: L
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Bodleian-Library-MS-Hatton-114_00001.png  ; np_array_of_img.size: 16384
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Bodleian-Library-MS-Hatton-114_00001.png  ; np_array_of_img.shape: (128, 128)
+--
+# GRAYSCALE DEBUG FOR POS #
+this_image: D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p105-377.png
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p105-377.png  ; original_img.mode: L
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p105-377.png  ; np_array_of_img.size: 16384
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p105-377.png  ; np_array_of_img.shape: (128, 128)
+--
+# GRAYSCALE DEBUG FOR POS #
+this_image: D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p74-269.png
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p74-269.png  ; original_img.mode: L
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p74-269.png  ; np_array_of_img.size: 16384
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p74-269.png  ; np_array_of_img.shape: (128, 128)
+--
+# GRAYSCALE DEBUG FOR POS #
+this_image: D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Bodleian-Library-MS-Hatton-113_00001.png
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Bodleian-Library-MS-Hatton-113_00001.png  ; original_img.mode: L
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Bodleian-Library-MS-Hatton-113_00001.png  ; np_array_of_img.size: 16384
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Bodleian-Library-MS-Hatton-113_00001.png  ; np_array_of_img.shape: (128, 128)
+--
+# GRAYSCALE DEBUG FOR POS #
+this_image: D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p84-306.png
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p84-306.png  ; original_img.mode: L
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p84-306.png  ; np_array_of_img.size: 16384
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p84-306.png  ; np_array_of_img.shape: (128, 128)
+--
+# GRAYSCALE DEBUG FOR POS #
+this_image: D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p73-265.png
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p73-265.png  ; original_img.mode: L
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p73-265.png  ; np_array_of_img.size: 16384
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p73-265.png  ; np_array_of_img.shape: (128, 128)
+--
+# GRAYSCALE DEBUG FOR POS #
+this_image: D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p60-215.png
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p60-215.png  ; original_img.mode: L
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p60-215.png  ; np_array_of_img.size: 16384
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p60-215.png  ; np_array_of_img.shape: (128, 128)
+--
+# GRAYSCALE DEBUG FOR POS #
+this_image: D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p29-102.png
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p29-102.png  ; original_img.mode: L
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p29-102.png  ; np_array_of_img.size: 16384
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p29-102.png  ; np_array_of_img.shape: (128, 128)
+--
+# GRAYSCALE DEBUG FOR POS #
+this_image: D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Bodleian-Library-MS-Bodl-168_p0-11.png
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Bodleian-Library-MS-Bodl-168_p0-11.png  ; original_img.mode: L
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Bodleian-Library-MS-Bodl-168_p0-11.png  ; np_array_of_img.size: 16384
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Bodleian-Library-MS-Bodl-168_p0-11.png  ; np_array_of_img.shape: (128, 128)
+
+Anast@DESKTOP-O7KM5A5 ~
+$ grep -B3 -A4 "original_img.mode: P" /cygdrive/c/David/my_repos_dwb/binding-unwinding/reuse_classification_attempt_2024-01-29T081300.txt
+# GRAYSCALE DEBUG FOR POS #
+this_image: D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\BeineckeMs1119-10622001_00001.png
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\BeineckeMs1119-10622001_00001.png  ; original_img.mode: P
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\BeineckeMs1119-10622001_00001.png  ; np_array_of_img.size: 16384
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\BeineckeMs1119-10622001_00001.png  ; np_array_of_img.shape: (128, 128)
+
+Anast@DESKTOP-O7KM5A5 ~
+$ grep -B3 -A4 "original_img.mode: 1" /cygdrive/c/David/my_repos_dwb/binding-unwinding/reuse_classification_attempt_2024-01-29T081300.txt
+# GRAYSCALE DEBUG FOR POS #
+this_image: D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001.png
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001.png  ; original_img.mode: 1
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001.png  ; np_array_of_img.size: 16384
+
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001.png  ; np_array_of_img.shape: (128, 128)
+
+Anast@DESKTOP-O7KM5A5 ~
+$ grep "original_img.mode: ^[R]" /cygdrive/c/David/my_repos_dwb/binding-unwinding/reuse_classification_attempt_2024-01-29T081300.txt
+
+Anast@DESKTOP-O7KM5A5 ~
+$ grep "original_img.mode:" /cygdrive/c/David/my_repos_dwb/binding-unwinding/reuse_classification_attempt_2024-01-29T081300.txt | grep -v RGB
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p71-257.png  ; original_img.mode: L
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Bodleian-Library-MS-Hatton-114_00001.png  ; original_img.mode: L
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p105-377.png  ; original_img.mode: L
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p74-269.png  ; original_img.mode: L
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Bodleian-Library-MS-Hatton-113_00001.png  ; original_img.mode: L
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p84-306.png  ; original_img.mode: L
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p73-265.png  ; original_img.mode: L
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\BeineckeMs1119-10622001_00001.png  ; original_img.mode: P
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p60-215.png  ; original_img.mode: L
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Hungary_winkler1_p29-102.png  ; original_img.mode: L
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\Bodleian-Library-MS-Bodl-168_p0-11.png  ; original_img.mode: L
+ D:/Datasets_and_Models/P2_MSS/DatasetBinding/dataset_3ch_train/dataset_3ch_not_train\BNFrance_-_Recueil_de_fabliaux_dits_contes_-_MsFr837-btv1b55013464t_00001.png  ; original_img.mode: 1
+
+Anast@DESKTOP-O7KM5A5 ~
+$ history | grep date | head
+  150  find . -type f -iname "*.png" > fnames.lst; echo -e "\n\n  $(date +'%s_%Y-%m-%dT%H%M%S%z') \n" >> rename.out; find . -type f -iname "*.png" -print0 | xargs -I'{}' -0 bash -c '
+  181  find . -type f -iname "*.png" > fnames.lst; echo -e "\n\n  $(date +'%s_%Y-%m-%dT%H%M%S%z') \n" >> rename.out; find . -type f -iname "*.png" -print0 | xargs -I'{}' -0 bash -c '
+  212  find . -type f -iname "*.png" > fnames.lst; echo -e "\n\n  $(date +'%s_%Y-%m-%dT%H%M%S%z') \n" >> rename.out; find . -type f -iname "*.png" -print0 | xargs -I'{}' -0 bash -c '
+  243  find . -type f -iname "*.png" > fnames.lst; echo -e "\n\n  $(date +'%s_%Y-%m-%dT%H%M%S%z') \n" >> rename.out; find . -type f -iname "*.png" -print0 | xargs -I'{}' -0 bash -c '
+  274  find . -type f -iname "*.png" > fnames.lst; echo -e "\n\n  $(date +'%s_%Y-%m-%dT%H%M%S%z') \n" >> rename.out; find . -type f -iname "*.png" -print0 | xargs -I'{}' -0 bash -c '
+  305  find . -type f -iname "*.png" > fnames.lst; echo -e "\n\n  $(date +'%s_%Y-%m-%dT%H%M%S%z') \n" >> rename.out; find . -type f -iname "*.png" -print0 | xargs -I'{}' -0 bash -c '
+  336  find . -type f -iname "*.png" > fnames.lst; echo -e "\n\n  $(date +'%s_%Y-%m-%dT%H%M%S%z') \n" >> rename.out; find . -type f -iname "*.png" -print0 | xargs -I'{}' -0 bash -c '
+  367  find . -type f -iname "*.png" > fnames.lst; echo -e "\n\n  $(date +'%s_%Y-%m-%dT%H%M%S%z') \n" >> rename.out; find . -type f -iname "*.png" -print0 | xargs -I'{}' -0 bash -c '
+  402  date +'%s_%Y-%m-%dT%H%M%S'
+  403  date
+
+Anast@DESKTOP-O7KM5A5 ~
+$ date +'%s_%Y-%m-%dT%H%M%S'
+1706542776_2024-01-29T083936
+
+Anast@DESKTOP-O7KM5A5 ~
+$
+```
+
+
+
+
+
 
 
 
