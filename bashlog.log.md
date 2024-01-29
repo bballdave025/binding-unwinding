@@ -3130,6 +3130,7 @@ done < _convert_all_color.list | \
 `##+` just slow. I wanted slow, though, to make sure we're not<br/>
 `##+` losing quality.<br/>
 
+
 ### Averaging for to-grayscale (24-bit) just above here
 
 `convert test.png -fx '(r+g+b)/3' gray_fx_average.png`
